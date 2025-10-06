@@ -62,7 +62,7 @@
 
 ## Scenario 1: User Authentication
 
-**Objective**: Verify multi-user authentication with username/password.
+**Objective**: Verify multi-user authentication with email/password.
 
 ### Steps:
 
@@ -71,14 +71,14 @@
    - Expected: Redirected to login page (/login)
 
 2. **Login with Invalid Credentials**
-   - Enter username: `invalid`
+   - Enter email: `invalid@example.com`
    - Enter password: `wrongpass`
    - Click "Login"
-   - Expected: Error message "Invalid username or password"
+   - Expected: Error message "Invalid email or password"
    - Expected: Remain on login page
 
 3. **Login with Valid Credentials**
-   - Enter username: `admin`
+   - Enter email: `admin@example.com`
    - Enter password: `password123`
    - Click "Login"
    - Expected: Redirected to dashboard (/)

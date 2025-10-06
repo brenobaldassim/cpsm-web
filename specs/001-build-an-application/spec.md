@@ -59,7 +59,7 @@ When creating this spec from a user prompt:
 ### Session 2025-10-05
 - Q: When a sale is completed, how should the system handle product stock quantities? → A: Automatically decrement stock quantity by the amount sold (real-time inventory tracking)
 - Q: When a client or product is deleted, how should the system handle their historical sales records? → A: Prevent deletion if any sales exist (preserve data integrity; soft delete only)
-- Q: Should the application require user authentication, or is it a single-user system with open access? → A: Multi-user with login required (username/password authentication)
+- Q: Should the application require user authentication, or is it a single-user system with open access? → A: Multi-user with login required (email/password authentication)
 - Q: Should users be able to edit client and product information after they've been created? → A: Yes, all fields can be edited, but prices on completed sales remain unchanged (only future sales use new prices)
 - Q: Should the application interface be optimized for mobile and tablet devices, or is desktop-only sufficient? → A: Responsive design (adapts to mobile, tablet, and desktop screens)
 
@@ -73,7 +73,7 @@ As a business owner, I need to manage my clients, products, and sales in one pla
 ### Acceptance Scenarios
 
 **Authentication & Access**
-1. **Given** I am not logged in, **When** I attempt to access the application, **Then** I am presented with a login screen requiring username and password
+1. **Given** I am not logged in, **When** I attempt to access the application, **Then** I am presented with a login screen requiring email and password
 2. **Given** I am on the login screen, **When** I enter valid credentials, **Then** I am authenticated and directed to the dashboard
 3. **Given** I am on the login screen, **When** I enter invalid credentials, **Then** I receive an error message and remain on the login screen
 
@@ -150,7 +150,7 @@ As a business owner, I need to manage my clients, products, and sales in one pla
 - **FR-028**: System MUST provide a dashboard interface as the main entry point
 - **FR-029**: System MUST provide separate screens/views for managing clients, products, and sales
 - **FR-030**: System MUST provide forms for adding new clients, products, and sales
-- **FR-031**: System MUST support multiple users with username/password authentication
+- **FR-031**: System MUST support multiple users with email/password authentication
 - **FR-032**: System MUST provide a responsive interface that adapts to mobile, tablet, and desktop screen sizes
 
 **Data Validation & Business Rules**
@@ -171,11 +171,11 @@ As a business owner, I need to manage my clients, products, and sales in one pla
 - **FR-043**: System MUST persist all client, product, and sales data
 - **FR-044**: System MUST [NEEDS CLARIFICATION: Are there data retention policies - how long should historical data be kept?]
 - **FR-045**: System MUST [NEEDS CLARIFICATION: What level of data security is required? Should sensitive client information be encrypted?]
-- **FR-046**: System MUST require user authentication (username and password) before granting access to any functionality
+- **FR-046**: System MUST require user authentication (email and password) before granting access to any functionality
 
 ### Key Entities *(include if feature involves data)*
 
-- **User**: Represents an authenticated user of the system. Contains username and password credentials for authentication. Multiple users can access the system independently.
+- **User**: Represents an authenticated user of the system. Contains email and password credentials for authentication. Multiple users can access the system independently.
 
 - **Client**: Represents a customer or buyer in the system. Contains personal information including name (first and last), email address, CPF (Brazilian tax ID), social media handle, and up to two addresses (home and work). Each address contains complete location details: street, city, state, CEP (postal code), and number.
 

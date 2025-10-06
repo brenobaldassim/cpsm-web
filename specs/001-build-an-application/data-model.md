@@ -12,7 +12,7 @@
 │    User     │
 │─────────────│
 │ id          │
-│ username    │──┐
+│ email       │──┐
 │ password    │  │
 │ createdAt   │  │
 │ updatedAt   │  │
@@ -106,7 +106,7 @@ datasource db {
 
 model User {
   id        String   @id @default(cuid())
-  username  String   @unique
+  email     String   @unique
   password  String   // Hashed with bcrypt
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -116,7 +116,7 @@ model User {
   products Product[]
   sales    Sale[]
 
-  @@index([username])
+  @@index([email])
   @@map("users")
 }
 
@@ -238,7 +238,7 @@ Represents an authenticated user of the system who can perform CRUD operations o
 
 **Fields**:
 - `id`: Unique identifier (CUID for URL safety)
-- `username`: Unique username for login
+- `email`: Unique email address for login
 - `password`: Hashed password (bcrypt with cost factor 12)
 - `createdAt`: Timestamp of user creation
 - `updatedAt`: Timestamp of last update
@@ -494,7 +494,7 @@ function validateSaleQty(qty: number): boolean {
 **Performance Considerations**:
 
 1. **Unique Constraints**:
-   - `User.username` - Login lookups
+   - `User.email` - Login lookups
    - `Client.cpf` - Prevent duplicates, enable fast lookup
 
 2. **Foreign Key Indexes**:

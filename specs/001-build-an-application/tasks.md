@@ -22,7 +22,7 @@
 
 ## Phase 3.1: Setup & Configuration
 
-### T001: Initialize Next.js 15 Project
+### T001: Initialize Next.js 15 Project [X]
 **Files**: `package.json`, `next.config.js`, `tsconfig.json`  
 **Description**: Initialize Next.js 15 project with TypeScript and configure for App Router
 ```bash
@@ -36,7 +36,7 @@ npx create-next-app@latest client-product-manager --typescript --tailwind --app 
 
 ---
 
-### T002: Configure Docker Compose for PostgreSQL
+### T002: Configure Docker Compose for PostgreSQL [X]
 **Files**: `docker-compose.yml`, `.env.example`  
 **Description**: Create Docker Compose configuration for PostgreSQL 15 development database
 ```yaml
@@ -68,7 +68,7 @@ volumes:
 
 ---
 
-### T003: Install Core Dependencies
+### T003: Install Core Dependencies [X]
 **Files**: `package.json`  
 **Description**: Install and configure core dependencies with version pinning
 ```json
@@ -109,7 +109,7 @@ volumes:
 
 ---
 
-### T004 [P]: Configure ESLint and Prettier
+### T004 [P]: Configure ESLint and Prettier [X]
 **Files**: `.eslintrc.json`, `.prettierrc`, `.prettierignore`  
 **Description**: Configure linting and formatting tools with Next.js and TypeScript rules
 **Acceptance**:
@@ -120,7 +120,7 @@ volumes:
 
 ---
 
-### T005 [P]: Setup Project Directory Structure
+### T005 [P]: Setup Project Directory Structure [X]
 **Files**: Create folder structure per plan.md  
 **Description**: Create complete project structure following Next.js App Router conventions
 ```
@@ -167,7 +167,7 @@ prisma/
 
 ---
 
-### T006: Initialize Prisma with PostgreSQL Schema
+### T006: Initialize Prisma with PostgreSQL Schema [X]
 **Files**: `prisma/schema.prisma`  
 **Description**: Create complete Prisma schema with all 6 entities (User, Client, Address, Product, Sale, SaleItem)
 **Schema**: Copy from data-model.md
@@ -179,7 +179,7 @@ prisma/
 
 ---
 
-### T007: Create Initial Database Migration
+### T007: Create Initial Database Migration [X]
 **Files**: `prisma/migrations/`  
 **Description**: Generate and run initial database migration
 ```bash
@@ -194,7 +194,7 @@ npx prisma migrate dev --name init
 
 ---
 
-### T008 [P]: Configure Tailwind CSS
+### T008 [P]: Configure Tailwind CSS [X]
 **Files**: `tailwind.config.ts`, `src/app/globals.css`  
 **Description**: Configure Tailwind with responsive breakpoints and custom theme
 ```typescript
@@ -221,7 +221,7 @@ module.exports = {
 
 ---
 
-### T009 [P]: Setup Vitest Configuration
+### T009 [P]: Setup Vitest Configuration [X]
 **Files**: `vitest.config.ts`  
 **Description**: Configure Vitest for unit and contract tests
 **Acceptance**:
@@ -231,7 +231,7 @@ module.exports = {
 
 ---
 
-### T010 [P]: Setup Playwright Configuration
+### T010 [P]: Setup Playwright Configuration [X]
 **Files**: `playwright.config.ts`  
 **Description**: Configure Playwright for E2E tests with responsive viewports
 **Acceptance**:
@@ -673,7 +673,7 @@ npx shadcn-ui@latest add button input label form table
 
 ### T042: Implement Login Page
 **Files**: `src/app/login/page.tsx`  
-**Description**: Create login page with form (username, password)
+**Description**: Create login page with form (email, password)
 **Acceptance**:
 - Form with validation
 - Calls auth.login tRPC procedure

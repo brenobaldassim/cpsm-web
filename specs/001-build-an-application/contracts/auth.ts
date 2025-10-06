@@ -5,21 +5,21 @@
  * Procedures for user authentication and session management.
  */
 
-import { z } from "zod";
+import { z } from 'zod'
 
 // ============================================================================
 // Input Schemas
 // ============================================================================
 
 export const loginInput = z.object({
-  username: z.string().min(3).max(50),
+  email: z.string().email().min(3).max(100),
   password: z.string().min(8).max(100),
-});
+})
 
 export const signupInput = z.object({
-  username: z.string().min(3).max(50),
+  email: z.string().email().min(3).max(100),
   password: z.string().min(8).max(100),
-});
+})
 
 // ============================================================================
 // Output Schemas
@@ -27,14 +27,14 @@ export const signupInput = z.object({
 
 export const userOutput = z.object({
   id: z.string(),
-  username: z.string(),
+  email: z.string(),
   createdAt: z.date(),
-});
+})
 
 export const sessionOutput = z.object({
   user: userOutput,
   expiresAt: z.date(),
-});
+})
 
 // ============================================================================
 // Procedure Definitions
@@ -43,10 +43,10 @@ export const sessionOutput = z.object({
 /**
  * auth.login
  *
- * Authenticate user with username and password.
+ * Authenticate user with email and password.
  *
  * Input:
- *   - username: string (3-50 chars)
+ *   - email: string (valid email, 3-100 chars)
  *   - password: string (8-100 chars)
  *
  * Output:
@@ -59,7 +59,7 @@ export const sessionOutput = z.object({
  *
  * Test Cases:
  *   1. Valid credentials → Return session
- *   2. Invalid username → UNAUTHORIZED
+ *   2. Invalid email → UNAUTHORIZED
  *   3. Invalid password → UNAUTHORIZED
  *   4. Missing fields → Validation error
  *   5. Multiple failed attempts → Rate limit
@@ -67,7 +67,7 @@ export const sessionOutput = z.object({
 export const loginProcedure = {
   input: loginInput,
   output: sessionOutput,
-};
+}
 
 /**
  * auth.signup
@@ -75,26 +75,26 @@ export const loginProcedure = {
  * Create new user account.
  *
  * Input:
- *   - username: string (3-50 chars, unique)
+ *   - email: string (valid email, 3-100 chars, unique)
  *   - password: string (8-100 chars)
  *
  * Output:
  *   - user: User object
  *
  * Errors:
- *   - CONFLICT: Username already exists
+ *   - CONFLICT: Email already exists
  *   - BAD_REQUEST: Invalid input format
  *
  * Test Cases:
  *   1. Valid new user → Create and return user
- *   2. Duplicate username → CONFLICT
+ *   2. Duplicate email → CONFLICT
  *   3. Weak password → Validation error
- *   4. Invalid username format → Validation error
+ *   4. Invalid email format → Validation error
  */
 export const signupProcedure = {
   input: signupInput,
   output: userOutput,
-};
+}
 
 /**
  * auth.logout
@@ -113,7 +113,7 @@ export const signupProcedure = {
 export const logoutProcedure = {
   input: z.void(),
   output: z.object({ success: z.boolean() }),
-};
+}
 
 /**
  * auth.getSession
@@ -133,7 +133,7 @@ export const logoutProcedure = {
 export const getSessionProcedure = {
   input: z.void(),
   output: sessionOutput.nullable(),
-};
+}
 
 // ============================================================================
 // Contract Summary
@@ -144,4 +144,4 @@ export const authContract = {
   signup: signupProcedure,
   logout: logoutProcedure,
   getSession: getSessionProcedure,
-};
+}

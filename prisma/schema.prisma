@@ -1,0 +1,141 @@
+// This is your Prisma schema file
+// Learn more: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================================
+// Authentication & Users
+// ============================================================================
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String // Hashed with bcrypt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  clients  Client[]
+  products Product[]
+  sales    Sale[]
+
+  @@index([email])
+  @@map("users")
+}
+
+// ============================================================================
+// Client Management
+// ============================================================================
+
+model Client {
+  id          String   @id @default(cuid())
+  firstName   String
+  lastName    String
+  email       String
+  cpf         String   @unique // Brazilian tax ID (format: XXX.XXX.XXX-XX)
+  socialMedia String? // Optional social media handle
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  addresses Address[]
+  sales     Sale[]
+  createdBy String
+  creator   User      @relation(fields: [createdBy], references: [id])
+
+  @@index([email])
+  @@index([cpf])
+  @@index([lastName])
+  @@map("clients")
+}
+
+enum AddressType {
+  HOME
+  WORK
+}
+
+model Address {
+  id       String      @id @default(cuid())
+  type     AddressType // HOME or WORK
+  street   String
+  number   String
+  city     String
+  state    String // Brazilian state (e.g., SP, RJ)
+  cep      String // Brazilian postal code (format: #####-###)
+  clientId String
+
+  // Relations
+  client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  @@index([clientId])
+  @@index([cep])
+  @@map("addresses")
+}
+
+// ============================================================================
+// Product Management
+// ============================================================================
+
+model Product {
+  id           String   @id @default(cuid())
+  name         String
+  priceInCents Int // Price in cents to avoid floating point issues
+  stockQty     Int      @default(0) // Current stock quantity
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  saleItems SaleItem[]
+  createdBy String
+  creator   User       @relation(fields: [createdBy], references: [id])
+
+  @@index([name])
+  @@map("products")
+}
+
+// ============================================================================
+// Sales Management
+// ============================================================================
+
+model Sale {
+  id          String   @id @default(cuid())
+  saleDate    DateTime @default(now()) // Date of the sale
+  totalAmount Int // Total amount in cents (calculated from SaleItems)
+  clientId    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  client    Client     @relation(fields: [clientId], references: [id], onDelete: Restrict)
+  saleItems SaleItem[]
+  createdBy String
+  creator   User       @relation(fields: [createdBy], references: [id])
+
+  @@index([clientId])
+  @@index([saleDate])
+  @@index([createdAt])
+  @@map("sales")
+}
+
+model SaleItem {
+  id           String @id @default(cuid())
+  quantity     Int // Quantity of product sold
+  priceInCents Int // Price at time of sale (snapshot for historical accuracy)
+  saleId       String
+  productId    String
+
+  // Relations
+  sale    Sale    @relation(fields: [saleId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Restrict)
+
+  @@index([saleId])
+  @@index([productId])
+  @@map("sale_items")
+}

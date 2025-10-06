@@ -119,7 +119,7 @@
 - **Supabase Auth**: Requires Supabase ecosystem adoption
 
 **Best Practices**:
-- Use credentials provider for username/password
+- Use credentials provider for email/password
 - Store sessions in database for multi-device support
 - Hash passwords with bcrypt (cost factor 12)
 - Implement CSRF protection via NextAuth

@@ -415,7 +415,7 @@ module.exports = {
 
 ### Database Layer
 
-### T021 [P]: Implement Prisma Client Singleton
+### T021 [P]: Implement Prisma Client Singleton [X]
 **Files**: `src/server/db.ts`  
 **Description**: Create Prisma Client singleton with connection pooling
 **Acceptance**:
@@ -426,7 +426,7 @@ module.exports = {
 
 ---
 
-### T022 [P]: Create Database Seed Script
+### T022 [P]: Create Database Seed Script [X]
 **Files**: `prisma/seed.ts`, `package.json`  
 **Description**: Create seed script with test data (admin user, 5 clients, 10 products, 20 sales)
 **Acceptance**:
@@ -439,7 +439,7 @@ module.exports = {
 
 ### Validation Layer
 
-### T023 [P]: Implement CPF Validation Utility
+### T023 [P]: Implement CPF Validation Utility [X]
 **Files**: `src/lib/validations.ts`  
 **Description**: Create CPF validation function with Zod schema
 **Code**: From contracts/clients.ts
@@ -451,7 +451,7 @@ module.exports = {
 
 ---
 
-### T024 [P]: Implement CEP Validation Utility
+### T024 [P]: Implement CEP Validation Utility [X]
 **Files**: `src/lib/validations.ts`  
 **Description**: Create CEP validation function with Zod schema
 **Acceptance**:
@@ -487,7 +487,7 @@ module.exports = {
 
 ### tRPC Layer
 
-### T027: Setup tRPC Server
+### T027: Setup tRPC Server [X]
 **Files**: `src/server/api/trpc.ts`  
 **Description**: Initialize tRPC with context (session, db) and error formatting
 **Acceptance**:
@@ -498,7 +498,7 @@ module.exports = {
 
 ---
 
-### T028: Create tRPC Root Router
+### T028: Create tRPC Root Router [X]
 **Files**: `src/server/api/root.ts`, `src/app/api/trpc/[trpc]/route.ts`  
 **Description**: Create root router and Next.js API route handler
 **Acceptance**:
@@ -508,7 +508,7 @@ module.exports = {
 
 ---
 
-### T029: Setup tRPC Client
+### T029: Setup tRPC Client [X]
 **Files**: `src/lib/trpc.ts`, `src/app/_trpc/Provider.tsx`  
 **Description**: Create tRPC client with React Query integration
 **Acceptance**:
@@ -521,7 +521,7 @@ module.exports = {
 
 ### API Routers (tRPC Procedures)
 
-### T030: Implement Auth Router
+### T030: Implement Auth Router [X]
 **Files**: `src/server/api/routers/auth.ts`  
 **Description**: Implement all 4 auth procedures (login, signup, logout, getSession)
 **Acceptance**:

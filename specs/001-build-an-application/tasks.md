@@ -810,7 +810,7 @@ npx shadcn-ui@latest add button input label form table
 
 ### Unit Tests
 
-### T051 [P]: Unit Tests - CPF Validation
+### T051 [P]: Unit Tests - CPF Validation [X]
 **Files**: `tests/unit/cpf-validation.test.ts`  
 **Description**: Write unit tests for CPF validation utility
 **Test Cases**:
@@ -825,7 +825,7 @@ npx shadcn-ui@latest add button input label form table
 
 ---
 
-### T052 [P]: Unit Tests - CEP Validation
+### T052 [P]: Unit Tests - CEP Validation [X]
 **Files**: `tests/unit/cep-validation.test.ts`  
 **Description**: Write unit tests for CEP validation utility
 **Test Cases**:
@@ -839,7 +839,7 @@ npx shadcn-ui@latest add button input label form table
 
 ---
 
-### T053 [P]: Unit Tests - Stock Management Logic
+### T053 [P]: Unit Tests - Stock Management Logic [X]
 **Files**: `tests/unit/stock-management.test.ts`  
 **Description**: Write unit tests for stock deduction and validation logic
 **Test Cases**:
@@ -853,7 +853,7 @@ npx shadcn-ui@latest add button input label form table
 
 ---
 
-### T054 [P]: Unit Tests - Price Preservation
+### T054 [P]: Unit Tests - Price Preservation [X]
 **Files**: `tests/unit/price-preservation.test.ts`  
 **Description**: Write unit tests for price snapshot logic
 **Test Cases**:
@@ -868,7 +868,7 @@ npx shadcn-ui@latest add button input label form table
 
 ### Responsive Design Validation
 
-### T055: Validate Mobile Responsiveness (320px, 375px)
+### T055: Validate Mobile Responsiveness (320px, 375px) [X]
 **Files**: Run Playwright tests at mobile viewports  
 **Description**: Manually verify responsive design at smallest breakpoints
 **Checks**:
@@ -883,7 +883,7 @@ npx shadcn-ui@latest add button input label form table
 
 ---
 
-### T056: Validate Tablet Responsiveness (768px)
+### T056: Validate Tablet Responsiveness (768px) [X]
 **Files**: Run Playwright tests at tablet viewport  
 **Description**: Verify responsive design at tablet breakpoint
 **Checks**:
@@ -895,7 +895,7 @@ npx shadcn-ui@latest add button input label form table
 
 ---
 
-### T057: Validate Desktop Responsiveness (1024px, 1440px, 1920px)
+### T057: Validate Desktop Responsiveness (1024px, 1440px, 1920px) [X]
 **Files**: Run Playwright tests at desktop viewports  
 **Description**: Verify responsive design at desktop breakpoints
 **Checks**:
@@ -945,7 +945,7 @@ npx shadcn-ui@latest add button input label form table
 
 ### Performance Optimization
 
-### T061: Optimize Bundle Size
+### T061: Optimize Bundle Size [X]
 **Files**: `next.config.js`, dynamic imports  
 **Description**: Implement code splitting and lazy loading
 **Acceptance**:
@@ -982,7 +982,7 @@ npx shadcn-ui@latest add button input label form table
 
 ### Documentation & Cleanup
 
-### T064 [P]: Create README with Setup Instructions
+### T064 [P]: Create README with Setup Instructions [X]
 **Files**: `README.md`  
 **Description**: Document project setup, Docker, and development workflow
 **Acceptance**:

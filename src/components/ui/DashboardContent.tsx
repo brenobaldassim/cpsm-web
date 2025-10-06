@@ -7,6 +7,7 @@
 'use client'
 
 import * as React from 'react'
+import Link from 'next/link'
 import { Card } from '@/components/ui/card'
 import { trpc } from '@/lib/trpc'
 
@@ -173,28 +174,28 @@ export function DashboardContent() {
         </h2>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <Card className="p-6 hover:bg-neutral-50 transition-colors">
-            <a href="/clients" className="block">
+            <Link href="/clients" className="block">
               <h3 className="font-medium text-neutral-900">Manage Clients</h3>
               <p className="mt-1 text-sm text-neutral-600">
                 View and manage your client list
               </p>
-            </a>
+            </Link>
           </Card>
           <Card className="p-6 hover:bg-neutral-50 transition-colors">
-            <a href="/products" className="block">
+            <Link href="/products" className="block">
               <h3 className="font-medium text-neutral-900">Manage Products</h3>
               <p className="mt-1 text-sm text-neutral-600">
                 Update inventory and pricing
               </p>
-            </a>
+            </Link>
           </Card>
           <Card className="p-6 hover:bg-neutral-50 transition-colors">
-            <a href="/sales" className="block">
+            <Link href="/sales" className="block">
               <h3 className="font-medium text-neutral-900">Create Sale</h3>
               <p className="mt-1 text-sm text-neutral-600">
                 Record a new sales transaction
               </p>
-            </a>
+            </Link>
           </Card>
         </div>
       </div>

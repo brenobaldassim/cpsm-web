@@ -39,60 +39,53 @@ export interface FormFieldProps
  * />
  * ```
  */
-export const FormField = React.forwardRef<HTMLInputElement, FormFieldProps>(
-  (
-    {
-      label,
-      registration,
-      error,
-      helperText,
-      fullWidth = true,
-      className,
-      ...props
-    },
-    _ref
-  ) => {
-    const id = registration.name
+export const FormField: React.FC<FormFieldProps> = ({
+  label,
+  registration,
+  error,
+  helperText,
+  fullWidth = true,
+  className,
+  ...props
+}) => {
+  const id = registration.name
 
-    return (
-      <div className={cn('space-y-2', fullWidth && 'w-full')}>
-        <Label htmlFor={id} className={error && 'text-red-600'}>
-          {label}
-          {props.required && <span className="ml-1 text-red-500">*</span>}
-        </Label>
+  return (
+    <div className={cn('space-y-2', fullWidth && 'w-full')}>
+      <Label htmlFor={id} className={error && 'text-red-600'}>
+        {label}
+        {props.required && <span className="ml-1 text-red-500">*</span>}
+      </Label>
 
-        <Input
-          id={id}
-          {...registration}
-          {...props}
-          className={cn(
-            error && 'border-red-500 focus-visible:ring-red-500',
-            className
-          )}
-          aria-invalid={error ? 'true' : 'false'}
-          aria-describedby={
-            error ? `${id}-error` : helperText ? `${id}-helper` : undefined
-          }
-        />
-
-        {error && (
-          <p
-            id={`${id}-error`}
-            className="text-sm font-medium text-red-600"
-            role="alert"
-          >
-            {error.message}
-          </p>
+      <Input
+        id={id}
+        {...registration}
+        {...props}
+        className={cn(
+          error && 'border-red-500 focus-visible:ring-red-500',
+          className
         )}
+        aria-invalid={error ? 'true' : 'false'}
+        aria-describedby={
+          error ? `${id}-error` : helperText ? `${id}-helper` : undefined
+        }
+      />
 
-        {helperText && !error && (
-          <p id={`${id}-helper`} className="text-sm text-neutral-500">
-            {helperText}
-          </p>
-        )}
-      </div>
-    )
-  }
-)
+      {error && (
+        <p
+          id={`${id}-error`}
+          className="text-sm font-medium text-red-600"
+          role="alert"
+        >
+          {error.message}
+        </p>
+      )}
 
-FormField.displayName = 'FormField'
+      {helperText && !error && (
+        <p id={`${id}-helper`} className="text-sm text-neutral-500">
+          {helperText}
+        </p>
+      )}
+    </div>
+  )
+}

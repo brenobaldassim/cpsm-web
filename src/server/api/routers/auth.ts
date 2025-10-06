@@ -5,7 +5,7 @@
  */
 
 import { TRPCError } from '@trpc/server'
-import * as bcrypt from 'bcrypt'
+import * as bcrypt from 'bcryptjs'
 import { z } from 'zod'
 import { signIn, signOut } from '@/server/auth'
 import { createTRPCRouter, publicProcedure, protectedProcedure } from '../trpc'
@@ -132,7 +132,7 @@ export const authRouter = createTRPCRouter({
    */
   logout: protectedProcedure
     .output(z.object({ success: z.boolean() }))
-    .mutation(async ({ ctx }) => {
+    .mutation(async () => {
       // Sign out with NextAuth
       await signOut({ redirect: false })
       return { success: true }

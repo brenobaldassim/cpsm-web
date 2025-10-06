@@ -11,10 +11,15 @@ import { useRouter } from 'next/navigation'
 import { Navigation } from '@/components/layouts'
 import { ClientForm } from '@/components/forms'
 import { trpc } from '@/lib/trpc'
+import { brazilianStates } from '@/lib/validations'
 
-export default function EditClientPage({ params }: { params: { id: string } }) {
+export default function EditClientPage({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) {
   const router = useRouter()
-  const clientId = params.id
+  const { id: clientId } = React.use(params)
 
   const { data: client, isLoading: isLoadingClient } =
     trpc.clients.getById.useQuery({
@@ -62,7 +67,19 @@ export default function EditClientPage({ params }: { params: { id: string } }) {
 
         <ClientForm
           defaultValues={{
-            ...client,
+            firstName: client.firstName,
+            lastName: client.lastName,
+            email: client.email,
+            cpf: client.cpf,
+            socialMedia: client.socialMedia || undefined,
+            addresses: client.addresses.map((addr) => ({
+              type: addr.type as 'HOME' | 'WORK',
+              street: addr.street,
+              number: addr.number,
+              city: addr.city,
+              state: addr.state as (typeof brazilianStates)[number],
+              cep: addr.cep,
+            })),
             id: client.id,
           }}
           onSubmit={(data) =>

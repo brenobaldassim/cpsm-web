@@ -16,7 +16,10 @@ import { prisma } from '../db'
  * Create context for each request
  * Contains: database client, session (if authenticated)
  */
-export async function createTRPCContext(_opts: FetchCreateContextFnOptions) {
+export async function createTRPCContext(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _opts: FetchCreateContextFnOptions
+) {
   const session = await auth()
 
   return {

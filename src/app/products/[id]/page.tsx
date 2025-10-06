@@ -15,10 +15,10 @@ import { trpc } from '@/lib/trpc'
 export default function EditProductPage({
   params,
 }: {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }) {
   const router = useRouter()
-  const productId = params.id
+  const { id: productId } = React.use(params)
 
   const { data: product, isLoading: isLoadingProduct } =
     trpc.products.getById.useQuery({

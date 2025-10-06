@@ -27,12 +27,13 @@ type Sale = {
 
 export default function SalesListPage() {
   const [page, setPage] = React.useState(1)
-  const [dateFrom, _setDateFrom] = React.useState<Date>(() => {
-    const date = new Date()
-    date.setDate(date.getDate() - 30)
-    return date
-  })
-  const [dateTo, _setDateTo] = React.useState<Date>(new Date())
+  // TODO: Add date filtering UI
+  // const [dateFrom, setDateFrom] = React.useState<Date>(() => {
+  //   const date = new Date()
+  //   date.setDate(date.getDate() - 30)
+  //   return date
+  // })
+  // const [dateTo, setDateTo] = React.useState<Date>(new Date())
 
   const { data, isLoading } = trpc.sales.list.useQuery({
     page,

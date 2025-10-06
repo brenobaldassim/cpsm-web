@@ -11,8 +11,12 @@ import { Navigation } from '@/components/layouts'
 import { Card } from '@/components/ui/card'
 import { trpc } from '@/lib/trpc'
 
-export default function SaleDetailPage({ params }: { params: { id: string } }) {
-  const saleId = params.id
+export default function SaleDetailPage({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) {
+  const { id: saleId } = React.use(params)
 
   const { data: sale, isLoading } = trpc.sales.getById.useQuery({
     id: saleId,

@@ -247,7 +247,7 @@ module.exports = {
 
 ### Contract Tests (tRPC Procedures)
 
-### T011 [P]: Contract Test - Auth Router (4 procedures)
+### T011 [P]: Contract Test - Auth Router (4 procedures) [X]
 **Files**: `tests/contract/auth.test.ts`  
 **Description**: Write contract tests for all auth procedures (login, signup, logout, getSession)
 **Test Cases**:
@@ -262,7 +262,7 @@ module.exports = {
 
 ---
 
-### T012 [P]: Contract Test - Clients Router (5 procedures)
+### T012 [P]: Contract Test - Clients Router (5 procedures) [X]
 **Files**: `tests/contract/clients.test.ts`  
 **Description**: Write contract tests for all client procedures (create, update, delete, getById, list)
 **Test Cases**:
@@ -278,7 +278,7 @@ module.exports = {
 
 ---
 
-### T013 [P]: Contract Test - Products Router (6 procedures)
+### T013 [P]: Contract Test - Products Router (6 procedures) [X]
 **Files**: `tests/contract/products.test.ts`  
 **Description**: Write contract tests for all product procedures (create, update, delete, getById, list, checkStock)
 **Test Cases**:
@@ -294,7 +294,7 @@ module.exports = {
 
 ---
 
-### T014 [P]: Contract Test - Sales Router (5 procedures)
+### T014 [P]: Contract Test - Sales Router (5 procedures) [X]
 **Files**: `tests/contract/sales.test.ts`  
 **Description**: Write contract tests for all sales procedures (create, getById, list, filter, getSummary)
 **Test Cases**:
@@ -313,7 +313,7 @@ module.exports = {
 
 ### Integration Tests (E2E with Playwright)
 
-### T015 [P]: Integration Test - Authentication Flow
+### T015 [P]: Integration Test - Authentication Flow [X]
 **Files**: `tests/integration/auth.spec.ts`  
 **Description**: Write E2E test for complete authentication workflow (Scenario 1 from quickstart.md)
 **Test Cases**:
@@ -329,7 +329,7 @@ module.exports = {
 
 ---
 
-### T016 [P]: Integration Test - Client Management
+### T016 [P]: Integration Test - Client Management [X]
 **Files**: `tests/integration/client-management.spec.ts`  
 **Description**: Write E2E test for client CRUD operations (Scenario 2 from quickstart.md)
 **Test Cases**:
@@ -347,7 +347,7 @@ module.exports = {
 
 ---
 
-### T017 [P]: Integration Test - Product Management
+### T017 [P]: Integration Test - Product Management [X]
 **Files**: `tests/integration/product-management.spec.ts`  
 **Description**: Write E2E test for product CRUD and stock tracking (Scenario 3 from quickstart.md)
 **Test Cases**:
@@ -364,7 +364,7 @@ module.exports = {
 
 ---
 
-### T018 [P]: Integration Test - Sales Creation
+### T018 [P]: Integration Test - Sales Creation [X]
 **Files**: `tests/integration/sales-creation.spec.ts`  
 **Description**: Write E2E test for sales creation with stock management (Scenario 4 from quickstart.md)
 **Test Cases**:
@@ -379,7 +379,7 @@ module.exports = {
 
 ---
 
-### T019 [P]: Integration Test - Sales Filtering
+### T019 [P]: Integration Test - Sales Filtering [X]
 **Files**: `tests/integration/sales-filtering.spec.ts`  
 **Description**: Write E2E test for sales filtering and date ranges (Scenario 5 from quickstart.md)
 **Test Cases**:
@@ -396,7 +396,7 @@ module.exports = {
 
 ---
 
-### T020 [P]: Integration Test - Responsive Design
+### T020 [P]: Integration Test - Responsive Design [X]
 **Files**: `tests/integration/responsive.spec.ts`  
 **Description**: Write responsive design tests across all breakpoints (Scenario 6 from quickstart.md)
 **Test Cases**:

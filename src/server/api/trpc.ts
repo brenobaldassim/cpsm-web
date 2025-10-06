@@ -5,10 +5,11 @@
  * Exports procedures (public, protected) for creating API routes.
  */
 
-import { initTRPC } from '@trpc/server'
+import { initTRPC, TRPCError } from '@trpc/server'
 import { type FetchCreateContextFnOptions } from '@trpc/server/adapters/fetch'
 import superjson from 'superjson'
 import { ZodError } from 'zod'
+import { auth } from '../auth'
 import { prisma } from '../db'
 
 /**
@@ -16,10 +17,11 @@ import { prisma } from '../db'
  * Contains: database client, session (if authenticated)
  */
 export async function createTRPCContext(_opts: FetchCreateContextFnOptions) {
+  const session = await auth()
+
   return {
     prisma,
-    // TODO: Add session from NextAuth when T025-T026 are complete
-    session: null as { user: { id: string; email: string } } | null,
+    session,
   }
 }
 
@@ -54,20 +56,20 @@ export const publicProcedure = t.procedure
 
 /**
  * Protected procedure - requires authentication
- * TODO: Implement authentication check when T025-T026 are complete
+ * Throws UNAUTHORIZED error if user is not authenticated
  */
 export const protectedProcedure = t.procedure.use(async ({ ctx, next }) => {
-  // For now, allow all requests during development
-  // This will be replaced with proper authentication check
   if (!ctx.session?.user) {
-    // Temporarily commented out until auth is implemented
-    // throw new TRPCError({ code: 'UNAUTHORIZED' })
+    throw new TRPCError({
+      code: 'UNAUTHORIZED',
+      message: 'You must be logged in to access this resource',
+    })
   }
 
   return next({
     ctx: {
       ...ctx,
-      session: { ...ctx.session, user: ctx.session!.user },
+      session: ctx.session,
     },
   })
 })

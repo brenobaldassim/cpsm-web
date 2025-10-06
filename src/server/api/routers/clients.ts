@@ -8,7 +8,7 @@
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 import { createTRPCRouter, protectedProcedure } from '../trpc'
-import { cpfSchema, addressSchema, emailSchema } from '@/src/lib/validations'
+import { cpfSchema, addressSchema, emailSchema } from '@/lib/validations'
 
 // Input schemas
 const createClientInput = z.object({

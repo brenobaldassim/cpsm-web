@@ -23,28 +23,37 @@
    # Copy environment variables template
    cp .env.example .env.local
    
-   # Install dependencies
-   npm install
+   # Install dependencies (using pnpm)
+   pnpm install
    
    # Setup database (migrations)
-   npx prisma migrate dev
+   pnpm exec prisma migrate dev
    
    # Seed database with test data
-   npx prisma db seed
+   pnpm exec prisma db seed
    
    # Start development server
-   npm run dev
+   pnpm dev
    ```
 
-3. **Test Data**: Seed script creates:
+3. **Package Manager**: This project uses **pnpm**. Install it globally:
+   ```bash
+   # Install pnpm globally
+   npm install -g pnpm
+   
+   # Or via Corepack (Node.js 16.13+)
+   corepack enable
+   ```
+
+4. **Test Data**: Seed script creates:
    - Admin user: `admin` / `password123`
    - 5 sample clients with addresses
    - 10 sample products with stock
    - 20 sample sales (last 60 days)
 
-4. **Access Application**: http://localhost:3000
+5. **Access Application**: http://localhost:3000
 
-5. **Stopping Services**:
+6. **Stopping Services**:
    ```bash
    # Stop development server: Ctrl+C
    
@@ -633,14 +642,14 @@
    - Verify NEXTAUTH_URL is set correctly
 
 7. **Seed Data Not Loading**
-   - Solution: Run `npx prisma db seed` manually
+   - Solution: Run `pnpm exec prisma db seed` manually
    - Check seed script for errors
    - Verify database is accessible
 
 8. **Prisma Migration Errors**
-   - Solution: Reset database: `npx prisma migrate reset`
+   - Solution: Reset database: `pnpm exec prisma migrate reset`
    - Or manually: `docker-compose down -v && docker-compose up -d`
-   - Then run: `npx prisma migrate dev`
+   - Then run: `pnpm exec prisma migrate dev`
 
 9. **Docker Volume Issues**
    - Error: "Permission denied" or data persistence issues

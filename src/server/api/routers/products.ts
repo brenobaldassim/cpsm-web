@@ -8,7 +8,7 @@
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 import { createTRPCRouter, protectedProcedure } from '../trpc'
-import { priceSchema, stockSchema } from '@/src/lib/validations'
+import { priceSchema, stockSchema } from '@/lib/validations'
 
 // Input schemas
 const createProductInput = z.object({

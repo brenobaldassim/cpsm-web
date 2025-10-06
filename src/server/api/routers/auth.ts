@@ -7,8 +7,9 @@
 import { TRPCError } from '@trpc/server'
 import * as bcrypt from 'bcrypt'
 import { z } from 'zod'
+import { signIn, signOut } from '@/server/auth'
 import { createTRPCRouter, publicProcedure, protectedProcedure } from '../trpc'
-import { emailSchema, passwordSchema } from '@/src/lib/validations'
+import { emailSchema, passwordSchema } from '@/lib/validations'
 
 const loginInput = z.object({
   email: emailSchema,
@@ -42,7 +43,7 @@ export const authRouter = createTRPCRouter({
     .mutation(async ({ input, ctx }) => {
       const { email, password } = input
 
-      // Find user
+      // Find user to verify they exist
       const user = await ctx.prisma.user.findUnique({
         where: { email },
       })
@@ -64,9 +65,16 @@ export const authRouter = createTRPCRouter({
         })
       }
 
-      // TODO: Create session (integrate with NextAuth in T025-T026)
+      // Sign in with NextAuth
+      await signIn('credentials', {
+        email,
+        password,
+        redirect: false,
+      })
+
+      // Calculate expiration (30 days from now)
       const expiresAt = new Date()
-      expiresAt.setDate(expiresAt.getDate() + 30) // 30 days
+      expiresAt.setDate(expiresAt.getDate() + 30)
 
       return {
         user: {
@@ -125,9 +133,8 @@ export const authRouter = createTRPCRouter({
   logout: protectedProcedure
     .output(z.object({ success: z.boolean() }))
     .mutation(async ({ ctx }) => {
-      // TODO: Destroy session (integrate with NextAuth in T025-T026)
-      // ctx will be used when session management is implemented
-      void ctx
+      // Sign out with NextAuth
+      await signOut({ redirect: false })
       return { success: true }
     }),
 
@@ -138,8 +145,32 @@ export const authRouter = createTRPCRouter({
   getSession: publicProcedure
     .output(sessionOutput.nullable())
     .query(async ({ ctx }) => {
-      // TODO: Get session from NextAuth (T025-T026)
-      // For now, return null
-      return null
+      // Session is already loaded in context
+      if (!ctx.session?.user) {
+        return null
+      }
+
+      // Get user details from database
+      const user = await ctx.prisma.user.findUnique({
+        where: { id: ctx.session.user.id },
+      })
+
+      if (!user) {
+        return null
+      }
+
+      // Calculate expiration
+      const expiresAt = new Date(
+        ctx.session.expires || Date.now() + 30 * 24 * 60 * 60 * 1000
+      )
+
+      return {
+        user: {
+          id: user.id,
+          email: user.email,
+          createdAt: user.createdAt,
+        },
+        expiresAt,
+      }
     }),
 })

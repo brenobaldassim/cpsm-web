@@ -533,7 +533,7 @@ module.exports = {
 
 ---
 
-### T031: Implement Clients Router - Create & List
+### T031: Implement Clients Router - Create & List [X]
 **Files**: `src/server/api/routers/clients.ts`  
 **Description**: Implement create and list procedures for clients
 **Acceptance**:
@@ -544,7 +544,7 @@ module.exports = {
 
 ---
 
-### T032: Implement Clients Router - Update, Delete, GetById
+### T032: Implement Clients Router - Update, Delete, GetById [X]
 **Files**: `src/server/api/routers/clients.ts`  
 **Description**: Implement remaining client procedures
 **Acceptance**:
@@ -555,7 +555,7 @@ module.exports = {
 
 ---
 
-### T033: Implement Products Router - Create & List
+### T033: Implement Products Router - Create & List [X]
 **Files**: `src/server/api/routers/products.ts`  
 **Description**: Implement create and list procedures for products
 **Acceptance**:
@@ -565,7 +565,7 @@ module.exports = {
 
 ---
 
-### T034: Implement Products Router - Update, Delete, GetById, CheckStock
+### T034: Implement Products Router - Update, Delete, GetById, CheckStock [X]
 **Files**: `src/server/api/routers/products.ts`  
 **Description**: Implement remaining product procedures
 **Acceptance**:
@@ -577,7 +577,7 @@ module.exports = {
 
 ---
 
-### T035: Implement Sales Router - Create
+### T035: Implement Sales Router - Create [X]
 **Files**: `src/server/api/routers/sales.ts`  
 **Description**: Implement create sale with stock deduction and price preservation
 **Acceptance**:
@@ -591,7 +591,7 @@ module.exports = {
 
 ---
 
-### T036: Implement Sales Router - GetById, List, Filter, GetSummary
+### T036: Implement Sales Router - GetById, List, Filter, GetSummary [X]
 **Files**: `src/server/api/routers/sales.ts`  
 **Description**: Implement remaining sales procedures
 **Acceptance**:

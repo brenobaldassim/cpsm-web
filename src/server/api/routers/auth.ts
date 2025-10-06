@@ -124,8 +124,10 @@ export const authRouter = createTRPCRouter({
    */
   logout: protectedProcedure
     .output(z.object({ success: z.boolean() }))
-    .mutation(async () => {
+    .mutation(async ({ ctx }) => {
       // TODO: Destroy session (integrate with NextAuth in T025-T026)
+      // ctx will be used when session management is implemented
+      void ctx
       return { success: true }
     }),
 

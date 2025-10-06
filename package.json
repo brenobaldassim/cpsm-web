@@ -33,7 +33,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.48.0",
-    "superjson": "^2.2.1",
+    "superjson": "^2.2.2",
     "zod": "^3.22.0"
   },
   "devDependencies": {

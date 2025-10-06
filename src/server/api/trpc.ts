@@ -5,7 +5,7 @@
  * Exports procedures (public, protected) for creating API routes.
  */
 
-import { initTRPC, TRPCError } from '@trpc/server'
+import { initTRPC } from '@trpc/server'
 import { type FetchCreateContextFnOptions } from '@trpc/server/adapters/fetch'
 import superjson from 'superjson'
 import { ZodError } from 'zod'
@@ -15,7 +15,7 @@ import { prisma } from '../db'
  * Create context for each request
  * Contains: database client, session (if authenticated)
  */
-export async function createTRPCContext(opts: FetchCreateContextFnOptions) {
+export async function createTRPCContext(_opts: FetchCreateContextFnOptions) {
   return {
     prisma,
     // TODO: Add session from NextAuth when T025-T026 are complete

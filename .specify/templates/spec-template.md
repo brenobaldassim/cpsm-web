@@ -49,6 +49,8 @@ When creating this spec from a user prompt:
    - Error handling behaviors
    - Integration requirements
    - Security/compliance needs
+   - Responsive design requirements (mobile/desktop support)
+   - Accessibility needs
 
 ---
 

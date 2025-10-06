@@ -47,7 +47,37 @@
 ## Constitution Check
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+### Code Quality Standards
+- [ ] Dependencies explicitly declared with version pinning
+- [ ] Each dependency justified (necessity, maintenance, license, bundle size)
+- [ ] Native/standard library solutions preferred over external dependencies
+- [ ] Linting rules configured for language/framework
+- [ ] Code organization follows single responsibility principle
+
+### Testing Standards (NON-NEGOTIABLE)
+- [ ] TDD approach planned: tests before implementation
+- [ ] Contract tests planned for all API endpoints
+- [ ] Integration tests planned for all user workflows
+- [ ] Test coverage target >80% for business logic
+
+### User Experience Consistency
+- [ ] Responsive design planned for mobile and desktop
+- [ ] Breakpoints defined (mobile: 320px, 375px, 768px; desktop: 1024px, 1440px, 1920px)
+- [ ] Touch targets minimum 44×44px for mobile
+- [ ] Design system or UI patterns defined
+- [ ] Error handling strategy ensures user-friendly messages
+- [ ] Accessibility requirements (WCAG 2.1 AA) considered
+- [ ] Loading/feedback states planned for async operations
+- [ ] Visual hierarchy and white space strategy defined
+
+### Performance Requirements
+- [ ] Response time targets defined (API <200ms p95, UI <100ms)
+- [ ] Mobile performance targets defined (<3s on 3G)
+- [ ] Client-side bundle optimization planned (code splitting, lazy loading)
+- [ ] Initial JS bundle target <200KB gzipped (for web apps)
+- [ ] Resource constraints identified (memory, connections)
+- [ ] Scalability approach (horizontal scaling, stateless design)
+- [ ] Monitoring and health check endpoints planned
 
 ## Project Structure
 
@@ -216,4 +246,4 @@ directories captured above]
 - [ ] Complexity deviations documented
 
 ---
-*Based on Constitution v2.1.1 - See `/memory/constitution.md`*
+*Based on Constitution v1.1.0 - See `.specify/memory/constitution.md`*

@@ -72,9 +72,11 @@
 ## Phase 3.5: Polish
 - [ ] T019 [P] Unit tests for validation in tests/unit/test_validation.py
 - [ ] T020 Performance tests (<200ms)
-- [ ] T021 [P] Update docs/api.md
-- [ ] T022 Remove duplication
-- [ ] T023 Run manual-testing.md
+- [ ] T021 [P] Responsive design tests across breakpoints (320px, 375px, 768px, 1024px, 1440px, 1920px)
+- [ ] T022 [P] Accessibility tests (WCAG 2.1 AA)
+- [ ] T023 [P] Update docs/api.md
+- [ ] T024 Remove duplication
+- [ ] T025 Run manual-testing.md
 
 ## Dependencies
 - Tests (T004-T007) before implementation (T008-T014)
@@ -113,7 +115,7 @@ Task: "Integration test auth in tests/integration/test_auth.py"
    - Quickstart scenarios → validation tasks
 
 4. **Ordering**:
-   - Setup → Tests → Models → Services → Endpoints → Polish
+   - Setup → Tests → Models → Services → Endpoints → Polish (incl. responsive/accessibility tests)
    - Dependencies block parallel execution
 
 ## Validation Checklist

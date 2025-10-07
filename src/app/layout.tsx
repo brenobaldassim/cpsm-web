@@ -9,6 +9,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import '@/app/globals.css'
 import { TRPCProvider } from '@/app/_trpc/Provider'
+import { SessionProvider } from 'next-auth/react'
 
 // Font optimization
 const inter = Inter({
@@ -43,11 +44,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable} suppressHydrationWarning>
       <body className="min-h-screen bg-neutral-50 font-sans antialiased">
-        <TRPCProvider>
-          <main className="relative flex min-h-screen flex-col">
-            {children}
-          </main>
-        </TRPCProvider>
+        <SessionProvider>
+          <TRPCProvider>
+            <main className="relative flex min-h-screen flex-col">
+              {children}
+            </main>
+          </TRPCProvider>
+        </SessionProvider>
       </body>
     </html>
   )

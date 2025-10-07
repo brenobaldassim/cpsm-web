@@ -12,10 +12,10 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import { signIn } from 'next-auth/react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { FormField, FormError } from '@/components/forms'
-import { trpc } from '@/lib/trpc'
 import { emailSchema, passwordSchema } from '@/lib/validations'
 
 const loginSchema = z.object({
@@ -31,6 +31,7 @@ function LoginForm() {
   const callbackUrl = searchParams?.get('callbackUrl') || '/'
 
   const [error, setError] = React.useState<string | null>(null)
+  const [isLoading, setIsLoading] = React.useState(false)
 
   const {
     register,
@@ -44,20 +45,26 @@ function LoginForm() {
     },
   })
 
-  const loginMutation = trpc.auth.login.useMutation({
-    onSuccess: () => {
-      // Redirect to callback URL or dashboard
+  const onSubmit = async (data: LoginFormData) => {
+    setError(null)
+    setIsLoading(true)
+    try {
+      const result = await signIn('credentials', {
+        email: data.email,
+        password: data.password,
+        redirect: false,
+      })
+      if (result?.error) {
+        setError(result.error)
+        return
+      }
       router.push(callbackUrl)
       router.refresh()
-    },
-    onError: (error) => {
-      setError(error.message)
-    },
-  })
-
-  const onSubmit = (data: LoginFormData) => {
-    setError(null)
-    loginMutation.mutate(data)
+    } catch (e) {
+      setError('An error occurred. Please try again.')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -96,12 +103,8 @@ function LoginForm() {
               required
             />
 
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={loginMutation.isPending}
-            >
-              {loginMutation.isPending ? 'Signing in...' : 'Sign in'}
+            <Button type="submit" className="w-full" disabled={isLoading}>
+              {isLoading ? 'Signing in...' : 'Sign in'}
             </Button>
           </form>
 

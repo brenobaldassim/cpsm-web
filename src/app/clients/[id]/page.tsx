@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation'
 import { ClientForm } from '@/components/forms'
 import { trpc } from '@/lib/trpc'
 import { brazilianStates } from '@/lib/validations'
+import { Address } from '@prisma/client'
 
 export default function EditClientPage({
   params,
@@ -68,7 +69,7 @@ export default function EditClientPage({
             email: client.email,
             cpf: client.cpf,
             socialMedia: client.socialMedia || undefined,
-            addresses: client.addresses.map((addr) => ({
+            addresses: client.addresses.map((addr: Address) => ({
               type: addr.type as 'HOME' | 'WORK',
               street: addr.street,
               number: addr.number,
@@ -84,7 +85,7 @@ export default function EditClientPage({
               ...data,
             })
           }
-          isLoading={updateMutation.isLoading}
+          isLoading={updateMutation.isPending}
           error={updateMutation.error?.message}
         />
       </div>

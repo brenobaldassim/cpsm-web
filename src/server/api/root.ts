@@ -5,7 +5,7 @@
  * Export type definition for client-side type inference.
  */
 
-import { createTRPCRouter } from './trpc'
+import { createTRPCRouter, createCallerFactory } from './trpc'
 import { authRouter } from './routers/auth'
 import { clientsRouter } from './routers/clients'
 import { productsRouter } from './routers/products'
@@ -23,3 +23,8 @@ export const appRouter = createTRPCRouter({
 
 // Export type definition for client-side
 export type AppRouter = typeof appRouter
+
+/**
+ * Create a server-side caller factory
+ */
+export const createCaller = createCallerFactory(appRouter)

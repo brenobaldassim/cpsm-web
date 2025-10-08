@@ -53,6 +53,11 @@ const t = initTRPC.context<Context>().create({
 export const createTRPCRouter = t.router
 
 /**
+ * Create caller factory for server-side calls
+ */
+export const createCallerFactory = t.createCallerFactory
+
+/**
  * Public procedure - no authentication required
  */
 export const publicProcedure = t.procedure

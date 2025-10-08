@@ -12,6 +12,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { DataTable, type Column } from '@/components/data-tables'
 import { trpc } from '@/lib/trpc'
+import { formatPrice } from '../utils/formatPrice'
 
 type Sale = {
   id: string
@@ -40,13 +41,6 @@ export default function SalesListPage() {
     sortBy: 'saleDate',
     sortOrder: 'desc',
   })
-
-  const formatPrice = (priceInCents: number) => {
-    return `R$ ${(priceInCents / 100).toLocaleString('pt-BR', {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    })}`
-  }
 
   const columns: Column<Sale>[] = [
     {

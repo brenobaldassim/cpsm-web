@@ -1,38 +1,41 @@
 /**
  * Dashboard Content Component
  *
- * Client component for dashboard with interactive features.
+ * Server component for dashboard - receives data as props for SSR.
  */
 
-'use client'
-
-import * as React from 'react'
-import { Card } from '@/components/ui/card'
-import { trpc } from '@/lib/trpc'
 import { DashBoardCard } from './DashBoardCard'
 
-export function DashboardContent() {
-  // Get summary data
-  const { data: clientsData } = trpc.clients.list.useQuery({
-    page: 1,
-    limit: 1,
-  })
+type DashboardContentProps = {
+  clientsData: {
+    total: number
+    clients: unknown[]
+    page: number
+    limit: number
+    totalPages: number
+  }
+  productsData: {
+    total: number
+    products: unknown[]
+    page: number
+    limit: number
+    totalPages: number
+  }
+  salesSummary: {
+    startDate: Date
+    endDate: Date
+    totalSales: number
+    totalRevenueInCents: number
+    averageSaleInCents: number
+    totalItemsSold: number
+  }
+}
 
-  const { data: productsData } = trpc.products.list.useQuery({
-    page: 1,
-    limit: 1,
-  })
-
-  // Get sales summary for last 30 days
-  const dateRange = React.useMemo(() => {
-    const endDate = new Date()
-    const startDate = new Date()
-    startDate.setDate(startDate.getDate() - 30)
-    return { startDate, endDate }
-  }, [])
-
-  const { data: salesSummary } = trpc.sales.getSummary.useQuery(dateRange)
-
+export function DashboardContent({
+  clientsData,
+  productsData,
+  salesSummary,
+}: DashboardContentProps) {
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="mb-8">
@@ -48,7 +51,7 @@ export function DashboardContent() {
         {/* Total Clients */}
         <DashBoardCard
           title="Total Clients"
-          value={clientsData?.total?.toString() ?? '-'}
+          value={clientsData.total.toString()}
           iconBgColor="bg-blue-100"
           icon={
             <svg
@@ -70,7 +73,7 @@ export function DashboardContent() {
         {/* Total Products */}
         <DashBoardCard
           title="Total Products"
-          value={productsData?.total?.toString() ?? '-'}
+          value={productsData.total.toString()}
           iconBgColor="bg-green-100"
           icon={
             <svg
@@ -92,7 +95,7 @@ export function DashboardContent() {
         {/* Sales (Last 30 Days) */}
         <DashBoardCard
           title="Sales (30 days)"
-          value={salesSummary?.totalSales.toString() ?? '-'}
+          value={salesSummary.totalSales.toString()}
           iconBgColor="bg-purple-100"
           icon={
             <svg
@@ -114,17 +117,13 @@ export function DashboardContent() {
         {/* Revenue (Last 30 Days) */}
         <DashBoardCard
           title="Revenue (30 days)"
-          value={
-            salesSummary?.totalRevenueInCents
-              ? `R$ ${(salesSummary.totalRevenueInCents / 100).toLocaleString(
-                  'pt-BR',
-                  {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  }
-                )}`
-              : '-'
-          }
+          value={`R$ ${(salesSummary.totalRevenueInCents / 100).toLocaleString(
+            'pt-BR',
+            {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            }
+          )}`}
           iconBgColor="bg-yellow-100"
           icon={
             <svg

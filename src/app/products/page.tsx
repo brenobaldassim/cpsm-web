@@ -12,6 +12,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { DataTable, type Column } from '@/components/data-tables'
 import { trpc } from '@/lib/trpc'
+import { formatPrice } from '../utils/formatPrice'
 
 type Product = {
   id: string
@@ -59,13 +60,6 @@ export default function ProductsListPage() {
     setSortOrder(order)
   }
 
-  const formatPrice = (priceInCents: number) => {
-    return `R$ ${(priceInCents / 100).toLocaleString('pt-BR', {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    })}`
-  }
-
   const columns: Column<Product>[] = [
     {
       key: 'name',
@@ -109,7 +103,7 @@ export default function ProductsListPage() {
             variant="outline"
             size="sm"
             onClick={() => handleDelete(row.id, row.name)}
-            disabled={deleteMutation.isLoading}
+            disabled={deleteMutation.isPending}
           >
             Delete
           </Button>

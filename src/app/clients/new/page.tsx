@@ -4,8 +4,6 @@
  * Form to create a new client with addresses.
  */
 
-'use client'
-
 import * as React from 'react'
 import { useRouter } from 'next/navigation'
 import { ClientForm } from '@/components/forms'
@@ -34,7 +32,7 @@ export default function CreateClientPage() {
 
         <ClientForm
           onSubmit={(data: ClientFormData) => createMutation.mutate(data)}
-          isLoading={createMutation.isLoading}
+          isLoading={createMutation.isPending}
           error={createMutation.error?.message}
         />
       </div>

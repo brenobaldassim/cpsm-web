@@ -10,6 +10,7 @@ import { Inter } from 'next/font/google'
 import '@/app/globals.css'
 import { TRPCProvider } from '@/app/_trpc/Provider'
 import { SessionProvider } from 'next-auth/react'
+import { Navigation } from '@/components/layouts'
 
 // Font optimization
 const inter = Inter({
@@ -46,6 +47,7 @@ export default function RootLayout({
       <body className="min-h-screen bg-neutral-50 font-sans antialiased">
         <SessionProvider>
           <TRPCProvider>
+            <Navigation />
             <main className="relative flex min-h-screen flex-col">
               {children}
             </main>

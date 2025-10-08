@@ -10,7 +10,6 @@
 import * as React from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { Navigation } from '@/components/layouts'
 import { DataTable, type Column } from '@/components/data-tables'
 import { trpc } from '@/lib/trpc'
 
@@ -121,7 +120,6 @@ export default function ProductsListPage() {
 
   return (
     <>
-      <Navigation />
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="mb-8 flex items-center justify-between">
           <div>

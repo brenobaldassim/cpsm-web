@@ -8,7 +8,6 @@
 
 import * as React from 'react'
 import { useRouter } from 'next/navigation'
-import { Navigation } from '@/components/layouts'
 import { ClientForm } from '@/components/forms'
 import { trpc } from '@/lib/trpc'
 
@@ -25,7 +24,6 @@ export default function CreateClientPage() {
 
   return (
     <>
-      <Navigation />
       <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-neutral-900">Add Client</h1>

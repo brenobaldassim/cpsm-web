@@ -12,21 +12,9 @@ A sales and client management system with real-time inventory tracking, built wi
 - 📱 **Responsive Design** (mobile, tablet, desktop)
 - 🎨 **Modern UI** with Tailwind CSS and shadcn/ui
 
-## Tech Stack
-
-- **Framework**: Next.js 15 (App Router)
-- **Language**: TypeScript
-- **API Layer**: tRPC for type-safe APIs
-- **Database**: PostgreSQL with Prisma ORM
-- **Authentication**: NextAuth.js v5
-- **Styling**: Tailwind CSS + shadcn/ui
-- **Forms**: React Hook Form + Zod validation
-- **Testing**: Vitest (unit/integration) + Playwright (E2E)
-- **Package Manager**: pnpm
-
 ## Prerequisites
 
-- Node.js 18+ 
+- Node.js 20+ 
 - Docker & Docker Compose (for database)
 - pnpm (install globally: `npm install -g pnpm` or use Corepack: `corepack enable`)
 
@@ -81,7 +69,6 @@ pnpm exec prisma db seed
 # Start Next.js development server
 pnpm dev
 
-# Application will be available at http://localhost:3000
 ```
 
 ## Project Structure
@@ -127,15 +114,6 @@ cpms-web/
 - **Product**: Products with price and stock tracking
 - **Sale**: Sales transactions with client and date
 - **SaleItem**: Individual products in a sale (price snapshot for historical accuracy)
-
-## Development Workflow
-
-1. **Docker**: Start database with `docker-compose up -d`
-2. **Development**: Run `pnpm dev` to start the development server
-3. **Migrations**: Create with `pnpm exec prisma migrate dev --name description`
-4. **Testing**: Run `pnpm test` for unit tests, `pnpm test:e2e` for E2E tests
-5. **Type Safety**: Run `pnpm type-check` before committing
-6. **Formatting**: Run `pnpm format` to format code
 
 ## Key Features
 

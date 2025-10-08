@@ -63,6 +63,7 @@ function LoginForm() {
       }
       router.push(callbackUrl)
       router.refresh()
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
       setError('An error occurred. Please try again.')
     } finally {

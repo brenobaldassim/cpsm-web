@@ -8,9 +8,11 @@ import * as React from 'react'
 import { redirect } from 'next/navigation'
 import { createCaller } from '@/server/api/server-caller'
 import { ClientFormWrapper } from './ClientFormWrapper'
+import { z } from 'zod'
+import { createClientInput } from '@/server/api/routers/clients'
 
 export default async function CreateClientPage() {
-  async function createClient(data: any) {
+  async function createClient(data: z.infer<typeof createClientInput>) {
     'use server'
     const api = await createCaller()
     await api.clients.create(data)

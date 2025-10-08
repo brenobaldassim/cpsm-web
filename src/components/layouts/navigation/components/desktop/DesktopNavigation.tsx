@@ -2,7 +2,6 @@ import { NavItem } from '../../types'
 import Link from 'next/link'
 import { DesktopMenu } from './DesktopMenu'
 import { Session } from 'next-auth'
-import { MenuButton } from '../MenuButton'
 
 interface DesktopNavigationProps {
   navItems: NavItem[]

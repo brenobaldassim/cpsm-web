@@ -2,16 +2,18 @@
 
 import { useState } from 'react'
 import { ClientForm } from '@/components/forms'
+import { createClientInput } from '@/server/api/routers/clients'
+import { z } from 'zod'
 
 interface ClientFormWrapperProps {
-  createClient: (data: any) => Promise<void>
+  createClient: (data: z.infer<typeof createClientInput>) => Promise<void>
 }
 
 export function ClientFormWrapper({ createClient }: ClientFormWrapperProps) {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | undefined>()
 
-  async function handleSubmit(data: any) {
+  async function handleSubmit(data: z.infer<typeof createClientInput>) {
     setIsLoading(true)
     setError(undefined)
     try {

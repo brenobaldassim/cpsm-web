@@ -1,4 +1,3 @@
-import { Session } from 'next-auth'
 import Link from 'next/link'
 import { NavItem } from '../../types'
 import { cn } from '@/lib/utils'

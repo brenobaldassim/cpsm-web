@@ -4,4 +4,4 @@
  * Reusable layout components for the application.
  */
 
-export { Navigation } from './Navigation'
+export * from './Navigation'

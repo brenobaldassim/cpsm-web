@@ -41,8 +41,6 @@ cp .env.example .env.local
 Edit `.env.local`
 
 
-> **Note**: The `DATABASE_URL` shown above matches the Docker Compose configuration. If you're using a different database setup, update accordingly.
-
 ### 3. Start Database
 
 ```bash

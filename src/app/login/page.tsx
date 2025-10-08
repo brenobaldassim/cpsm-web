@@ -55,7 +55,10 @@ function LoginForm() {
         redirect: false,
       })
       if (result?.error) {
-        setError(result.error)
+        if (result.error !== 'CredentialsSignin') {
+          setError(result.error)
+        }
+        setError('Invalid email or password')
         return
       }
       router.push(callbackUrl)
@@ -68,7 +71,7 @@ function LoginForm() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-neutral-100 px-4 py-12 sm:px-6 lg:px-8 bg-red-500">
+    <div className="flex min-h-screen items-center justify-center bg-neutral-100 px-4 py-12 sm:px-6 lg:px-8">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-neutral-900">
@@ -107,13 +110,6 @@ function LoginForm() {
               {isLoading ? 'Signing in...' : 'Sign in'}
             </Button>
           </form>
-
-          <div className="mt-6 text-center text-sm text-neutral-600">
-            <p>
-              Demo credentials: <strong>admin@example.com</strong> /{' '}
-              <strong>password123</strong>
-            </p>
-          </div>
         </Card>
       </div>
     </div>

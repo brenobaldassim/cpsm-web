@@ -24,13 +24,14 @@ export function DashboardContent() {
   })
 
   // Get sales summary for last 30 days
-  const thirtyDaysAgo = new Date()
-  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
+  const dateRange = React.useMemo(() => {
+    const endDate = new Date()
+    const startDate = new Date()
+    startDate.setDate(startDate.getDate() - 30)
+    return { startDate, endDate }
+  }, [])
 
-  const { data: salesSummary } = trpc.sales.getSummary.useQuery({
-    startDate: thirtyDaysAgo,
-    endDate: new Date(),
-  })
+  const { data: salesSummary } = trpc.sales.getSummary.useQuery(dateRange)
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
@@ -50,7 +51,7 @@ export function DashboardContent() {
               <p className="text-sm font-medium text-neutral-600">
                 Total Clients
               </p>
-              <p className="mt-2 text-3xl font-bold text-neutral-900">
+              <p className="mt-2 text-2xl font-bold text-neutral-900">
                 {clientsData?.total ?? '-'}
               </p>
             </div>
@@ -79,7 +80,7 @@ export function DashboardContent() {
               <p className="text-sm font-medium text-neutral-600">
                 Total Products
               </p>
-              <p className="mt-2 text-3xl font-bold text-neutral-900">
+              <p className="mt-2 text-2xl font-bold text-neutral-900">
                 {productsData?.total ?? '-'}
               </p>
             </div>
@@ -108,7 +109,7 @@ export function DashboardContent() {
               <p className="text-sm font-medium text-neutral-600">
                 Sales (30 days)
               </p>
-              <p className="mt-2 text-3xl font-bold text-neutral-900">
+              <p className="mt-2 text-2xl font-bold text-neutral-900">
                 {salesSummary?.totalSales ?? '-'}
               </p>
             </div>
@@ -137,7 +138,7 @@ export function DashboardContent() {
               <p className="text-sm font-medium text-neutral-600">
                 Revenue (30 days)
               </p>
-              <p className="mt-2 text-3xl font-bold text-neutral-900">
+              <p className="mt-2 text-2xl font-bold text-neutral-900">
                 {salesSummary?.totalRevenueInCents
                   ? `R$ ${(
                       salesSummary.totalRevenueInCents / 100

@@ -34,7 +34,7 @@ export default function CreateSalePage() {
 
         <SaleForm
           onSubmit={(data) => createMutation.mutate(data)}
-          isLoading={createMutation.isLoading}
+          isLoading={createMutation.isPending}
           error={createMutation.error?.message}
         />
       </div>

@@ -122,12 +122,11 @@ export const salesRouter = createTRPCRouter({
           productId: item.productId,
           quantity: item.quantity,
           priceInCents: product.priceInCents, // Price preservation
-          subtotalInCents: product.priceInCents * item.quantity,
         }
       })
 
       const totalAmount = saleItems.reduce(
-        (sum, item) => sum + item.subtotalInCents,
+        (sum, item) => sum + item.priceInCents * item.quantity,
         0
       )
 

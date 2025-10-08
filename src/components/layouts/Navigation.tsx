@@ -12,7 +12,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { trpc } from '@/lib/trpc'
+import { useSession, signOut } from 'next-auth/react'
 
 interface NavItem {
   label: string
@@ -30,16 +30,12 @@ export function Navigation() {
   const pathname = usePathname()
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
 
-  // Get session to show/hide logout button
-  const { data: session } = trpc.auth.getSession.useQuery()
-  const logoutMutation = trpc.auth.logout.useMutation({
-    onSuccess: () => {
-      window.location.href = '/login'
-    },
-  })
+  const { data: session } = useSession()
+  const [isLoggingOut, setIsLoggingOut] = React.useState(false)
 
-  const handleLogout = () => {
-    logoutMutation.mutate()
+  const handleLogout = async () => {
+    setIsLoggingOut(true)
+    await signOut({ callbackUrl: '/login' })
   }
 
   return (
@@ -78,9 +74,9 @@ export function Navigation() {
                   variant="outline"
                   size="sm"
                   onClick={handleLogout}
-                  disabled={logoutMutation.isLoading}
+                  disabled={isLoggingOut}
                 >
-                  {logoutMutation.isLoading ? 'Logging out...' : 'Logout'}
+                  {isLoggingOut ? 'Logging out...' : 'Logout'}
                 </Button>
               </>
             )}
@@ -155,9 +151,9 @@ export function Navigation() {
             <button
               onClick={handleLogout}
               className="w-full text-left rounded-md px-3 py-2 text-base font-medium text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900"
-              disabled={logoutMutation.isLoading}
+              disabled={isLoggingOut}
             >
-              {logoutMutation.isLoading ? 'Logging out...' : 'Logout'}
+              {isLoggingOut ? 'Logging out...' : 'Logout'}
             </button>
           </div>
         </div>

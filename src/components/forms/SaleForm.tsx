@@ -112,12 +112,12 @@ export function SaleForm({
 
       {/* Basic Information */}
       <Card className="p-6">
-        <h2 className="text-lg font-semibold text-neutral-900 mb-4">
+        <h2 className="text-lg font-semibold text-card-foreground mb-4">
           Sale Information
         </h2>
         <div className="grid gap-6 sm:grid-cols-2">
           <FormItem>
-            <label className="block text-sm font-medium text-neutral-700 mb-2">
+            <label className="block text-sm font-medium  mb-2">
               Client <span className="text-red-500">*</span>
             </label>
             <select
@@ -139,7 +139,7 @@ export function SaleForm({
           </FormItem>
 
           <FormItem>
-            <label className="block text-sm font-medium text-neutral-700 mb-2">
+            <label className="block text-sm font-medium mb-2">
               Sale Date <span className="text-red-500">*</span>
             </label>
             <input
@@ -159,11 +159,12 @@ export function SaleForm({
       {/* Products */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-neutral-900">Products</h2>
+          <h2 className="text-lg font-semibold text-foreground">Products</h2>
           <Button
             type="button"
             variant="outline"
             onClick={() => append({ productId: '', quantity: 1 })}
+            className="text-secondary-foreground"
           >
             Add Product
           </Button>
@@ -178,12 +179,12 @@ export function SaleForm({
             <div className="flex items-start gap-4">
               <div className="flex-1 grid gap-4 sm:grid-cols-2">
                 <FormItem>
-                  <label className="block text-sm font-medium text-neutral-700 mb-2">
+                  <label className="block text-sm font-medium mb-2">
                     Product <span className="text-red-500">*</span>
                   </label>
                   <select
                     {...register(`items.${index}.productId`)}
-                    className="flex h-10 w-full rounded-md border border-neutral-200 bg-white px-3 py-2 text-sm"
+                    className="flex h-10 w-full rounded-md border border-muted bg-white px-3 py-2 text-sm"
                   >
                     <option value="">Select a product</option>
                     {products.map((product) => (
@@ -201,7 +202,7 @@ export function SaleForm({
                 </FormItem>
 
                 <FormItem>
-                  <label className="block text-sm font-medium text-neutral-700 mb-2">
+                  <label className="block text-sm font-medium mb-2">
                     Quantity <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -210,7 +211,7 @@ export function SaleForm({
                     {...register(`items.${index}.quantity`, {
                       valueAsNumber: true,
                     })}
-                    className="flex h-10 w-full rounded-md border border-neutral-200 bg-white px-3 py-2 text-sm"
+                    className="flex h-10 w-full rounded-md border border-muted bg-white px-3 py-2 text-sm"
                   />
                   {errors.items?.[index]?.quantity && (
                     <p className="mt-1 text-sm text-red-600">

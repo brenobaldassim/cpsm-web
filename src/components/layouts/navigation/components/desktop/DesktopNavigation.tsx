@@ -20,12 +20,12 @@ export const DesktopNavigation: React.FC<DesktopNavigationProps> = ({
   session,
 }) => {
   return (
-    <nav className="hidden md:block fixed left-0 top-0 h-screen w-64 border-r border-neutral-200 bg-white overflow-hidden">
+    <nav className="hidden md:block fixed left-0 top-0 h-screen w-64 border-r border-muted bg-background overflow-hidden">
       <div className="flex flex-col h-full px-4 py-6">
         <div className="flex items-center mb-8">
           <Link
             href="/"
-            className="text-xl font-bold text-neutral-900 hover:text-neutral-700"
+            className="text-xl font-bold text-foreground hover:text-secondary-foreground"
           >
             CPM
           </Link>

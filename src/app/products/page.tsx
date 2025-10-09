@@ -117,8 +117,8 @@ export default function ProductsListPage() {
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="mb-8 flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-neutral-900">Products</h1>
-            <p className="mt-2 text-neutral-600">
+            <h1 className="text-3xl font-bold text-foreground">Products</h1>
+            <p className="mt-2 text-secondary-foreground">
               Manage your product catalog and inventory
             </p>
           </div>
@@ -129,12 +129,12 @@ export default function ProductsListPage() {
 
         {/* Filters */}
         <div className="mb-4">
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2 text-sm text-secondary-foreground">
             <input
               type="checkbox"
               checked={inStockOnly}
               onChange={(e) => setInStockOnly(e.target.checked)}
-              className="rounded border-neutral-300"
+              className="rounded border-muted"
             />
             Show in-stock products only
           </label>

@@ -151,7 +151,7 @@ export function ClientForm({
 
       {/* Basic Information */}
       <Card className="p-6">
-        <h2 className="text-lg font-semibold text-neutral-900 mb-4">
+        <h2 className="text-lg font-semibold text-foreground mb-4">
           Basic Information
         </h2>
         <div className="grid gap-6 sm:grid-cols-2">
@@ -208,7 +208,7 @@ export function ClientForm({
       {/* Addresses */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-neutral-900">Addresses</h2>
+          <h2 className="text-lg font-semibold text-foreground">Addresses</h2>
           {addresses.length < 2 && (
             <Button type="button" variant="outline" onClick={addAddress}>
               Add Address
@@ -223,7 +223,7 @@ export function ClientForm({
         {addresses.map((_, index) => (
           <Card key={index} className="p-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-medium text-neutral-900">
+              <h3 className="font-medium text-foreground">
                 {watch(`addresses.${index}.type`)} Address
               </h3>
               {addresses.length > 1 && (

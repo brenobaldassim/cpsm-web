@@ -75,8 +75,8 @@ export default function SalesListPage() {
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-neutral-900">Sales</h1>
-          <p className="mt-2 text-neutral-600">
+          <h1 className="text-3xl font-bold text-foreground">Sales</h1>
+          <p className="mt-2 text-secondary-foreground">
             View and manage sales transactions
           </p>
         </div>

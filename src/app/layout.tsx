@@ -11,6 +11,7 @@ import '@/app/globals.css'
 import { TRPCProvider } from '@/app/_trpc/Provider'
 import { SessionProvider } from 'next-auth/react'
 import { Navigation } from '@/components/layouts/navigation'
+import { cn } from '@/lib/utils'
 
 // Font optimization
 const inter = Inter({
@@ -43,8 +44,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={inter.variable} suppressHydrationWarning>
-      <body className="min-h-screen bg-neutral-50 font-sans antialiased">
+    <html
+      lang="en"
+      className={cn(inter.variable, 'dark')}
+      suppressHydrationWarning
+    >
+      <body className="min-h-screen bg-background font-sans antialiased">
         <SessionProvider>
           <TRPCProvider>
             <Navigation />

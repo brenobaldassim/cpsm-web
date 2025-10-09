@@ -113,8 +113,10 @@ export default function ClientsListPage() {
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="mb-8 flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-neutral-900">Clients</h1>
-            <p className="mt-2 text-neutral-600">Manage your client database</p>
+            <h1 className="text-3xl font-bold text-card-foreground">Clients</h1>
+            <p className="mt-2 text-secondary-foreground">
+              Manage your client database
+            </p>
           </div>
           <Link href="/clients/new">
             <Button>Add Client</Button>

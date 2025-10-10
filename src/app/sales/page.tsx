@@ -72,7 +72,7 @@ export default function SalesListPage() {
   ]
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <div className="w-full max-w-5xl px-4 py-8 sm:px-6 lg:px-8 ">
       <div className="mb-8 flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-foreground">Sales</h1>
@@ -86,8 +86,8 @@ export default function SalesListPage() {
       </div>
 
       {/* Info about date filtering */}
-      <div className="mb-6 p-4 bg-blue-50 rounded-md">
-        <p className="text-sm text-blue-800">
+      <div className="mb-6 p-4 bg-primary border border-muted rounded-md">
+        <p className="text-sm text-primary-foreground">
           Showing sales from the last 30 days (default view)
         </p>
       </div>

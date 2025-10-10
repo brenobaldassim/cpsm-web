@@ -22,6 +22,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { DateInput } from '@/components/ui/dateInput'
+import { Input } from '../ui/input'
 
 const saleItemSchema = z.object({
   productId: z.string().min(1, 'Product is required'),
@@ -156,10 +158,12 @@ export function SaleForm({
             <label className="block text-sm font-medium mb-2">
               Sale Date <span className="text-red-500">*</span>
             </label>
-            <input
-              type="date"
-              {...register('saleDate')}
-              className="flex h-10 w-full rounded-md border border-neutral-200 bg-white px-3 py-2 text-sm"
+            <Controller
+              name="saleDate"
+              control={control}
+              render={({ field }) => (
+                <DateInput value={field.value} onChange={field.onChange} />
+              )}
             />
             {errors.saleDate && (
               <p className="mt-1 text-sm text-red-600">
@@ -230,13 +234,12 @@ export function SaleForm({
                   <label className="block text-sm font-medium mb-2">
                     Quantity <span className="text-red-500">*</span>
                   </label>
-                  <input
+                  <Input
                     type="number"
                     min="1"
                     {...register(`items.${index}.quantity`, {
                       valueAsNumber: true,
                     })}
-                    className="flex h-10 w-full rounded-md border border-muted bg-white px-3 py-2 text-sm"
                   />
                   {errors.items?.[index]?.quantity && (
                     <p className="mt-1 text-sm text-red-600">

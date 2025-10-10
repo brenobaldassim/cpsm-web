@@ -10,6 +10,7 @@
 import * as React from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { Switch } from '@/components/ui/switch'
 import { DataTable, type Column } from '@/components/data-tables'
 import { trpc } from '@/lib/trpc'
 import { formatPrice } from '../utils/formatPrice'
@@ -100,7 +101,7 @@ export default function ProductsListPage() {
             </Button>
           </Link>
           <Button
-            variant="outline"
+            variant="destructive"
             size="sm"
             onClick={() => handleDelete(row.id, row.name)}
             disabled={deleteMutation.isPending}
@@ -114,7 +115,7 @@ export default function ProductsListPage() {
 
   return (
     <>
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <div className="w-full max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="mb-8 flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold text-foreground">Products</h1>
@@ -129,13 +130,8 @@ export default function ProductsListPage() {
 
         {/* Filters */}
         <div className="mb-4">
-          <label className="flex items-center gap-2 text-sm text-secondary-foreground">
-            <input
-              type="checkbox"
-              checked={inStockOnly}
-              onChange={(e) => setInStockOnly(e.target.checked)}
-              className="rounded border-muted"
-            />
+          <label className="flex items-center gap-2 text-sm text-secondary-foreground cursor-pointer">
+            <Switch checked={inStockOnly} onCheckedChange={setInStockOnly} />
             Show in-stock products only
           </label>
         </div>

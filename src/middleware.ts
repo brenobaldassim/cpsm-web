@@ -3,10 +3,44 @@
  *
  * Protects routes requiring authentication.
  * Redirects unauthenticated users to the login page.
+ * Implements rate limiting per IP address.
  */
 
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+
+/**
+ * Rate limiting configuration
+ */
+const RATE_LIMIT = 30 // per IP per minute
+const accessLog = new Map<string, number[]>()
+const TIME_IN_MS = {
+  ONE_MINUTE: 60000,
+  TWO_MINUTES: 120000,
+} as const
+
+/**
+ * Cleanup old entries from accessLog to prevent memory leaks
+ * Runs periodically to remove IPs that haven't made requests recently
+ */
+function cleanupAccessLog() {
+  const now = Date.now()
+  const threshold = TIME_IN_MS.ONE_MINUTE
+
+  for (const [ip, timestamps] of accessLog.entries()) {
+    const recent = timestamps.filter((t) => now - t < threshold)
+    if (recent.length === 0) {
+      // No recent requests from this IP, remove it
+      accessLog.delete(ip)
+    } else {
+      // Update with only recent timestamps
+      accessLog.set(ip, recent)
+    }
+  }
+}
+
+// Run cleanup every 2 minutes
+setInterval(cleanupAccessLog, TIME_IN_MS.TWO_MINUTES)
 
 /**
  * Public routes that don't require authentication
@@ -20,10 +54,27 @@ const AUTH_ROUTES = ['/login', '/signup']
 
 /**
  * Middleware function
- * Runs on every request to check authentication status
+ * Runs on every request to check rate limiting and authentication status
  */
 export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
+
+  // Rate limiting check
+  const ip =
+    request.headers.get('x-forwarded-for') ??
+    request.headers.get('x-real-ip') ??
+    'unknown'
+  const now = Date.now()
+
+  const log = accessLog.get(ip) || []
+  const recent = log.filter((t) => now - t < TIME_IN_MS.ONE_MINUTE)
+
+  if (recent.length >= RATE_LIMIT) {
+    return new NextResponse('Too Many Requests', { status: 429 })
+  }
+
+  recent.push(now)
+  accessLog.set(ip, recent)
 
   // Allow all API routes (handled by their own middleware)
   if (pathname.startsWith('/api/')) {

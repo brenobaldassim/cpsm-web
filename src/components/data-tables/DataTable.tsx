@@ -15,7 +15,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { Card } from '@/components/ui/card'
 import {
   Pagination,
   PaginationContent,
@@ -112,7 +111,7 @@ export function DataTable<T>({
   }
 
   return (
-    <Card className={cn('space-y-4  border-muted', className)}>
+    <div className={cn('space-y-4  border-muted', className)}>
       {/* Search bar */}
       {onSearchChange && (
         <div className="flex items-center gap-4">
@@ -141,7 +140,7 @@ export function DataTable<T>({
                     column.sortable && onSortChange && handleSort(column.key)
                   }
                 >
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 text-card-foreground">
                     {column.label}
                     {column.sortable && sortBy === column.key && (
                       <span>{sortOrder === 'asc' ? '↑' : '↓'}</span>
@@ -156,7 +155,7 @@ export function DataTable<T>({
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center"
+                  className="h-24 text-center text-card-foreground"
                 >
                   Loading...
                 </TableCell>
@@ -165,7 +164,7 @@ export function DataTable<T>({
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center"
+                  className="h-24 text-center text-card-foreground"
                 >
                   {emptyMessage}
                 </TableCell>
@@ -176,7 +175,7 @@ export function DataTable<T>({
                   {columns.map((column) => (
                     <TableCell
                       key={column.key}
-                      className={cn(column.className)}
+                      className={cn(column.className, 'text-card-foreground')}
                     >
                       {column.render(row)}
                     </TableCell>
@@ -218,7 +217,7 @@ export function DataTable<T>({
           </Pagination>
         </div>
       )}
-    </Card>
+    </div>
   )
 }
 

@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button'
 import { DataTable, type Column } from '@/components/data-tables'
 import { trpc } from '@/lib/trpc'
 import { formatPrice } from '../utils/formatPrice'
+import { Card } from '@/components/ui/card'
 
 type Sale = {
   id: string
@@ -73,35 +74,37 @@ export default function SalesListPage() {
 
   return (
     <div className="w-full max-w-5xl px-4 py-8 sm:px-6 lg:px-8 ">
-      <div className="mb-8 flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-foreground">Sales</h1>
-          <p className="mt-2 text-secondary-foreground">
-            View and manage sales transactions
+      <Card className="p-6">
+        <div className="mb-8 flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-foreground">Sales</h1>
+            <p className="mt-2 text-muted-foreground">
+              View and manage sales transactions
+            </p>
+          </div>
+          <Link href="/sales/new">
+            <Button>Create Sale</Button>
+          </Link>
+        </div>
+
+        {/* Info about date filtering */}
+        <div className="mb-6 p-4 bg-primary border border-muted rounded-md">
+          <p className="text-sm text-primary-foreground">
+            Showing sales from the last 30 days (default view)
           </p>
         </div>
-        <Link href="/sales/new">
-          <Button>Create Sale</Button>
-        </Link>
-      </div>
 
-      {/* Info about date filtering */}
-      <div className="mb-6 p-4 bg-primary border border-muted rounded-md">
-        <p className="text-sm text-primary-foreground">
-          Showing sales from the last 30 days (default view)
-        </p>
-      </div>
-
-      <DataTable
-        data={data?.sales || []}
-        columns={columns}
-        currentPage={page}
-        totalPages={data?.totalPages || 1}
-        onPageChange={setPage}
-        isLoading={isLoading}
-        emptyMessage="No sales found for the selected period"
-        keyExtractor={(row) => row.id}
-      />
+        <DataTable
+          data={data?.sales || []}
+          columns={columns}
+          currentPage={page}
+          totalPages={data?.totalPages || 1}
+          onPageChange={setPage}
+          isLoading={isLoading}
+          emptyMessage="No sales found for the selected period"
+          keyExtractor={(row) => row.id}
+        />
+      </Card>
     </div>
   )
 }

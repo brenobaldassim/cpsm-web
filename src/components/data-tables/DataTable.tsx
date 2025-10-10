@@ -6,8 +6,22 @@
  */
 
 import * as React from 'react'
-import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationPrevious,
+  PaginationNext,
+} from '@/components/ui/pagination'
 import { cn } from '@/lib/utils'
 
 export interface Column<T> {
@@ -97,7 +111,7 @@ export function DataTable<T>({
   }
 
   return (
-    <div className={cn('space-y-4', className)}>
+    <div className={cn('space-y-4  border-muted', className)}>
       {/* Search bar */}
       {onSearchChange && (
         <div className="flex items-center gap-4">
@@ -110,128 +124,97 @@ export function DataTable<T>({
         </div>
       )}
 
-      {/* Desktop table view */}
-      <div className="hidden md:block rounded-md border border-neutral-200 overflow-hidden">
-        <table className="w-full">
-          <thead className="bg-neutral-100 border-b border-neutral-200">
-            <tr>
+      {/* Table */}
+      <div className="rounded-md border border-muted">
+        <Table>
+          <TableHeader>
+            <TableRow>
               {columns.map((column) => (
-                <th
+                <TableHead
                   key={column.key}
                   className={cn(
-                    'px-4 py-3 text-left text-sm font-medium text-neutral-700',
-                    column.sortable && 'cursor-pointer hover:bg-neutral-200',
+                    column.sortable && 'cursor-pointer select-none',
                     column.className
                   )}
                   onClick={() =>
                     column.sortable && onSortChange && handleSort(column.key)
                   }
                 >
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 text-card-foreground">
                     {column.label}
                     {column.sortable && sortBy === column.key && (
-                      <span className="text-neutral-500">
-                        {sortOrder === 'asc' ? '↑' : '↓'}
-                      </span>
+                      <span>{sortOrder === 'asc' ? '↑' : '↓'}</span>
                     )}
                   </div>
-                </th>
+                </TableHead>
               ))}
-            </tr>
-          </thead>
-          <tbody>
+            </TableRow>
+          </TableHeader>
+          <TableBody className="[&_tr:last-child]:border-b-0 [&_tr]:text-muted-foreground">
             {isLoading ? (
-              <tr>
-                <td
+              <TableRow>
+                <TableCell
                   colSpan={columns.length}
-                  className="px-4 py-8 text-center text-sm text-neutral-500"
+                  className="h-24 text-center text-card-foreground"
                 >
                   Loading...
-                </td>
-              </tr>
+                </TableCell>
+              </TableRow>
             ) : data.length === 0 ? (
-              <tr>
-                <td
+              <TableRow>
+                <TableCell
                   colSpan={columns.length}
-                  className="px-4 py-8 text-center text-sm text-neutral-500"
+                  className="h-24 text-center text-card-foreground"
                 >
                   {emptyMessage}
-                </td>
-              </tr>
+                </TableCell>
+              </TableRow>
             ) : (
               data.map((row) => (
-                <tr
-                  key={keyExtractor(row)}
-                  className="border-b border-neutral-200 last:border-b-0 hover:bg-neutral-50"
-                >
+                <TableRow key={keyExtractor(row)}>
                   {columns.map((column) => (
-                    <td
+                    <TableCell
                       key={column.key}
-                      className={cn('px-4 py-3 text-sm', column.className)}
+                      className={cn(column.className, 'text-card-foreground')}
                     >
                       {column.render(row)}
-                    </td>
+                    </TableCell>
                   ))}
-                </tr>
+                </TableRow>
               ))
             )}
-          </tbody>
-        </table>
-      </div>
-
-      {/* Mobile card view */}
-      <div className="md:hidden space-y-4">
-        {isLoading ? (
-          <div className="text-center py-8 text-sm text-neutral-500">
-            Loading...
-          </div>
-        ) : data.length === 0 ? (
-          <div className="text-center py-8 text-sm text-neutral-500">
-            {emptyMessage}
-          </div>
-        ) : (
-          data.map((row) => (
-            <div
-              key={keyExtractor(row)}
-              className="rounded-md border border-neutral-200 p-4 space-y-2"
-            >
-              {columns.map((column) => (
-                <div key={column.key} className="flex flex-col">
-                  <span className="text-xs font-medium text-neutral-500">
-                    {column.label}
-                  </span>
-                  <span className="text-sm">{column.render(row)}</span>
-                </div>
-              ))}
-            </div>
-          ))
-        )}
+          </TableBody>
+        </Table>
       </div>
 
       {/* Pagination */}
       {totalPages > 1 && onPageChange && (
         <div className="flex items-center justify-between">
-          <div className="text-sm text-neutral-500">
+          <div className="text-sm text-muted-foreground p-2">
             Page {currentPage} of {totalPages}
           </div>
-          <div className="flex gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => onPageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-            >
-              Previous
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => onPageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-            >
-              Next
-            </Button>
-          </div>
+          <Pagination className="justify-end w-fit mx-0">
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious
+                  onClick={() => onPageChange(currentPage - 1)}
+                  className={cn(
+                    currentPage === 1 &&
+                      'pointer-events-none opacity-50 cursor-not-allowed'
+                  )}
+                />
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationNext
+                  onClick={() => onPageChange(currentPage + 1)}
+                  className={cn(
+                    currentPage === totalPages &&
+                      'pointer-events-none opacity-50 cursor-not-allowed'
+                  )}
+                />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
         </div>
       )}
     </div>

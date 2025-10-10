@@ -10,9 +10,11 @@
 import * as React from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { Switch } from '@/components/ui/switch'
 import { DataTable, type Column } from '@/components/data-tables'
 import { trpc } from '@/lib/trpc'
 import { formatPrice } from '../utils/formatPrice'
+import { Card } from '@/components/ui/card'
 
 type Product = {
   id: string
@@ -100,7 +102,7 @@ export default function ProductsListPage() {
             </Button>
           </Link>
           <Button
-            variant="outline"
+            variant="destructive"
             size="sm"
             onClick={() => handleDelete(row.id, row.name)}
             disabled={deleteMutation.isPending}
@@ -114,48 +116,45 @@ export default function ProductsListPage() {
 
   return (
     <>
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="mb-8 flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-neutral-900">Products</h1>
-            <p className="mt-2 text-neutral-600">
-              Manage your product catalog and inventory
-            </p>
+      <div className="w-full max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
+        <Card className="p-6 ">
+          <div className="mb-8 flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-foreground">Products</h1>
+              <p className="mt-2 text-muted-foreground">
+                Manage your product catalog and inventory
+              </p>
+            </div>
+            <Link href="/products/new">
+              <Button>Add Product</Button>
+            </Link>
           </div>
-          <Link href="/products/new">
-            <Button>Add Product</Button>
-          </Link>
-        </div>
 
-        {/* Filters */}
-        <div className="mb-4">
-          <label className="flex items-center gap-2 text-sm">
-            <input
-              type="checkbox"
-              checked={inStockOnly}
-              onChange={(e) => setInStockOnly(e.target.checked)}
-              className="rounded border-neutral-300"
-            />
-            Show in-stock products only
-          </label>
-        </div>
+          {/* Filters */}
+          <div className="mb-4">
+            <label className="flex items-center gap-2 text-sm text-secondary-foreground cursor-pointer">
+              <Switch checked={inStockOnly} onCheckedChange={setInStockOnly} />
+              Show in-stock products only
+            </label>
+          </div>
 
-        <DataTable
-          data={data?.products || []}
-          columns={columns}
-          searchPlaceholder="Search by product name..."
-          searchValue={search}
-          onSearchChange={setSearch}
-          currentPage={page}
-          totalPages={data?.totalPages || 1}
-          onPageChange={setPage}
-          sortBy={sortBy}
-          sortOrder={sortOrder}
-          onSortChange={handleSortChange}
-          isLoading={isLoading}
-          emptyMessage="No products found"
-          keyExtractor={(row) => row.id}
-        />
+          <DataTable
+            data={data?.products || []}
+            columns={columns}
+            searchPlaceholder="Search by product name..."
+            searchValue={search}
+            onSearchChange={setSearch}
+            currentPage={page}
+            totalPages={data?.totalPages || 1}
+            onPageChange={setPage}
+            sortBy={sortBy}
+            sortOrder={sortOrder}
+            onSortChange={handleSortChange}
+            isLoading={isLoading}
+            emptyMessage="No products found"
+            keyExtractor={(row) => row.id}
+          />
+        </Card>
       </div>
     </>
   )

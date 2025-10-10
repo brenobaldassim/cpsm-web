@@ -72,13 +72,13 @@ function LoginForm() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-neutral-100 px-4 py-12 sm:px-6 lg:px-8">
+    <div className="flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-neutral-900">
+          <h1 className="text-3xl font-bold text-foreground">
             Client & Product Manager
           </h1>
-          <p className="mt-2 text-sm text-neutral-600">
+          <p className="mt-2 text-sm text-muted-foreground">
             Sign in to your account
           </p>
         </div>
@@ -121,9 +121,9 @@ export default function LoginPage() {
   return (
     <React.Suspense
       fallback={
-        <div className="flex min-h-screen items-center justify-center bg-neutral-100">
+        <div className="flex min-h-screen items-center justify-center">
           <div className="text-center">
-            <p className="text-neutral-600">Loading...</p>
+            <p className="text-muted-foreground">Loading...</p>
           </div>
         </div>
       }

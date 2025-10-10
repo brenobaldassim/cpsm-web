@@ -12,6 +12,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { DataTable, type Column } from '@/components/data-tables'
 import { trpc } from '@/lib/trpc'
+import { Card } from '@/components/ui/card'
 
 type Client = {
   id: string
@@ -94,7 +95,7 @@ export default function ClientsListPage() {
             </Button>
           </Link>
           <Button
-            variant="outline"
+            variant="destructive"
             size="sm"
             onClick={() =>
               handleDelete(row.id, `${row.firstName} ${row.lastName}`)
@@ -109,12 +110,14 @@ export default function ClientsListPage() {
   ]
 
   return (
-    <>
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <div className="w-full max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
+      <Card className="p-6">
         <div className="mb-8 flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-neutral-900">Clients</h1>
-            <p className="mt-2 text-neutral-600">Manage your client database</p>
+            <h1 className="text-3xl font-bold text-card-foreground">Clients</h1>
+            <p className="mt-2 text-muted-foreground">
+              Manage your client database
+            </p>
           </div>
           <Link href="/clients/new">
             <Button>Add Client</Button>
@@ -137,7 +140,7 @@ export default function ClientsListPage() {
           emptyMessage="No clients found"
           keyExtractor={(row) => row.id}
         />
-      </div>
-    </>
+      </Card>
+    </div>
   )
 }

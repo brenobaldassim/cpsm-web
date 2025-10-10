@@ -56,8 +56,8 @@ export default function EditClientPage({
     <>
       <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-neutral-900">Edit Client</h1>
-          <p className="mt-2 text-neutral-600">
+          <h1 className="text-3xl font-bold text-foreground">Edit Client</h1>
+          <p className="mt-2 text-secondary-foreground">
             Update client information and addresses
           </p>
         </div>

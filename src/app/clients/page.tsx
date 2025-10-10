@@ -110,41 +110,37 @@ export default function ClientsListPage() {
   ]
 
   return (
-    <>
-      <div className="w-full max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
-        <Card className="p-6">
-          <div className="mb-8 flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-card-foreground">
-                Clients
-              </h1>
-              <p className="mt-2 text-muted-foreground">
-                Manage your client database
-              </p>
-            </div>
-            <Link href="/clients/new">
-              <Button>Add Client</Button>
-            </Link>
+    <div className="w-full max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
+      <Card className="p-6">
+        <div className="mb-8 flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-card-foreground">Clients</h1>
+            <p className="mt-2 text-muted-foreground">
+              Manage your client database
+            </p>
           </div>
+          <Link href="/clients/new">
+            <Button>Add Client</Button>
+          </Link>
+        </div>
 
-          <DataTable
-            data={data?.clients || []}
-            columns={columns}
-            searchPlaceholder="Search by name or email..."
-            searchValue={search}
-            onSearchChange={setSearch}
-            currentPage={page}
-            totalPages={data?.totalPages || 1}
-            onPageChange={setPage}
-            sortBy={sortBy}
-            sortOrder={sortOrder}
-            onSortChange={handleSortChange}
-            isLoading={isLoading}
-            emptyMessage="No clients found"
-            keyExtractor={(row) => row.id}
-          />
-        </Card>
-      </div>
-    </>
+        <DataTable
+          data={data?.clients || []}
+          columns={columns}
+          searchPlaceholder="Search by name or email..."
+          searchValue={search}
+          onSearchChange={setSearch}
+          currentPage={page}
+          totalPages={data?.totalPages || 1}
+          onPageChange={setPage}
+          sortBy={sortBy}
+          sortOrder={sortOrder}
+          onSortChange={handleSortChange}
+          isLoading={isLoading}
+          emptyMessage="No clients found"
+          keyExtractor={(row) => row.id}
+        />
+      </Card>
+    </div>
   )
 }

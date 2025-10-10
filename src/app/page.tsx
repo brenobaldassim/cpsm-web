@@ -16,7 +16,7 @@ export default async function DashboardPage() {
   ])
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center">
+    <main className="flex min-h-screen flex-col items-center justify-start">
       <div className="md:p-16 p-6">
         <h1 className="text-4xl font-bold text-primary">
           Client & Product Manager

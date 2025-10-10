@@ -10,7 +10,12 @@ import { Inter } from 'next/font/google'
 import '@/app/globals.css'
 import { TRPCProvider } from '@/app/_trpc/Provider'
 import { SessionProvider } from 'next-auth/react'
-import { Navigation } from '@/components/layouts/navigation'
+import {
+  SidebarProvider,
+  SidebarInset,
+  SidebarTrigger,
+} from '@/components/ui/sidebar'
+import { AppSidebar } from '@/components/layouts/navigation'
 import { cn } from '@/lib/utils'
 
 // Font optimization
@@ -52,10 +57,17 @@ export default function RootLayout({
       <body className="min-h-screen bg-background font-sans antialiased">
         <SessionProvider>
           <TRPCProvider>
-            <Navigation />
-            <main className="relative flex min-h-screen flex-col pt-16 md:pt-0 md:ml-64">
-              {children}
-            </main>
+            <SidebarProvider>
+              <AppSidebar />
+              <SidebarInset>
+                <header className="sticky top-0 z-10 flex h-16 shrink-0 items-center gap-2 border-b bg-background px-4">
+                  <SidebarTrigger />
+                </header>
+                <main className="flex flex-1 flex-col gap-4 p-4">
+                  {children}
+                </main>
+              </SidebarInset>
+            </SidebarProvider>
           </TRPCProvider>
         </SessionProvider>
       </body>

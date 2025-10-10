@@ -8,51 +8,29 @@
 'use client'
 
 import * as React from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { FormField, FormError, FormItem } from '@/components/forms'
-import { cpfSchema, cepSchema } from '@/lib/validations'
+import { cpfSchema, cepSchema, brazilianStates } from '@/lib/validations'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 const addressSchema = z.object({
   type: z.enum(['HOME', 'WORK']),
   street: z.string().min(1, 'Street is required').max(255),
   number: z.string().min(1, 'Number is required').max(20),
   city: z.string().min(1, 'City is required').max(100),
-  state: z.enum(
-    [
-      'AC',
-      'AL',
-      'AP',
-      'AM',
-      'BA',
-      'CE',
-      'DF',
-      'ES',
-      'GO',
-      'MA',
-      'MT',
-      'MS',
-      'MG',
-      'PA',
-      'PB',
-      'PR',
-      'PE',
-      'PI',
-      'RJ',
-      'RN',
-      'RS',
-      'RO',
-      'RR',
-      'SC',
-      'SP',
-      'SE',
-      'TO',
-    ],
-    { errorMap: () => ({ message: 'Invalid Brazilian state' }) }
-  ),
+  state: z.enum(brazilianStates, {
+    errorMap: () => ({ message: 'Invalid Brazilian state' }),
+  }),
   cep: cepSchema,
 })
 
@@ -95,6 +73,7 @@ export function ClientForm({
     handleSubmit,
     watch,
     setValue,
+    control,
     formState: { errors },
   } = useForm<ClientFormData>({
     resolver: zodResolver(clientFormSchema),
@@ -241,13 +220,21 @@ export function ClientForm({
             <div className="grid gap-6 sm:grid-cols-2">
               <FormItem className="sm:col-span-2">
                 <label className="text-sm font-medium">Address Type</label>
-                <select
-                  {...register(`addresses.${index}.type`)}
-                  className="flex h-10 w-full rounded-md border border-neutral-200 bg-white px-3 py-2 text-sm"
-                >
-                  <option value="HOME">Home</option>
-                  <option value="WORK">Work</option>
-                </select>
+                <Controller
+                  name={`addresses.${index}.type`}
+                  control={control}
+                  render={({ field }) => (
+                    <Select value={field.value} onValueChange={field.onChange}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select address type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="HOME">Home</SelectItem>
+                        <SelectItem value="WORK">Work</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
               </FormItem>
 
               <FormItem className="sm:col-span-2">
@@ -279,27 +266,24 @@ export function ClientForm({
 
               <FormItem>
                 <label className="text-sm font-medium">State</label>
-                <select
-                  {...register(`addresses.${index}.state`)}
-                  className="flex h-10 w-full rounded-md border border-neutral-200 bg-white px-3 py-2 text-sm"
-                >
-                  {[
-                    'SP',
-                    'RJ',
-                    'MG',
-                    'BA',
-                    'PR',
-                    'RS',
-                    'SC',
-                    'PE',
-                    'CE',
-                    'PA',
-                  ].map((state) => (
-                    <option key={state} value={state}>
-                      {state}
-                    </option>
-                  ))}
-                </select>
+                <Controller
+                  name={`addresses.${index}.state`}
+                  control={control}
+                  render={({ field }) => (
+                    <Select value={field.value} onValueChange={field.onChange}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select state" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {brazilianStates.map((state) => (
+                          <SelectItem key={state} value={state}>
+                            {state}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
               </FormItem>
 
               <FormItem>

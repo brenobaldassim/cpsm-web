@@ -8,13 +8,20 @@
 'use client'
 
 import * as React from 'react'
-import { useForm, useFieldArray } from 'react-hook-form'
+import { useForm, useFieldArray, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { FormError, FormItem } from '@/components/forms'
 import { trpc } from '@/lib/trpc'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 const saleItemSchema = z.object({
   productId: z.string().min(1, 'Product is required'),
@@ -120,17 +127,24 @@ export function SaleForm({
             <label className="block text-sm font-medium  mb-2">
               Client <span className="text-red-500">*</span>
             </label>
-            <select
-              {...register('clientId')}
-              className="flex h-10 w-full rounded-md border border-neutral-200 bg-white px-3 py-2 text-sm"
-            >
-              <option value="">Select a client</option>
-              {clients.map((client) => (
-                <option key={client.id} value={client.id}>
-                  {client.firstName} {client.lastName}
-                </option>
-              ))}
-            </select>
+            <Controller
+              name="clientId"
+              control={control}
+              render={({ field }) => (
+                <Select value={field.value} onValueChange={field.onChange}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a client" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {clients.map((client) => (
+                      <SelectItem key={client.id} value={client.id}>
+                        {client.firstName} {client.lastName}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            />
             {errors.clientId && (
               <p className="mt-1 text-sm text-red-600">
                 {errors.clientId.message}
@@ -182,18 +196,29 @@ export function SaleForm({
                   <label className="block text-sm font-medium mb-2">
                     Product <span className="text-red-500">*</span>
                   </label>
-                  <select
-                    {...register(`items.${index}.productId`)}
-                    className="flex h-10 w-full rounded-md border border-muted bg-white px-3 py-2 text-sm"
-                  >
-                    <option value="">Select a product</option>
-                    {products.map((product) => (
-                      <option key={product.id} value={product.id}>
-                        {product.name} - {formatPrice(product.priceInCents)}{' '}
-                        (Stock: {product.stockQty})
-                      </option>
-                    ))}
-                  </select>
+                  <Controller
+                    name={`items.${index}.productId`}
+                    control={control}
+                    render={({ field }) => (
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a product" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {products.map((product) => (
+                            <SelectItem key={product.id} value={product.id}>
+                              {product.name} -{' '}
+                              {formatPrice(product.priceInCents)} (Stock:{' '}
+                              {product.stockQty})
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
                   {errors.items?.[index]?.productId && (
                     <p className="mt-1 text-sm text-red-600">
                       {errors.items[index]?.productId?.message}

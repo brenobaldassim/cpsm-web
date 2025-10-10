@@ -11,10 +11,11 @@ import * as React from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Switch } from '@/components/ui/switch'
-import { DataTable, type Column } from '@/components/data-tables'
+import { type Column } from '@/components/data-tables'
 import { trpc } from '@/lib/trpc'
 import { formatPrice } from '../utils/formatPrice'
 import { Card } from '@/components/ui/card'
+import { ProductsCardList } from '@/components/card-lists/productsCardList'
 
 type Product = {
   id: string
@@ -115,8 +116,8 @@ export default function ProductsListPage() {
   ]
 
   return (
-    <>
-      <div className="w-full max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
+    <div className="w-full max-w-5xl mx-auto px-4 py-8 sm:px-6 lg:px-8 space-y-4">
+      <div>
         <Card className="p-6 ">
           <div className="mb-8 flex items-center justify-between">
             <div>
@@ -130,32 +131,15 @@ export default function ProductsListPage() {
             </Link>
           </div>
 
-          {/* Filters */}
           <div className="mb-4">
             <label className="flex items-center gap-2 text-sm text-secondary-foreground cursor-pointer">
               <Switch checked={inStockOnly} onCheckedChange={setInStockOnly} />
               Show in-stock products only
             </label>
           </div>
-
-          <DataTable
-            data={data?.products || []}
-            columns={columns}
-            searchPlaceholder="Search by product name..."
-            searchValue={search}
-            onSearchChange={setSearch}
-            currentPage={page}
-            totalPages={data?.totalPages || 1}
-            onPageChange={setPage}
-            sortBy={sortBy}
-            sortOrder={sortOrder}
-            onSortChange={handleSortChange}
-            isLoading={isLoading}
-            emptyMessage="No products found"
-            keyExtractor={(row) => row.id}
-          />
         </Card>
       </div>
-    </>
+      <ProductsCardList data={data} />
+    </div>
   )
 }

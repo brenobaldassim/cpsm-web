@@ -84,8 +84,9 @@ export function AppSidebar() {
                       asChild
                       isActive={isActive}
                       tooltip={item.label}
+                      size="lg"
                     >
-                      <Link href={item.href}>
+                      <Link href={item.href} className="text-xl">
                         <Icon />
                         <span>{item.label}</span>
                       </Link>

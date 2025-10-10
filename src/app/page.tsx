@@ -1,4 +1,4 @@
-import { DashboardContent } from '@/app/components/DashboardContent'
+import { DashboardContent } from '@/components/dashboard'
 import { createCaller } from '@/server/api/server-caller'
 
 export default async function DashboardPage() {

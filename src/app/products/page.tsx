@@ -13,6 +13,7 @@ import { ProductsFilter } from '@/components/filters/ProductsFilter'
 import { ItemsListPagination } from '@/components/items-list-pagination'
 import { ProductsListPageParams } from './types'
 import { ProductsCardList } from '@/components/card-lists/productsCardList'
+import { PackagePlus } from 'lucide-react'
 
 interface ProductsListPageProps {
   searchParams: Promise<ProductsListPageParams>
@@ -49,7 +50,9 @@ export default async function ProductsListPage({
             </p>
           </div>
           <Link href="/products/new">
-            <Button>Add Product</Button>
+            <Button className="[&_svg]:!size-7">
+              <PackagePlus />
+            </Button>
           </Link>
         </div>
 

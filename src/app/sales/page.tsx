@@ -14,6 +14,7 @@ import { DataTable, type Column } from '@/components/data-tables'
 import { trpc } from '@/lib/trpc'
 import { formatPrice } from '../utils/formatPrice'
 import { Card } from '@/components/ui/card'
+import { FilePlusIcon } from 'lucide-react'
 
 type Sale = {
   id: string
@@ -83,7 +84,9 @@ export default function SalesListPage() {
             </p>
           </div>
           <Link href="/sales/new">
-            <Button>Create Sale</Button>
+            <Button className="[&_svg]:!size-7">
+              <FilePlusIcon />
+            </Button>
           </Link>
         </div>
 

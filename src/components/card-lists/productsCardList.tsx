@@ -1,28 +1,11 @@
-import { CardButtonSection, CardItem } from '../card-item/CardItem'
+import { CardItem } from '../card-item/CardItem'
 import { formatPrice } from '@/app/utils/formatPrice'
 import { cn } from '@/lib/utils'
-import {
-  type listProductsOutput,
-  type productSchema,
-} from '@/server/api/routers/products'
-import { SquarePen } from 'lucide-react'
-import { DeleteProductButton } from '../delete-buttons/DeleteProductButton'
-import { Button } from '../ui/button'
-import Link from 'next/link'
+import { type listProductsOutput } from '@/server/api/routers/products'
+import { CardButtons } from '../card-item/CardButtons'
 interface ProductsCardListProps {
   data: listProductsOutput
 }
-
-const Buttons = (row: productSchema) => (
-  <CardButtonSection>
-    <Link href={`/products/${row.id}`}>
-      <Button variant="outline" size="sm">
-        <SquarePen />
-      </Button>
-    </Link>
-    <DeleteProductButton id={row.id} name={row.name} />
-  </CardButtonSection>
-)
 
 export function ProductsCardList({ data }: ProductsCardListProps) {
   return (
@@ -34,7 +17,7 @@ export function ProductsCardList({ data }: ProductsCardListProps) {
           className={cn({
             'bg-destructive/10 border-foreground/5': product.stockQty === 0,
           })}
-          ButtonSection={Buttons(product)}
+          ButtonSection={<CardButtons row={product} href="/products" />}
         >
           <p>{formatPrice(product.priceInCents)}</p>
           <p

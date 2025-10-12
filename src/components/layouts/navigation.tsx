@@ -45,7 +45,7 @@ const navItems = [
 
 export function AppSidebar() {
   const pathname = usePathname()
-  const { data: session } = useSession()
+  const { status } = useSession()
   const [isLoggingOut, setIsLoggingOut] = React.useState(false)
 
   const handleLogout = async () => {
@@ -53,7 +53,7 @@ export function AppSidebar() {
     await signOut({ callbackUrl: '/login' })
   }
 
-  if (!session) {
+  if (status === 'unauthenticated') {
     return null
   }
 
@@ -84,8 +84,9 @@ export function AppSidebar() {
                       asChild
                       isActive={isActive}
                       tooltip={item.label}
+                      size="lg"
                     >
-                      <Link href={item.href}>
+                      <Link href={item.href} className="text-xl">
                         <Icon />
                         <span>{item.label}</span>
                       </Link>

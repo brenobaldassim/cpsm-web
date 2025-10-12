@@ -104,25 +104,23 @@ export function ProductForm({
             />
           </FormItem>
         </div>
+        <div className="flex gap-4 mt-10">
+          <Button type="submit" disabled={isLoading}>
+            {isLoading
+              ? 'Saving...'
+              : defaultValues?.id
+                ? 'Update Product'
+                : 'Create Product'}
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => window.history.back()}
+          >
+            Cancel
+          </Button>
+        </div>
       </Card>
-
-      {/* Submit Button */}
-      <div className="flex gap-4">
-        <Button type="submit" disabled={isLoading}>
-          {isLoading
-            ? 'Saving...'
-            : defaultValues?.id
-              ? 'Update Product'
-              : 'Create Product'}
-        </Button>
-        <Button
-          type="button"
-          variant="outline"
-          onClick={() => window.history.back()}
-        >
-          Cancel
-        </Button>
-      </div>
     </form>
   )
 }

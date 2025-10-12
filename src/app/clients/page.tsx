@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button'
 import { DataTable, type Column } from '@/components/data-tables'
 import { trpc } from '@/lib/trpc'
 import { Card } from '@/components/ui/card'
+import { UserRoundPlus } from 'lucide-react'
 
 type Client = {
   id: string
@@ -120,7 +121,9 @@ export default function ClientsListPage() {
             </p>
           </div>
           <Link href="/clients/new">
-            <Button>Add Client</Button>
+            <Button className="[&_svg]:!size-7">
+              <UserRoundPlus />
+            </Button>
           </Link>
         </div>
 

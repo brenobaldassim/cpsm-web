@@ -17,6 +17,14 @@ const createProductInput = z.object({
   stockQty: stockSchema.default(0),
 })
 
+const productSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  priceInCents: z.number(),
+  stockQty: z.number(),
+  createdAt: z.date(),
+})
+
 const updateProductInput = z.object({
   id: z.string(),
   name: z.string().min(1).max(255).optional(),
@@ -39,6 +47,17 @@ const checkStockInput = z.object({
   productId: z.string(),
   requestedQty: z.number().int().positive(),
 })
+
+const listProductsOutput = z.object({
+  products: z.array(productSchema),
+  total: z.number(),
+  page: z.number(),
+  limit: z.number(),
+  totalPages: z.number(),
+})
+
+export type productSchema = z.infer<typeof productSchema>
+export type listProductsOutput = z.infer<typeof listProductsOutput>
 
 export const productsRouter = createTRPCRouter({
   /**
@@ -158,6 +177,7 @@ export const productsRouter = createTRPCRouter({
    */
   list: protectedProcedure
     .input(listProductsInput)
+    .output(listProductsOutput)
     .query(async ({ input, ctx }) => {
       const { page, limit, search, inStockOnly, sortBy, sortOrder } = input
       const skip = (page - 1) * limit

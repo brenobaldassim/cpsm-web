@@ -1,15 +1,13 @@
-import { DashboardContent } from '@/app/components/DashboardContent'
+import { DashboardContent } from '@/components/dashboard'
 import { createCaller } from '@/server/api/server-caller'
 
 export default async function DashboardPage() {
-  // Fetch data server-side
-  const api = await createCaller()
+  const caller = await createCaller()
 
-  // Fetch all dashboard data in parallel
   const [clientsData, productsData, salesSummary] = await Promise.all([
-    api.clients.list({ page: 1, limit: 1 }),
-    api.products.list({ page: 1, limit: 1 }),
-    api.sales.getSummary({
+    caller.clients.list({ page: 1, limit: 1 }),
+    caller.products.list({ page: 1, limit: 1 }),
+    caller.sales.getSummary({
       startDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), // 30 days ago
       endDate: new Date(),
     }),

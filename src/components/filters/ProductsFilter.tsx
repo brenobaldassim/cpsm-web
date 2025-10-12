@@ -24,7 +24,7 @@ export function ProductsFilter({ inStockOnly }: ProductsFilterProps) {
   }
 
   return (
-    <div className="mb-4">
+    <div className="mb-4 flex flex-row gap-2">
       <label className="flex items-center gap-2 text-sm text-secondary-foreground cursor-pointer">
         <Switch checked={inStockOnly} onCheckedChange={handleInStockChange} />
         Show in-stock products only

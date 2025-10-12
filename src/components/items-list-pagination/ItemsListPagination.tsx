@@ -7,7 +7,7 @@ import {
   PaginationPrevious,
 } from '../ui/pagination'
 import { ProductsListPageParams } from '@/app/products/types'
-import { returnParamsWithoutPage } from '@/app/utils/returnParamsWithoutPage'
+import { updatePageInParams } from '@/app/utils/updatePageInParams'
 
 interface ItemsListPaginationProps {
   page: number
@@ -22,21 +22,20 @@ export function ItemsListPagination({
   params,
   href,
 }: ItemsListPaginationProps) {
-  const paramsString = returnParamsWithoutPage(params)
   return (
     <Pagination>
       <PaginationContent>
         {page > 1 && (
           <PaginationItem>
             <PaginationPrevious
-              href={`${href}?${paramsString}&page=${page - 1}`}
+              href={`${href}?${updatePageInParams(page - 1, params)}`}
             />
           </PaginationItem>
         )}
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
           <PaginationItem key={p}>
             <PaginationLink
-              href={`${href}?${paramsString}&page=${p}`}
+              href={`${href}?${updatePageInParams(p, params)}`}
               isActive={p === page}
             >
               {p}
@@ -45,7 +44,9 @@ export function ItemsListPagination({
         ))}
         {page < totalPages && (
           <PaginationItem>
-            <PaginationNext href={`${href}?${paramsString}&page=${page + 1}`} />
+            <PaginationNext
+              href={`${href}?${updatePageInParams(page + 1, params)}`}
+            />
           </PaginationItem>
         )}
       </PaginationContent>

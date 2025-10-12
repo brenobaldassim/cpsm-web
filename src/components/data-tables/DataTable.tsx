@@ -5,6 +5,8 @@
  * Responsive design with mobile-friendly card layout.
  */
 
+'use client'
+
 import * as React from 'react'
 import { Input } from '@/components/ui/input'
 import {
@@ -68,6 +70,7 @@ export interface DataTableProps<T> {
   className?: string
   /** Key extractor function */
   keyExtractor: (row: T) => string | number
+  /** Additional CSS classes for the table */
 }
 
 /**
@@ -125,7 +128,7 @@ export function DataTable<T>({
       )}
 
       {/* Table */}
-      <div className="rounded-md border border-muted">
+      <div className={cn('rounded-md border border-muted')}>
         <Table>
           <TableHeader>
             <TableRow>

@@ -8,11 +8,11 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import { ProductsCardList } from '@/components/card-lists/productsCardList'
 import { createCaller } from '@/server/api/server-caller'
 import { ProductsFilter } from '@/components/filters/ProductsFilter'
 import { ItemsListPagination } from '@/components/items-list-pagination'
 import { ProductsListPageParams } from './types'
+import { ProductsCardList } from '@/components/card-lists/productsCardList'
 
 interface ProductsListPageProps {
   searchParams: Promise<ProductsListPageParams>

@@ -181,8 +181,9 @@ test.describe('Client Management', () => {
 
     // Click edit on the first client
     await page
-      .click('button[title*="Edit"], a[href*="/clients/"][href*="/edit"]')
+      .locator('button[title*="Edit"], a[href*="/clients/"][href*="/edit"]')
       .first()
+      .click()
 
     // Update name
     await page.fill('input[name="lastName"]', 'Silva Santos')
@@ -217,9 +218,10 @@ test.describe('Client Management', () => {
 
     // Now delete it
     await page
-      .click('text=ToDelete Client')
+      .locator('text=ToDelete Client')
       .locator('..')
       .locator('button[title*="Delete"]')
+      .click()
 
     // Confirm deletion
     await page.click('text=/confirm|yes|delete/i')

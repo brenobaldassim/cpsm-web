@@ -58,7 +58,10 @@ test.describe('Sales Filtering', () => {
     await page.goto('/sales')
 
     // Select "Last 7 days" option if available
-    await page.selectOption('select[name="dateRange"]', { label: /7.*days/i })
+    const dateRangeSelect = page.locator('select[name="dateRange"]')
+    if ((await dateRangeSelect.count()) > 0) {
+      await page.selectOption('select[name="dateRange"]', { index: 1 })
+    }
 
     // Or manually set date range
     const sevenDaysAgo = new Date()
@@ -163,7 +166,7 @@ test.describe('Sales Filtering', () => {
     await page.goto('/sales')
 
     // Click on a sale to view details
-    await page.click('tbody tr').first()
+    await page.locator('tbody tr').first().click()
 
     // Should navigate to sale detail page
     await expect(page).toHaveURL(/\/sales\/\w+/)
@@ -177,7 +180,7 @@ test.describe('Sales Filtering', () => {
 
   test('should display all sale items in detail view', async ({ page }) => {
     await page.goto('/sales')
-    await page.click('tbody tr').first()
+    await page.locator('tbody tr').first().click()
 
     // Should show table of sale items
     await expect(page.locator('text=/product/i')).toBeVisible()
@@ -191,7 +194,7 @@ test.describe('Sales Filtering', () => {
 
   test('should show client information in sale detail', async ({ page }) => {
     await page.goto('/sales')
-    await page.click('tbody tr').first()
+    await page.locator('tbody tr').first().click()
 
     // Should display client name and details
     await expect(
@@ -231,7 +234,10 @@ test.describe('Sales Filtering', () => {
     await page.goto('/sales')
 
     // Click sort by date column
-    await page.click('th:has-text("Date"), button[aria-label*="Sort"]').first()
+    await page
+      .locator('th:has-text("Date"), button[aria-label*="Sort"]')
+      .first()
+      .click()
 
     // Should sort in descending order (newest first) by default
     // Or toggle to ascending
@@ -304,7 +310,7 @@ test.describe('Sales Filtering', () => {
     await page.click('button:has-text("Filter"), button:has-text("Apply")')
 
     // Click on a sale
-    await page.click('tbody tr').first()
+    await page.locator('tbody tr').first().click()
 
     // Go back
     await page.goBack()

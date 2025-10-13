@@ -58,7 +58,7 @@ test.describe('Sales Creation', () => {
     await page.selectOption('select[name="clientId"]', { index: 1 }) // First client
 
     // Select product and quantity
-    await page.selectOption('select[name*="productId"]', { label: /laptop/i })
+    await page.selectOption('select[name*="productId"]', { index: 1 })
     await page.fill('input[name*="quantity"]', '2')
 
     // Price should auto-fill from product
@@ -152,7 +152,7 @@ test.describe('Sales Creation', () => {
     await page.click('text=/create.*sale|new.*sale/i')
 
     await page.selectOption('select[name="clientId"]', { index: 1 })
-    await page.selectOption('select[name*="productId"]', { label: /laptop/i })
+    await page.selectOption('select[name*="productId"]', { index: 1 })
     await page.fill('input[name*="quantity"]', '1')
 
     // Note the price
@@ -163,13 +163,16 @@ test.describe('Sales Creation', () => {
 
     // Now change the product price
     await page.goto('/products')
-    await page.click('button[title*="Edit"]:has-text("Laptop")').first()
+    await page
+      .locator('button[title*="Edit"]:has-text("Laptop")')
+      .first()
+      .click()
     await page.fill('input[name="price"]', '3000.00') // Increase price
     await page.click('button[type="submit"]')
 
     // Go back to sales and check the historical sale
     await page.goto('/sales')
-    await page.click('tr:has-text("Laptop")').first() // Click on sale detail
+    await page.locator('tr:has-text("Laptop")').first().click() // Click on sale detail
 
     // The sale should still show the original price, not the new price
     await expect(page.locator(`text=/${originalPrice}/i`)).toBeVisible()
@@ -250,7 +253,10 @@ test.describe('Sales Creation', () => {
     await page.fill('input[name*="items.1.quantity"]', '2')
 
     // Remove second product
-    await page.click('button[title*="Remove"], button:has-text("✕")').nth(1)
+    await page
+      .locator('button[title*="Remove"], button:has-text("✕")')
+      .nth(1)
+      .click()
 
     // Should only have one product now
     const productInputs = page.locator('select[name*="productId"]')

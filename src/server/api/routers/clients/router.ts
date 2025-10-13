@@ -13,7 +13,6 @@ import {
   updateClientInput,
   listClientsInput,
   listClientsOutput,
-  TClientSchema,
 } from './schemas/validation'
 
 export const clientsRouter = createTRPCRouter({

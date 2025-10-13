@@ -112,8 +112,9 @@ test.describe('Product Management', () => {
 
     // Click edit on first product
     await page
-      .click('button[title*="Edit"], a[href*="/products/"][href*="/edit"]')
+      .locator('button[title*="Edit"], a[href*="/products/"][href*="/edit"]')
       .first()
+      .click()
 
     // Get original price for comparison
     const originalPrice = await page.inputValue('input[name="price"]')
@@ -136,8 +137,9 @@ test.describe('Product Management', () => {
 
     // Click edit on first product
     await page
-      .click('button[title*="Edit"], a[href*="/products/"][href*="/edit"]')
+      .locator('button[title*="Edit"], a[href*="/products/"][href*="/edit"]')
       .first()
+      .click()
 
     // Update stock
     await page.fill('input[name="stock"]', '25')
@@ -213,9 +215,10 @@ test.describe('Product Management', () => {
 
     // Now delete it
     await page
-      .click('text=Product To Delete')
+      .locator('text=Product To Delete')
       .locator('..')
       .locator('button[title*="Delete"]')
+      .click()
 
     // Confirm deletion
     await page.click('text=/confirm|yes|delete/i')
@@ -249,7 +252,10 @@ test.describe('Product Management', () => {
     await page.goto('/products')
 
     // Click on first product name to view details
-    await page.click('a[href*="/products/"]:not([href*="/edit"])').first()
+    await page
+      .locator('a[href*="/products/"]:not([href*="/edit"])')
+      .first()
+      .click()
 
     // Should show product details
     await expect(page.locator('text=/price/i')).toBeVisible()

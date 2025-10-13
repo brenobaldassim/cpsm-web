@@ -1,0 +1,42 @@
+name: Verify (Type / Lint / Prisma)
+
+on:
+  push:
+    branches:
+      - main
+      - staging
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    env:
+      DATABASE_URL: postgresql://user:password@localhost:5432/testdb
+
+    steps:
+      - name: 🧾 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 📦 Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: 🟢 Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: 📚 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🧩 Validate Prisma schema
+        run: pnpm prisma validate
+
+      - name: 🛠️ Generate Prisma Client
+        run: pnpm prisma generate
+
+      - name: 🧠 TypeScript type check
+        run: pnpm typecheck

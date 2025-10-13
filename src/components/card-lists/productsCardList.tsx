@@ -21,7 +21,6 @@ export function ProductsCardList({ data }: ProductsCardListProps) {
           ButtonSection={
             <CardButtons
               id={product.id}
-              name={product.name}
               href="/products"
               DeleteButton={
                 <DeleteProductButton id={product.id} name={product.name} />

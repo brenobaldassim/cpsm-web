@@ -20,7 +20,6 @@ export const ClientsCardList: React.FC<ClientsCardListProps> = ({ data }) => {
             ButtonSection={
               <CardButtons
                 id={client.id}
-                name={name}
                 href="/clients"
                 DeleteButton={<DeleteClientButton id={client.id} name={name} />}
               />

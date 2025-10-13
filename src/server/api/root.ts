@@ -6,10 +6,10 @@
  */
 
 import { createTRPCRouter, createCallerFactory } from './trpc'
-import { authRouter } from './routers/auth'
-import { clientsRouter } from './routers/clients'
-import { productsRouter } from './routers/products'
-import { salesRouter } from './routers/sales'
+import { authRouter } from './routers/auth/router'
+import { clientsRouter } from './routers/clients/router'
+import { productsRouter } from './routers/products/router'
+import { salesRouter } from './routers/sales/router'
 
 export const appRouter = createTRPCRouter({
   auth: authRouter,

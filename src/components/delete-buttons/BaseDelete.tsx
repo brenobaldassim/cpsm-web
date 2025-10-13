@@ -1,3 +1,5 @@
+'use client'
+
 import { Trash2 } from 'lucide-react'
 import { Button } from '../ui/button'
 import { type UseMutationResult } from '@tanstack/react-query'
@@ -35,7 +37,7 @@ export const BaseDelete = <TError = Error,>({
       trigger={
         <Button
           variant="destructive"
-          size="sm"
+          size="icon"
           disabled={deleteMutation.isPending}
         >
           <Trash2 />

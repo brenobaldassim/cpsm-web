@@ -64,7 +64,7 @@ export default async function ProductsListPage({
       <ItemsListPagination
         page={page}
         totalPages={data.totalPages}
-        params={params}
+        params={params as Record<string, string>}
         href="/products"
       />
     </div>

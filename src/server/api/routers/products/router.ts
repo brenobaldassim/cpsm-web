@@ -7,57 +7,14 @@
 
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
-import { createTRPCRouter, protectedProcedure } from '../trpc'
-import { priceSchema, stockSchema } from '@/lib/validations'
-
-// Input schemas
-const createProductInput = z.object({
-  name: z.string().min(1).max(255),
-  priceInCents: priceSchema,
-  stockQty: stockSchema.default(0),
-})
-
-const productSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  priceInCents: z.number(),
-  stockQty: z.number(),
-  createdAt: z.date(),
-})
-
-const updateProductInput = z.object({
-  id: z.string(),
-  name: z.string().min(1).max(255).optional(),
-  priceInCents: priceSchema.optional(),
-  stockQty: stockSchema.optional(),
-})
-
-const listProductsInput = z.object({
-  page: z.number().int().positive().default(1),
-  limit: z.number().int().positive().max(100).default(20),
-  search: z.string().optional(),
-  inStockOnly: z.boolean().default(false),
-  sortBy: z
-    .enum(['name', 'priceInCents', 'stockQty', 'createdAt'])
-    .default('name'),
-  sortOrder: z.enum(['asc', 'desc']).default('asc'),
-})
-
-const checkStockInput = z.object({
-  productId: z.string(),
-  requestedQty: z.number().int().positive(),
-})
-
-const listProductsOutput = z.object({
-  products: z.array(productSchema),
-  total: z.number(),
-  page: z.number(),
-  limit: z.number(),
-  totalPages: z.number(),
-})
-
-export type productSchema = z.infer<typeof productSchema>
-export type listProductsOutput = z.infer<typeof listProductsOutput>
+import { createTRPCRouter, protectedProcedure } from '../../trpc'
+import {
+  createProductInput,
+  updateProductInput,
+  listProductsInput,
+  listProductsOutput,
+  checkStockInput,
+} from './schemas/validation'
 
 export const productsRouter = createTRPCRouter({
   /**

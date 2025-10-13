@@ -9,7 +9,7 @@ import { redirect } from 'next/navigation'
 import { createCaller } from '@/server/api/server-caller'
 import { ClientFormWrapper } from './ClientFormWrapper'
 import { z } from 'zod'
-import { createClientInput } from '@/server/api/routers/clients'
+import { createClientInput } from '@/server/api/routers/clients/router'
 
 export default async function CreateClientPage() {
   async function createClient(data: z.infer<typeof createClientInput>) {

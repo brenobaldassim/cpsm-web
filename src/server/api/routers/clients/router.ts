@@ -7,59 +7,14 @@
 
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
-import { createTRPCRouter, protectedProcedure } from '../trpc'
-import { cpfSchema, addressSchema, emailSchema } from '@/lib/validations'
-
-// Input schemas
-export const createClientInput = z.object({
-  firstName: z.string().min(1).max(100),
-  lastName: z.string().min(1).max(100),
-  email: emailSchema,
-  cpf: cpfSchema,
-  socialMedia: z.string().max(100).optional(),
-  addresses: z
-    .array(addressSchema)
-    .min(1)
-    .max(2)
-    .refine(
-      (addresses) => {
-        const types = addresses.map((a) => a.type)
-        return types.length === new Set(types).size
-      },
-      { message: 'Cannot have duplicate address types' }
-    ),
-})
-
-const updateClientInput = z.object({
-  id: z.string(),
-  firstName: z.string().min(1).max(100).optional(),
-  lastName: z.string().min(1).max(100).optional(),
-  email: emailSchema.optional(),
-  socialMedia: z.string().max(100).optional(),
-  addresses: z
-    .array(addressSchema)
-    .min(1)
-    .max(2)
-    .optional()
-    .refine(
-      (addresses) => {
-        if (!addresses) return true
-        const types = addresses.map((a) => a.type)
-        return types.length === new Set(types).size
-      },
-      { message: 'Cannot have duplicate address types' }
-    ),
-})
-
-const listClientsInput = z.object({
-  page: z.number().int().positive().default(1),
-  limit: z.number().int().positive().max(100).default(20),
-  search: z.string().optional(),
-  sortBy: z
-    .enum(['firstName', 'lastName', 'email', 'createdAt'])
-    .default('lastName'),
-  sortOrder: z.enum(['asc', 'desc']).default('asc'),
-})
+import { createTRPCRouter, protectedProcedure } from '../../trpc'
+import {
+  createClientInput,
+  updateClientInput,
+  listClientsInput,
+  listClientsOutput,
+  TClientSchema,
+} from './schemas/validation'
 
 export const clientsRouter = createTRPCRouter({
   /**
@@ -222,6 +177,7 @@ export const clientsRouter = createTRPCRouter({
    */
   list: protectedProcedure
     .input(listClientsInput)
+    .output(listClientsOutput)
     .query(async ({ input, ctx }) => {
       const { page, limit, search, sortBy, sortOrder } = input
       const skip = (page - 1) * limit

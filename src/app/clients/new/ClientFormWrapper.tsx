@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { ClientForm } from '@/components/forms'
-import { createClientInput } from '@/server/api/routers/clients'
+import { createClientInput } from '@/server/api/routers/clients/router'
 import { z } from 'zod'
 
 interface ClientFormWrapperProps {

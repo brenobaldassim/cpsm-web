@@ -26,7 +26,7 @@ export const CardButtonSection: React.FC<CardButtonSectionProps> = ({
   return (
     <CardContent
       className={cn(
-        'flex gap-2 justify-end absolute bottom-0 right-0',
+        'flex flex-col-reverse gap-2 justify-between absolute h-full p-2 top-0  right-0',
         className
       )}
       {...props}
@@ -49,11 +49,7 @@ export const CardItem: React.FC<CardItemProps> = ({
         <CardTitle>{item.name}</CardTitle>
       </CardHeader>
       <CardContent>{children}</CardContent>
-      {ButtonSection && (
-        <CardContent className="flex gap-2 justify-end absolute bottom-0 right-0">
-          {ButtonSection}
-        </CardContent>
-      )}
+      {ButtonSection && ButtonSection}
       <CardFooter className="text-sm">
         <p>{item.createdAt.toLocaleDateString('pt-BR')}</p>
       </CardFooter>

@@ -4,21 +4,25 @@ import { Button } from '../ui/button'
 import { SquarePen } from 'lucide-react'
 import { DeleteProductButton } from '../delete-buttons/DeleteProductButton'
 
-interface CardButtonProps<T extends { id: string; name: string }> {
-  row: T
+interface CardButtonProps {
+  id: string
+  name: string
   href: string
+  DeleteButton: React.ReactNode
 }
 
-export const CardButtons = <T extends { id: string; name: string }>({
-  row,
+export const CardButtons: React.FC<CardButtonProps> = ({
+  id,
+  name,
   href,
-}: CardButtonProps<T>) => (
+  DeleteButton,
+}) => (
   <CardButtonSection>
-    <Link href={`${href}/${row.id}`}>
-      <Button variant="outline" size="sm">
+    <Link href={`${href}/${id}`}>
+      <Button variant="ghost" size="icon">
         <SquarePen />
       </Button>
     </Link>
-    <DeleteProductButton id={row.id} name={row.name} />
+    {DeleteButton}
   </CardButtonSection>
 )

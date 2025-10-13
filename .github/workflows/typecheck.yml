@@ -1,0 +1,43 @@
+name: Verify (Type / Lint / Prisma)
+
+on:
+  push:
+    branches:
+      - main
+      - staging
+  pull_request:
+    branches:
+      - main
+      - staging
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🧾 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🟢 Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: 📦 Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.8
+          run_install: false
+
+      - name: 📚 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🧩 Validate Prisma schema
+        run: pnpm prisma validate
+
+      - name: 🛠️ Generate Prisma Client
+        run: pnpm prisma generate
+
+      - name: 🧠 TypeScript type check
+        run: pnpm typecheck

@@ -14,7 +14,7 @@ A sales and client management system with real-time inventory tracking, built wi
 
 ## Prerequisites
 
-- Node.js 20+ 
+- Node.js 20+
 - Docker & Docker Compose (for database)
 - pnpm (install globally: `npm install -g pnpm` or use Corepack: `corepack enable`)
 
@@ -35,17 +35,14 @@ pnpm install
 
 ```bash
 # Copy environment variables template
-cp .env.example .env.local
+cp .env.example .env
 ```
-
-Edit `.env.local`
-
 
 ### 3. Start Database
 
 ```bash
 # Start PostgreSQL with Docker Compose
-docker-compose up -d
+docker-compose up -d --build
 
 # Verify database is running
 docker-compose ps
@@ -54,6 +51,9 @@ docker-compose ps
 ### 4. Database Setup
 
 ```bash
+# Generate prisma ORM
+pnpm exec prisma generate
+
 # Run migrations to create tables
 pnpm exec prisma migrate dev
 
@@ -72,7 +72,7 @@ pnpm dev
 ## Project Structure
 
 ```
-cpms-web/                 
+cpms-web/
 ├── src/
 │   ├── app/                            # Next.js App Router pages
 │   │   ├── clients/                    # Client management
@@ -116,6 +116,7 @@ cpms-web/
 ## Key Features
 
 ### Client Management
+
 - Create clients with Brazilian CPF validation
 - Add up to 2 addresses (HOME and WORK)
 - Brazilian postal code (CEP) validation
@@ -123,12 +124,14 @@ cpms-web/
 - Delete clients (only if no sales exist)
 
 ### Product Management
+
 - Create products with name, price (in cents), and stock quantity
 - Edit product information
 - Track stock levels
 - Delete products (only if no sales exist)
 
 ### Sales Management
+
 - Create sales with multiple products
 - Automatic stock deduction
 - Price preservation (historical sales show original prices)
@@ -137,8 +140,8 @@ cpms-web/
 - View detailed sale information
 
 ### Authentication
+
 - Email/password login
 - Protected routes
 - Session management
 - Multi-user support
-

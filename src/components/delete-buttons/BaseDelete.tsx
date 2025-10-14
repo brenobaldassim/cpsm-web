@@ -36,6 +36,7 @@ export const BaseDelete = <TError = Error,>({
     <AlertConfirmation
       trigger={
         <Button
+          className="bg-destructive/20 text-destructive hover:text-destructive-foreground"
           variant="destructive"
           size="icon"
           disabled={deleteMutation.isPending}

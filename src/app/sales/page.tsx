@@ -5,16 +5,16 @@
  * Protected route - requires authentication.
  */
 
-'use client'
+"use client"
 
-import * as React from 'react'
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { DataTable, type Column } from '@/components/data-tables'
-import { trpc } from '@/lib/trpc'
-import { formatPrice } from '../utils/formatPrice'
-import { Card } from '@/components/ui/card'
-import { FilePlusIcon } from 'lucide-react'
+import * as React from "react"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { DataTable, type Column } from "@/components/data-tables"
+import { trpc } from "@/lib/trpc"
+import { formatPrice } from "../utils/formatPrice"
+import { Card } from "@/components/ui/card"
+import { FilePlusIcon } from "lucide-react"
 
 type Sale = {
   id: string
@@ -40,29 +40,29 @@ export default function SalesListPage() {
   const { data, isLoading } = trpc.sales.list.useQuery({
     page,
     limit: 20,
-    sortBy: 'saleDate',
-    sortOrder: 'desc',
+    sortBy: "saleDate",
+    sortOrder: "desc",
   })
 
   const columns: Column<Sale>[] = [
     {
-      key: 'saleDate',
-      label: 'Date',
-      render: (row) => new Date(row.saleDate).toLocaleDateString('pt-BR'),
+      key: "saleDate",
+      label: "Date",
+      render: (row) => new Date(row.saleDate).toLocaleDateString("pt-BR"),
     },
     {
-      key: 'clientName',
-      label: 'Client',
+      key: "clientName",
+      label: "Client",
       render: (row) => `${row.client.firstName} ${row.client.lastName}`,
     },
     {
-      key: 'totalAmount',
-      label: 'Total',
+      key: "totalAmount",
+      label: "Total",
       render: (row) => formatPrice(row.totalAmount),
     },
     {
-      key: 'actions',
-      label: 'Actions',
+      key: "actions",
+      label: "Actions",
       render: (row) => (
         <Link href={`/sales/${row.id}`}>
           <Button variant="outline" size="sm">

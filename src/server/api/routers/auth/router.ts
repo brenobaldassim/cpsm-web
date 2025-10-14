@@ -4,11 +4,11 @@
  * Handles user authentication: login, signup, logout, getSession
  */
 
-import { TRPCError } from '@trpc/server'
-import * as bcrypt from 'bcryptjs'
+import { TRPCError } from "@trpc/server"
+import * as bcrypt from "bcryptjs"
 
-import { createTRPCRouter, publicProcedure } from '../../trpc'
-import { signupInput, userOutput } from './schemas/validation'
+import { createTRPCRouter, publicProcedure } from "../../trpc"
+import { signupInput, userOutput } from "./schemas/validation"
 
 export const authRouter = createTRPCRouter({
   /**
@@ -28,8 +28,8 @@ export const authRouter = createTRPCRouter({
 
       if (existingUser) {
         throw new TRPCError({
-          code: 'CONFLICT',
-          message: 'Email already registered',
+          code: "CONFLICT",
+          message: "Email already registered",
         })
       }
 

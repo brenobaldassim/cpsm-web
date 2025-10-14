@@ -1,5 +1,5 @@
-import { describe, it, expect, beforeAll, afterAll } from 'vitest'
-import { z } from 'zod'
+import { describe, it, expect, beforeAll, afterAll } from "vitest"
+import { z } from "zod"
 
 /**
  * Contract Tests: Auth Router
@@ -11,8 +11,8 @@ import { z } from 'zod'
  * This is expected TDD behavior.
  */
 
-describe('Auth Router Contract Tests', () => {
-  describe('auth.login', () => {
+describe("Auth Router Contract Tests", () => {
+  describe("auth.login", () => {
     const loginInput = z.object({
       email: z.string().email(),
       password: z.string().min(8).max(100),
@@ -27,41 +27,41 @@ describe('Auth Router Contract Tests', () => {
       expiresAt: z.date(),
     })
 
-    it('should validate input schema - valid credentials', () => {
+    it("should validate input schema - valid credentials", () => {
       const validInput = {
-        email: 'admin@example.com',
-        password: 'password123',
+        email: "admin@example.com",
+        password: "password123",
       }
 
       const result = loginInput.safeParse(validInput)
       expect(result.success).toBe(true)
     })
 
-    it('should reject invalid email format', () => {
+    it("should reject invalid email format", () => {
       const invalidInput = {
-        email: 'not-an-email',
-        password: 'password123',
+        email: "not-an-email",
+        password: "password123",
       }
 
       const result = loginInput.safeParse(invalidInput)
       expect(result.success).toBe(false)
     })
 
-    it('should reject short password', () => {
+    it("should reject short password", () => {
       const invalidInput = {
-        email: 'admin@example.com',
-        password: 'short',
+        email: "admin@example.com",
+        password: "short",
       }
 
       const result = loginInput.safeParse(invalidInput)
       expect(result.success).toBe(false)
     })
 
-    it('should validate output schema', () => {
+    it("should validate output schema", () => {
       const validOutput = {
         user: {
-          id: 'cluid123',
-          email: 'admin@example.com',
+          id: "cluid123",
+          email: "admin@example.com",
           createdAt: new Date(),
         },
         expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
@@ -72,7 +72,7 @@ describe('Auth Router Contract Tests', () => {
     })
   })
 
-  describe('auth.signup', () => {
+  describe("auth.signup", () => {
     const signupInput = z.object({
       email: z.string().email(),
       password: z.string().min(8).max(100),
@@ -84,30 +84,30 @@ describe('Auth Router Contract Tests', () => {
       createdAt: z.date(),
     })
 
-    it('should validate input schema - valid user', () => {
+    it("should validate input schema - valid user", () => {
       const validInput = {
-        email: 'newuser@example.com',
-        password: 'securepass123',
+        email: "newuser@example.com",
+        password: "securepass123",
       }
 
       const result = signupInput.safeParse(validInput)
       expect(result.success).toBe(true)
     })
 
-    it('should reject invalid email', () => {
+    it("should reject invalid email", () => {
       const invalidInput = {
-        email: 'invalid',
-        password: 'securepass123',
+        email: "invalid",
+        password: "securepass123",
       }
 
       const result = signupInput.safeParse(invalidInput)
       expect(result.success).toBe(false)
     })
 
-    it('should validate output schema', () => {
+    it("should validate output schema", () => {
       const validOutput = {
-        id: 'cluid456',
-        email: 'newuser@example.com',
+        id: "cluid456",
+        email: "newuser@example.com",
         createdAt: new Date(),
       }
 
@@ -116,12 +116,12 @@ describe('Auth Router Contract Tests', () => {
     })
   })
 
-  describe('auth.logout', () => {
+  describe("auth.logout", () => {
     const logoutOutput = z.object({
       success: z.boolean(),
     })
 
-    it('should validate output schema', () => {
+    it("should validate output schema", () => {
       const validOutput = { success: true }
 
       const result = logoutOutput.safeParse(validOutput)
@@ -129,7 +129,7 @@ describe('Auth Router Contract Tests', () => {
     })
   })
 
-  describe('auth.getSession', () => {
+  describe("auth.getSession", () => {
     const sessionOutput = z
       .object({
         user: z.object({
@@ -141,11 +141,11 @@ describe('Auth Router Contract Tests', () => {
       })
       .nullable()
 
-    it('should validate output schema - authenticated', () => {
+    it("should validate output schema - authenticated", () => {
       const validOutput = {
         user: {
-          id: 'cluid123',
-          email: 'admin@example.com',
+          id: "cluid123",
+          email: "admin@example.com",
           createdAt: new Date(),
         },
         expiresAt: new Date(),
@@ -155,7 +155,7 @@ describe('Auth Router Contract Tests', () => {
       expect(result.success).toBe(true)
     })
 
-    it('should validate output schema - not authenticated', () => {
+    it("should validate output schema - not authenticated", () => {
       const validOutput = null
 
       const result = sessionOutput.safeParse(validOutput)
@@ -165,13 +165,13 @@ describe('Auth Router Contract Tests', () => {
 })
 
 // Integration test placeholders (will be implemented when tRPC router exists)
-describe('Auth Router Integration (Pending Implementation)', () => {
-  it.todo('should login with valid credentials and return session')
-  it.todo('should return UNAUTHORIZED for invalid email')
-  it.todo('should return UNAUTHORIZED for invalid password')
-  it.todo('should signup new user and return user object')
-  it.todo('should return CONFLICT for duplicate email')
-  it.todo('should logout and terminate session')
-  it.todo('should return session for authenticated user')
-  it.todo('should return null for unauthenticated user')
+describe("Auth Router Integration (Pending Implementation)", () => {
+  it.todo("should login with valid credentials and return session")
+  it.todo("should return UNAUTHORIZED for invalid email")
+  it.todo("should return UNAUTHORIZED for invalid password")
+  it.todo("should signup new user and return user object")
+  it.todo("should return CONFLICT for duplicate email")
+  it.todo("should logout and terminate session")
+  it.todo("should return session for authenticated user")
+  it.todo("should return null for unauthenticated user")
 })

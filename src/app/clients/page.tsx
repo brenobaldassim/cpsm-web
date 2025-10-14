@@ -5,15 +5,15 @@
  * Protected route - requires authentication.
  */
 
-import * as React from 'react'
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import { UserRoundPlus } from 'lucide-react'
-import { ClientsCardList } from '@/components/card-lists/clientsCardList'
-import { createCaller } from '@/server/api/server-caller'
-import { ClientsListPageParams } from './types'
-import { ItemsListPagination } from '@/components/items-list-pagination'
+import * as React from "react"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
+import { UserRoundPlus } from "lucide-react"
+import { ClientsCardList } from "@/components/card-lists/clientsCardList"
+import { createCaller } from "@/server/api/server-caller"
+import { ClientsListPageParams } from "./types"
+import { ItemsListPagination } from "@/components/items-list-pagination"
 
 interface ClientsListPageProps {
   searchParams: Promise<ClientsListPageParams>
@@ -24,9 +24,9 @@ export default async function ClientsListPage({
 }: ClientsListPageProps) {
   const params = await searchParams
   const page = Number(params.page) || 1
-  const search = params.search || ''
-  const sortBy = params.sortBy || 'lastName'
-  const sortOrder = params.sortOrder || 'asc'
+  const search = params.search || ""
+  const sortBy = params.sortBy || "lastName"
+  const sortOrder = params.sortOrder || "asc"
 
   const caller = await createCaller()
   const data = await caller.clients.list({

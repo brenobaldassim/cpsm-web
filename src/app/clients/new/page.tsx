@@ -4,19 +4,19 @@
  * Form to create a new client with addresses.
  */
 
-import * as React from 'react'
-import { redirect } from 'next/navigation'
-import { createCaller } from '@/server/api/server-caller'
-import { ClientFormWrapper } from './ClientFormWrapper'
-import { z } from 'zod'
-import { createClientInput } from '@/server/api/routers/clients/schemas/validation'
+import * as React from "react"
+import { redirect } from "next/navigation"
+import { createCaller } from "@/server/api/server-caller"
+import { ClientFormWrapper } from "./ClientFormWrapper"
+import { z } from "zod"
+import { createClientInput } from "@/server/api/routers/clients/schemas/validation"
 
 export default async function CreateClientPage() {
   async function createClient(data: z.infer<typeof createClientInput>) {
-    'use server'
+    "use server"
     const api = await createCaller()
     await api.clients.create(data)
-    redirect('/clients')
+    redirect("/clients")
   }
 
   return (

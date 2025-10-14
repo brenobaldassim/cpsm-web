@@ -4,12 +4,12 @@
  * Form to edit an existing product.
  */
 
-'use client'
+"use client"
 
-import * as React from 'react'
-import { useRouter } from 'next/navigation'
-import { ProductForm } from '@/components/forms'
-import { trpc } from '@/lib/trpc'
+import * as React from "react"
+import { useRouter } from "next/navigation"
+import { ProductForm } from "@/components/forms"
+import { trpc } from "@/lib/trpc"
 
 export default function EditProductPage({
   params,
@@ -26,7 +26,7 @@ export default function EditProductPage({
 
   const updateMutation = trpc.products.update.useMutation({
     onSuccess: () => {
-      router.push('/products')
+      router.push("/products")
     },
   })
 

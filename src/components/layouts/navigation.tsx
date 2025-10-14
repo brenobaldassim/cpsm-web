@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import * as React from 'react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { useSession, signOut } from 'next-auth/react'
-import { Home, Users, Package, ShoppingCart, LogOut } from 'lucide-react'
+import * as React from "react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { useSession, signOut } from "next-auth/react"
+import { Home, Users, Package, ShoppingCart, LogOut } from "lucide-react"
 
 import {
   Sidebar,
@@ -17,28 +17,28 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarSeparator,
-} from '@/components/ui/sidebar'
-import { Button } from '@/components/ui/button'
+} from "@/components/ui/sidebar"
+import { Button } from "@/components/ui/button"
 
 const navItems = [
   {
-    label: 'Dashboard',
-    href: '/',
+    label: "Dashboard",
+    href: "/",
     icon: Home,
   },
   {
-    label: 'Clients',
-    href: '/clients',
+    label: "Clients",
+    href: "/clients",
     icon: Users,
   },
   {
-    label: 'Products',
-    href: '/products',
+    label: "Products",
+    href: "/products",
     icon: Package,
   },
   {
-    label: 'Sales',
-    href: '/sales',
+    label: "Sales",
+    href: "/sales",
     icon: ShoppingCart,
   },
 ]
@@ -50,10 +50,10 @@ export function AppSidebar() {
 
   const handleLogout = async () => {
     setIsLoggingOut(true)
-    await signOut({ callbackUrl: '/login' })
+    await signOut({ callbackUrl: "/login" })
   }
 
-  if (status === 'unauthenticated') {
+  if (status === "unauthenticated") {
     return null
   }
 
@@ -110,7 +110,7 @@ export function AppSidebar() {
             className="w-full justify-start"
           >
             <LogOut className="mr-2 h-4 w-4" />
-            {isLoggingOut ? 'Logging out...' : 'Logout'}
+            {isLoggingOut ? "Logging out..." : "Logout"}
           </Button>
         </div>
       </SidebarFooter>

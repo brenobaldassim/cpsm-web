@@ -5,9 +5,9 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from '../ui/pagination'
+} from "../ui/pagination"
 
-import { updatePageInParams } from '@/app/utils/updatePageInParams'
+import { updatePageInParams } from "@/app/utils/updatePageInParams"
 
 interface ItemsListPaginationProps {
   page: number

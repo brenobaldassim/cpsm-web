@@ -5,15 +5,15 @@
  * Protected route - requires authentication.
  */
 
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import { createCaller } from '@/server/api/server-caller'
-import { ProductsFilter } from '@/components/filters/ProductsFilter'
-import { ItemsListPagination } from '@/components/items-list-pagination'
-import { ProductsListPageParams } from './types'
-import { ProductsCardList } from '@/components/card-lists/productsCardList'
-import { PackagePlus } from 'lucide-react'
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
+import { createCaller } from "@/server/api/server-caller"
+import { ProductsFilter } from "@/components/filters/ProductsFilter"
+import { ItemsListPagination } from "@/components/items-list-pagination"
+import { ProductsListPageParams } from "./types"
+import { ProductsCardList } from "@/components/card-lists/productsCardList"
+import { PackagePlus } from "lucide-react"
 
 interface ProductsListPageProps {
   searchParams: Promise<ProductsListPageParams>
@@ -24,10 +24,10 @@ export default async function ProductsListPage({
 }: ProductsListPageProps) {
   const params = await searchParams
   const page = Number(params.page) || 1
-  const search = params.search || ''
-  const inStockOnly = params.inStockOnly === 'true'
-  const sortBy = params.sortBy || 'name'
-  const sortOrder = params.sortOrder || 'asc'
+  const search = params.search || ""
+  const inStockOnly = params.inStockOnly === "true"
+  const sortBy = params.sortBy || "name"
+  const sortOrder = params.sortOrder || "asc"
 
   const caller = await createCaller()
   const data = await caller.products.list({

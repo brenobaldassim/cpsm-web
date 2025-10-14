@@ -1,7 +1,7 @@
-import { TListClientsOutput } from '@/server/api/routers/clients/schemas/validation'
-import { CardButtons } from '../card-item/CardButtons'
-import { CardItem } from '../card-item/CardItem'
-import { DeleteClientButton } from '../delete-buttons/DeleteClientButton'
+import { TListClientsOutput } from "@/server/api/routers/clients/schemas/validation"
+import { CardButtons } from "../card-item/CardButtons"
+import { CardItem } from "../card-item/CardItem"
+import { DeleteClientButton } from "../delete-buttons/DeleteClientButton"
 
 interface ClientsCardListProps {
   data: TListClientsOutput
@@ -25,14 +25,14 @@ export const ClientsCardList: React.FC<ClientsCardListProps> = ({ data }) => {
               />
             }
           >
-            <p className={'mb-2'}>{client.email}</p>
-            <p className={'text-xs text-muted-foreground'}>
+            <p className={"mb-2"}>{client.email}</p>
+            <p className={"text-xs text-muted-foreground"}>
               {client.addresses[0].street} {client.addresses[0].number}
             </p>
-            <p className={'text-xs text-muted-foreground'}>
+            <p className={"text-xs text-muted-foreground"}>
               {client.addresses[0].city} {client.addresses[0].state}
             </p>
-            <p className={'text-xs text-muted-foreground'}>
+            <p className={"text-xs text-muted-foreground"}>
               {client.addresses[0].cep}
             </p>
           </CardItem>

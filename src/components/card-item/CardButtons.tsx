@@ -1,7 +1,7 @@
-import { CardButtonSection } from './CardItem'
-import Link from 'next/link'
-import { Button } from '../ui/button'
-import { SquarePen } from 'lucide-react'
+import { CardButtonSection } from "./CardItem"
+import Link from "next/link"
+import { Button } from "../ui/button"
+import { SquarePen } from "lucide-react"
 interface CardButtonProps {
   id: string
   href: string

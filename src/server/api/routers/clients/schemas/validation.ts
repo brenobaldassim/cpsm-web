@@ -1,6 +1,6 @@
-import { z } from 'zod'
-import { Prisma } from '@prisma/client'
-import { emailSchema, cpfSchema, addressSchema } from '@/lib/validations'
+import { z } from "zod"
+import { Prisma } from "@prisma/client"
+import { emailSchema, cpfSchema, addressSchema } from "@/lib/validations"
 
 const clientWithAddresses = Prisma.validator<Prisma.ClientDefaultArgs>()({
   include: { addresses: true },
@@ -11,7 +11,7 @@ export type ClientWithAddresses = Prisma.ClientGetPayload<
 >
 
 export const clientSchema = z.custom<ClientWithAddresses>((val) => {
-  return typeof val === 'object' && val !== null && 'id' in val
+  return typeof val === "object" && val !== null && "id" in val
 })
 
 export const createClientInput = z.object({
@@ -29,7 +29,7 @@ export const createClientInput = z.object({
         const types = addresses.map((a) => a.type)
         return types.length === new Set(types).size
       },
-      { message: 'Cannot have duplicate address types' }
+      { message: "Cannot have duplicate address types" }
     ),
 })
 
@@ -50,18 +50,18 @@ export const updateClientInput = z.object({
         const types = addresses.map((a) => a.type)
         return types.length === new Set(types).size
       },
-      { message: 'Cannot have duplicate address types' }
+      { message: "Cannot have duplicate address types" }
     ),
 })
 
-const sortOptions = ['firstName', 'lastName', 'email', 'createdAt'] as const
+const sortOptions = ["firstName", "lastName", "email", "createdAt"] as const
 
 export const listClientsInput = z.object({
   page: z.number().int().positive().default(1),
   limit: z.number().int().positive().max(100).default(20),
   search: z.string().optional(),
-  sortBy: z.enum(sortOptions).default('lastName'),
-  sortOrder: z.enum(['asc', 'desc']).default('asc'),
+  sortBy: z.enum(sortOptions).default("lastName"),
+  sortOrder: z.enum(["asc", "desc"]).default("asc"),
 })
 
 export const listClientsOutput = z.object({

@@ -1,4 +1,4 @@
-import z from 'zod'
+import z from "zod"
 
 export const saleItemInput = z.object({
   productId: z.string(),
@@ -11,12 +11,12 @@ export const createSaleInput = z.object({
   saleDate: z.coerce.date().optional(),
 })
 
-const sortOptions = ['saleDate', 'totalAmount', 'createdAt'] as const
+const sortOptions = ["saleDate", "totalAmount", "createdAt"] as const
 export const listSalesInput = z.object({
   page: z.number().int().positive().default(1),
   limit: z.number().int().positive().max(100).default(20),
-  sortBy: z.enum(sortOptions).default('saleDate'),
-  sortOrder: z.enum(['asc', 'desc']).default('desc'),
+  sortBy: z.enum(sortOptions).default("saleDate"),
+  sortOrder: z.enum(["asc", "desc"]).default("desc"),
 })
 
 export const filterSalesInput = z.object({

@@ -4,4 +4,4 @@
  * Reusable data table components with pagination, sorting, and search.
  */
 
-export { DataTable, type DataTableProps, type Column } from './DataTable'
+export { DataTable, type DataTableProps, type Column } from "./DataTable"

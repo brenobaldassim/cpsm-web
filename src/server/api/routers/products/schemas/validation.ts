@@ -1,5 +1,5 @@
-import { z } from 'zod'
-import { priceSchema, stockSchema } from '@/lib/validations'
+import { z } from "zod"
+import { priceSchema, stockSchema } from "@/lib/validations"
 
 export const createProductInput = z.object({
   name: z.string().min(1).max(255),
@@ -22,15 +22,15 @@ export const updateProductInput = z.object({
   stockQty: stockSchema.optional(),
 })
 
-const sortOptions = ['name', 'priceInCents', 'stockQty', 'createdAt'] as const
+const sortOptions = ["name", "priceInCents", "stockQty", "createdAt"] as const
 
 export const listProductsInput = z.object({
   page: z.number().int().positive().default(1),
   limit: z.number().int().positive().max(100).default(20),
   search: z.string().optional(),
   inStockOnly: z.boolean().default(false),
-  sortBy: z.enum(sortOptions).default('name'),
-  sortOrder: z.enum(['asc', 'desc']).default('asc'),
+  sortBy: z.enum(sortOptions).default("name"),
+  sortOrder: z.enum(["asc", "desc"]).default("asc"),
 })
 
 export const checkStockInput = z.object({

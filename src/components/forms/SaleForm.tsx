@@ -5,35 +5,35 @@
  * Validates stock availability and calculates totals.
  */
 
-'use client'
+"use client"
 
-import * as React from 'react'
-import { useForm, useFieldArray, Controller } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import { FormError, FormItem } from '@/components/forms'
-import { trpc } from '@/lib/trpc'
+import * as React from "react"
+import { useForm, useFieldArray, Controller } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
+import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
+import { FormError, FormItem } from "@/components/forms"
+import { trpc } from "@/lib/trpc"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
-import { DateInput } from '@/components/ui/dateInput'
-import { Input } from '../ui/input'
+} from "@/components/ui/select"
+import { DateInput } from "@/components/ui/dateInput"
+import { Input } from "../ui/input"
 
 const saleItemSchema = z.object({
-  productId: z.string().min(1, 'Product is required'),
-  quantity: z.number().int().positive('Quantity must be positive'),
+  productId: z.string().min(1, "Product is required"),
+  quantity: z.number().int().positive("Quantity must be positive"),
 })
 
 const saleFormSchema = z.object({
-  clientId: z.string().min(1, 'Client is required'),
+  clientId: z.string().min(1, "Client is required"),
   saleDate: z.string(), // Will be converted to Date
-  items: z.array(saleItemSchema).min(1, 'At least one product is required'),
+  items: z.array(saleItemSchema).min(1, "At least one product is required"),
 })
 
 type SaleFormData = z.infer<typeof saleFormSchema>
@@ -62,15 +62,15 @@ export function SaleForm({
   } = useForm<SaleFormData>({
     resolver: zodResolver(saleFormSchema),
     defaultValues: {
-      clientId: '',
-      saleDate: new Date().toISOString().split('T')[0],
-      items: [{ productId: '', quantity: 1 }],
+      clientId: "",
+      saleDate: new Date().toISOString().split("T")[0],
+      items: [{ productId: "", quantity: 1 }],
     },
   })
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'items',
+    name: "items",
   })
 
   // Fetch clients and products
@@ -87,7 +87,7 @@ export function SaleForm({
   const products = productsData?.products || []
 
   // Watch items to calculate total
-  const watchedItems = watch('items')
+  const watchedItems = watch("items")
 
   const calculateTotal = () => {
     let total = 0
@@ -101,7 +101,7 @@ export function SaleForm({
   }
 
   const formatPrice = (priceInCents: number) => {
-    return `R$ ${(priceInCents / 100).toLocaleString('pt-BR', {
+    return `R$ ${(priceInCents / 100).toLocaleString("pt-BR", {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     })}`
@@ -181,14 +181,14 @@ export function SaleForm({
           <Button
             type="button"
             variant="outline"
-            onClick={() => append({ productId: '', quantity: 1 })}
+            onClick={() => append({ productId: "", quantity: 1 })}
             className="text-secondary-foreground"
           >
             Add Product
           </Button>
         </div>
 
-        {errors.items && typeof errors.items.message === 'string' && (
+        {errors.items && typeof errors.items.message === "string" && (
           <FormError message={errors.items.message} />
         )}
 
@@ -214,8 +214,8 @@ export function SaleForm({
                         <SelectContent>
                           {products.map((product) => (
                             <SelectItem key={product.id} value={product.id}>
-                              {product.name} -{' '}
-                              {formatPrice(product.priceInCents)} (Stock:{' '}
+                              {product.name} -{" "}
+                              {formatPrice(product.priceInCents)} (Stock:{" "}
                               {product.stockQty})
                             </SelectItem>
                           ))}
@@ -278,7 +278,7 @@ export function SaleForm({
                             product.priceInCents * watchedItems[index].quantity
                           )
                         }
-                        return '-'
+                        return "-"
                       })()}
                     </span>
                   </div>
@@ -303,7 +303,7 @@ export function SaleForm({
       {/* Submit Button */}
       <div className="flex gap-4">
         <Button type="submit" disabled={isLoading}>
-          {isLoading ? 'Creating Sale...' : 'Create Sale'}
+          {isLoading ? "Creating Sale..." : "Create Sale"}
         </Button>
         <Button
           type="button"

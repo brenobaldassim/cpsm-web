@@ -5,15 +5,15 @@
  * Includes Brazilian-specific validations (CPF, CEP)
  */
 
-import { TRPCError } from '@trpc/server'
-import { z } from 'zod'
-import { createTRPCRouter, protectedProcedure } from '../../trpc'
+import { TRPCError } from "@trpc/server"
+import { z } from "zod"
+import { createTRPCRouter, protectedProcedure } from "../../trpc"
 import {
   createClientInput,
   updateClientInput,
   listClientsInput,
   listClientsOutput,
-} from './schemas/validation'
+} from "./schemas/validation"
 
 export const clientsRouter = createTRPCRouter({
   /**
@@ -32,8 +32,8 @@ export const clientsRouter = createTRPCRouter({
 
       if (existingClient) {
         throw new TRPCError({
-          code: 'CONFLICT',
-          message: 'CPF already registered',
+          code: "CONFLICT",
+          message: "CPF already registered",
         })
       }
 
@@ -41,8 +41,8 @@ export const clientsRouter = createTRPCRouter({
       const user = await ctx.prisma.user.findFirst()
       if (!user) {
         throw new TRPCError({
-          code: 'INTERNAL_SERVER_ERROR',
-          message: 'No user found',
+          code: "INTERNAL_SERVER_ERROR",
+          message: "No user found",
         })
       }
 
@@ -79,8 +79,8 @@ export const clientsRouter = createTRPCRouter({
 
       if (!existingClient) {
         throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'Client not found',
+          code: "NOT_FOUND",
+          message: "Client not found",
         })
       }
 
@@ -125,16 +125,16 @@ export const clientsRouter = createTRPCRouter({
 
       if (!client) {
         throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'Client not found',
+          code: "NOT_FOUND",
+          message: "Client not found",
         })
       }
 
       // Check if client has sales
       if (client.sales.length > 0) {
         throw new TRPCError({
-          code: 'CONFLICT',
-          message: 'Cannot delete client with sales history',
+          code: "CONFLICT",
+          message: "Cannot delete client with sales history",
         })
       }
 
@@ -162,8 +162,8 @@ export const clientsRouter = createTRPCRouter({
 
       if (!client) {
         throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'Client not found',
+          code: "NOT_FOUND",
+          message: "Client not found",
         })
       }
 
@@ -185,9 +185,9 @@ export const clientsRouter = createTRPCRouter({
       const where = search
         ? {
             OR: [
-              { firstName: { contains: search, mode: 'insensitive' as const } },
-              { lastName: { contains: search, mode: 'insensitive' as const } },
-              { email: { contains: search, mode: 'insensitive' as const } },
+              { firstName: { contains: search, mode: "insensitive" as const } },
+              { lastName: { contains: search, mode: "insensitive" as const } },
+              { email: { contains: search, mode: "insensitive" as const } },
             ],
           }
         : {}

@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
-import { ClientForm } from '@/components/forms'
-import { createClientInput } from '@/server/api/routers/clients/schemas/validation'
-import { z } from 'zod'
+import { useState } from "react"
+import { ClientForm } from "@/components/forms"
+import { createClientInput } from "@/server/api/routers/clients/schemas/validation"
+import { z } from "zod"
 
 interface ClientFormWrapperProps {
   createClient: (data: z.infer<typeof createClientInput>) => Promise<void>
@@ -19,7 +19,7 @@ export function ClientFormWrapper({ createClient }: ClientFormWrapperProps) {
     try {
       await createClient(data)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred')
+      setError(err instanceof Error ? err.message : "An error occurred")
       setIsLoading(false)
     }
   }

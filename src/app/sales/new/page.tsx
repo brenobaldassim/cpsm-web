@@ -4,19 +4,19 @@
  * Form to create a new sale with multiple products.
  */
 
-'use client'
+"use client"
 
-import * as React from 'react'
-import { useRouter } from 'next/navigation'
-import { SaleForm } from '@/components/forms'
-import { trpc } from '@/lib/trpc'
+import * as React from "react"
+import { useRouter } from "next/navigation"
+import { SaleForm } from "@/components/forms"
+import { trpc } from "@/lib/trpc"
 
 export default function CreateSalePage() {
   const router = useRouter()
 
   const createMutation = trpc.sales.create.useMutation({
     onSuccess: () => {
-      router.push('/sales')
+      router.push("/sales")
     },
   })
 

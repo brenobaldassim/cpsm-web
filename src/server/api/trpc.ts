@@ -5,12 +5,12 @@
  * Exports procedures (public, protected) for creating API routes.
  */
 
-import { initTRPC, TRPCError } from '@trpc/server'
-import { type FetchCreateContextFnOptions } from '@trpc/server/adapters/fetch'
-import superjson from 'superjson'
-import { ZodError } from 'zod'
-import { auth } from '../auth'
-import { prisma } from '../db'
+import { initTRPC, TRPCError } from "@trpc/server"
+import { type FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch"
+import superjson from "superjson"
+import { ZodError } from "zod"
+import { auth } from "../auth"
+import { prisma } from "../db"
 
 /**
  * Create context for each request
@@ -69,8 +69,8 @@ export const publicProcedure = t.procedure
 export const protectedProcedure = t.procedure.use(async ({ ctx, next }) => {
   if (!ctx.session?.user) {
     throw new TRPCError({
-      code: 'UNAUTHORIZED',
-      message: 'You must be logged in to access this resource',
+      code: "UNAUTHORIZED",
+      message: "You must be logged in to access this resource",
     })
   }
 

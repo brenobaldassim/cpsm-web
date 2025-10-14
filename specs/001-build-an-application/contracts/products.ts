@@ -5,7 +5,7 @@
  * Procedures for product management (CRUD operations with stock tracking).
  */
 
-import { z } from "zod";
+import { z } from "zod"
 
 // ============================================================================
 // Input Schemas
@@ -15,22 +15,22 @@ export const createProductInput = z.object({
   name: z.string().min(1).max(255),
   priceInCents: z.number().int().positive(),
   stockQty: z.number().int().nonnegative().default(0),
-});
+})
 
 export const updateProductInput = z.object({
   id: z.string(),
   name: z.string().min(1).max(255).optional(),
   priceInCents: z.number().int().positive().optional(),
   stockQty: z.number().int().nonnegative().optional(),
-});
+})
 
 export const deleteProductInput = z.object({
   id: z.string(),
-});
+})
 
 export const getProductInput = z.object({
   id: z.string(),
-});
+})
 
 export const listProductsInput = z.object({
   page: z.number().int().positive().default(1),
@@ -41,12 +41,12 @@ export const listProductsInput = z.object({
     .enum(["name", "priceInCents", "stockQty", "createdAt"])
     .default("name"),
   sortOrder: z.enum(["asc", "desc"]).default("asc"),
-});
+})
 
 export const checkStockInput = z.object({
   productId: z.string(),
   requestedQty: z.number().int().positive(),
-});
+})
 
 // ============================================================================
 // Output Schemas
@@ -59,7 +59,7 @@ export const productOutput = z.object({
   stockQty: z.number(),
   createdAt: z.date(),
   updatedAt: z.date(),
-});
+})
 
 export const productListOutput = z.object({
   products: z.array(productOutput),
@@ -67,13 +67,13 @@ export const productListOutput = z.object({
   page: z.number(),
   limit: z.number(),
   totalPages: z.number(),
-});
+})
 
 export const stockCheckOutput = z.object({
   available: z.boolean(),
   currentStock: z.number(),
   requestedQty: z.number(),
-});
+})
 
 // ============================================================================
 // Procedure Definitions
@@ -107,7 +107,7 @@ export const stockCheckOutput = z.object({
 export const createProductProcedure = {
   input: createProductInput,
   output: productOutput,
-};
+}
 
 /**
  * products.update
@@ -139,7 +139,7 @@ export const createProductProcedure = {
 export const updateProductProcedure = {
   input: updateProductInput,
   output: productOutput,
-};
+}
 
 /**
  * products.delete
@@ -165,7 +165,7 @@ export const updateProductProcedure = {
 export const deleteProductProcedure = {
   input: deleteProductInput,
   output: z.object({ success: z.boolean() }),
-};
+}
 
 /**
  * products.getById
@@ -189,7 +189,7 @@ export const deleteProductProcedure = {
 export const getProductProcedure = {
   input: getProductInput,
   output: productOutput,
-};
+}
 
 /**
  * products.list
@@ -221,7 +221,7 @@ export const getProductProcedure = {
 export const listProductsProcedure = {
   input: listProductsInput,
   output: productListOutput,
-};
+}
 
 /**
  * products.checkStock
@@ -252,7 +252,7 @@ export const listProductsProcedure = {
 export const checkStockProcedure = {
   input: checkStockInput,
   output: stockCheckOutput,
-};
+}
 
 // ============================================================================
 // Contract Summary
@@ -265,4 +265,4 @@ export const productsContract = {
   getById: getProductProcedure,
   list: listProductsProcedure,
   checkStock: checkStockProcedure,
-};
+}

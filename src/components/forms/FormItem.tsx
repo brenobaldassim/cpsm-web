@@ -5,8 +5,8 @@
  * Use this to wrap form fields in a form.
  */
 
-import * as React from 'react'
-import { cn } from '@/lib/utils'
+import * as React from "react"
+import { cn } from "@/lib/utils"
 
 export interface FormItemProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Children form fields */
@@ -36,10 +36,10 @@ export const FormItem: React.FC<FormItemProps> = ({
   ...props
 }) => {
   return (
-    <div className={cn('space-y-2', className)} {...props}>
+    <div className={cn("space-y-2", className)} {...props}>
       {children}
     </div>
   )
 }
 
-FormItem.displayName = 'FormItem'
+FormItem.displayName = "FormItem"

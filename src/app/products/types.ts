@@ -4,4 +4,5 @@ export interface ProductsListPageParams {
   inStockOnly?: string
   sortBy?: "name" | "priceInCents" | "stockQty" | "createdAt"
   sortOrder?: "asc" | "desc"
+  viewMode?: "card" | "table"
 }

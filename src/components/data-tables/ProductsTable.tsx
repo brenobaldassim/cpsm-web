@@ -10,21 +10,21 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { DataTable, Column } from "./DataTable"
-import { Product } from "@prisma/client"
 import { SquarePen } from "lucide-react"
 import { DeleteProductButton } from "@/components/delete-buttons/DeleteProductButton"
 import { formatPrice } from "@/app/utils/formatPrice"
 import { Card } from "@/components/ui/card"
+import { TProductSchema } from "@/server/api/routers/products/schemas/validation"
 
 interface ProductsTableProps {
-  products: Product[]
+  products: TProductSchema[]
 }
 
 export function ProductsTable({ products }: ProductsTableProps) {
-  const Buttons = (row: Product) => (
+  const Buttons = (row: TProductSchema) => (
     <div className="flex gap-2">
       <Link href={`/products/${row.id}`}>
-        <Button variant="outline" size="sm">
+        <Button className="hover:bg-transparent" variant="ghost" size="icon">
           <SquarePen />
         </Button>
       </Link>
@@ -32,7 +32,7 @@ export function ProductsTable({ products }: ProductsTableProps) {
     </div>
   )
 
-  const columns: Column<Product>[] = [
+  const columns: Column<TProductSchema>[] = [
     {
       key: "name",
       label: "Name",

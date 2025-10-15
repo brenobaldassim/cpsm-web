@@ -13,6 +13,7 @@ import { ProductsFilter } from "@/components/filters/ProductsFilter"
 import { ItemsListPagination } from "@/components/items-list-pagination"
 import { ProductsListPageParams } from "./types"
 import { ProductsCardList } from "@/components/card-lists/productsCardList"
+import { ProductsTable } from "@/components/data-tables/ProductsTable"
 import { PackagePlus } from "lucide-react"
 
 interface ProductsListPageProps {
@@ -28,6 +29,7 @@ export default async function ProductsListPage({
   const inStockOnly = params.inStockOnly === "true"
   const sortBy = params.sortBy || "name"
   const sortOrder = params.sortOrder || "asc"
+  const viewMode = params.viewMode || "card"
 
   const caller = await createCaller()
   const data = await caller.products.list({
@@ -56,10 +58,14 @@ export default async function ProductsListPage({
           </Link>
         </div>
 
-        <ProductsFilter inStockOnly={inStockOnly} />
+        <ProductsFilter inStockOnly={inStockOnly} viewMode={viewMode} />
       </Card>
 
-      <ProductsCardList data={data} />
+      {viewMode === "table" ? (
+        <ProductsTable products={data.products} />
+      ) : (
+        <ProductsCardList data={data} />
+      )}
 
       <ItemsListPagination
         page={page}

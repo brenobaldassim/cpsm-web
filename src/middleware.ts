@@ -12,7 +12,7 @@ import type { NextRequest } from "next/server"
 /**
  * Rate limiting configuration
  */
-const RATE_LIMIT = 30 // per IP per minute
+const RATE_LIMIT = 60 // per IP per minute
 const accessLog = new Map<string, number[]>()
 const TIME_IN_MS = {
   ONE_MINUTE: 60000,

@@ -15,6 +15,7 @@ import {
   listSalesInput,
   filterSalesInput,
   getSummaryInput,
+  listSalesOutput,
 } from "./schemas/validation"
 
 export const salesRouter = createTRPCRouter({
@@ -188,6 +189,7 @@ export const salesRouter = createTRPCRouter({
    */
   list: protectedProcedure
     .input(listSalesInput)
+    .output(listSalesOutput)
     .query(async ({ input, ctx }) => {
       const { page, limit, sortBy, sortOrder } = input
       const skip = (page - 1) * limit

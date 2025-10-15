@@ -1,4 +1,18 @@
 import z from "zod"
+import { Prisma } from "@prisma/client"
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const saleWithItemsAndClient = Prisma.validator<Prisma.SaleDefaultArgs>()({
+  include: { saleItems: true, client: true },
+})
+
+export type SaleWithItemsAndClient = Prisma.SaleGetPayload<
+  typeof saleWithItemsAndClient
+>
+
+export const saleSchema = z.custom<SaleWithItemsAndClient>((val) => {
+  return typeof val === "object" && val !== null && "id" in val
+})
 
 export const saleItemInput = z.object({
   productId: z.string(),
@@ -31,3 +45,14 @@ export const getSummaryInput = z.object({
   startDate: z.coerce.date(),
   endDate: z.coerce.date(),
 })
+
+export const listSalesOutput = z.object({
+  sales: z.array(saleSchema),
+  total: z.number(),
+  page: z.number(),
+  limit: z.number(),
+  totalPages: z.number(),
+})
+
+export type TSaleSchema = z.infer<typeof saleSchema>
+export type TListSalesOutput = z.infer<typeof listSalesOutput>

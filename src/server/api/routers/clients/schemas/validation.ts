@@ -2,6 +2,7 @@ import { z } from "zod"
 import { Prisma } from "@prisma/client"
 import { emailSchema, cpfSchema, addressSchema } from "@/lib/validations"
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const clientWithAddresses = Prisma.validator<Prisma.ClientDefaultArgs>()({
   include: { addresses: true },
 })

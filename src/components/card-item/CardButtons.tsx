@@ -15,7 +15,7 @@ export const CardButtons: React.FC<CardButtonProps> = ({
 }) => (
   <CardButtonSection>
     <Link href={`${href}/${id}`}>
-      <Button variant="ghost" size="icon">
+      <Button className="hover:bg-transparent" variant="ghost" size="icon">
         <SquarePen />
       </Button>
     </Link>

@@ -48,8 +48,8 @@ export default async function ClientsListPage({
             </p>
           </div>
           <Link href="/clients/new">
-            <Button className="[&_svg]:!size-7">
-              <UserRoundPlus />
+            <Button>
+              <UserRoundPlus className="size-7" />
             </Button>
           </Link>
         </div>

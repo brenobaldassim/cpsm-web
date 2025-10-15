@@ -50,8 +50,8 @@ export default async function ProductsListPage({
             </p>
           </div>
           <Link href="/products/new">
-            <Button className="[&_svg]:!size-7">
-              <PackagePlus />
+            <Button>
+              <PackagePlus className="size-7" />
             </Button>
           </Link>
         </div>

@@ -11,6 +11,8 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { UserRoundPlus } from "lucide-react"
 import { ClientsCardList } from "@/components/card-lists/clientsCardList"
+import { ClientsTable } from "@/components/data-tables/ClientsTable"
+import { ClientsFilter } from "@/components/filters/ClientsFilter"
 import { createCaller } from "@/server/api/server-caller"
 import { ClientsListPageParams } from "./types"
 import { ItemsListPagination } from "@/components/items-list-pagination"
@@ -27,6 +29,7 @@ export default async function ClientsListPage({
   const search = params.search || ""
   const sortBy = params.sortBy || "lastName"
   const sortOrder = params.sortOrder || "asc"
+  const viewMode = params.viewMode || "card"
 
   const caller = await createCaller()
   const data = await caller.clients.list({
@@ -48,13 +51,20 @@ export default async function ClientsListPage({
             </p>
           </div>
           <Link href="/clients/new">
-            <Button>
-              <UserRoundPlus className="size-7" />
+            <Button variant="default">
+              <UserRoundPlus className="size-7 text-primary-foreground" />
             </Button>
           </Link>
         </div>
+
+        <ClientsFilter viewMode={viewMode} />
       </Card>
-      <ClientsCardList data={data} />
+
+      {viewMode === "table" ? (
+        <ClientsTable clients={data.clients} />
+      ) : (
+        <ClientsCardList data={data} />
+      )}
 
       <ItemsListPagination
         page={page}

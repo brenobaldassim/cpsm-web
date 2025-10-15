@@ -3,4 +3,5 @@ export interface ClientsListPageParams {
   search?: string
   sortBy?: "firstName" | "lastName" | "email" | "createdAt"
   sortOrder?: "asc" | "desc"
+  viewMode?: "card" | "table"
 }

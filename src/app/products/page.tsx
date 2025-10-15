@@ -52,8 +52,8 @@ export default async function ProductsListPage({
             </p>
           </div>
           <Link href="/products/new">
-            <Button>
-              <PackagePlus className="size-7" />
+            <Button variant="default">
+              <PackagePlus className="size-7 text-primary-foreground" />
             </Button>
           </Link>
         </div>

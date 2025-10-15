@@ -4,8 +4,6 @@
  * View complete sale information with items.
  */
 
-"use client"
-
 import * as React from "react"
 import { Card } from "@/components/ui/card"
 import {
@@ -17,25 +15,21 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { trpc } from "@/lib/trpc"
 import { notFound } from "next/navigation"
-import { Loading } from "@/components/loading/Loading"
 import { formatPrice } from "@/app/utils/formatPrice"
+import { createCaller } from "@/server/api/server-caller"
 
-export default function SaleDetailPage({
+export default async function SaleDetailPage({
   params,
 }: {
   params: Promise<{ id: string }>
 }) {
-  const { id: saleId } = React.use(params)
+  const { id: saleId } = await params
+  const caller = await createCaller()
 
-  const { data: sale, isLoading: isLoadingSale } = trpc.sales.getById.useQuery({
+  const sale = await caller.sales.getById({
     id: saleId,
   })
-
-  if (isLoadingSale) {
-    return <Loading />
-  }
 
   if (!sale) {
     return notFound()

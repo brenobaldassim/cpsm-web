@@ -11,6 +11,8 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { FilePlusIcon } from "lucide-react"
 import { SalesCardList } from "@/components/card-lists/salesCardList"
+import { SalesTable } from "@/components/data-tables/SalesTable"
+import { SalesFilter } from "@/components/filters/SalesFilter"
 import { createCaller } from "@/server/api/server-caller"
 import { SalesListPageParams } from "./types"
 import { ItemsListPagination } from "@/components/items-list-pagination"
@@ -24,6 +26,7 @@ export default async function SalesListPage({
 }: SalesListPageProps) {
   const params = await searchParams
   const page = Number(params.page) || 1
+  const viewMode = params.viewMode || "card"
   // TODO: Add date filtering UI
   // const [dateFrom, setDateFrom] = React.useState<Date>(() => {
   //   const date = new Date()
@@ -50,8 +53,8 @@ export default async function SalesListPage({
             </p>
           </div>
           <Link href="/sales/new">
-            <Button>
-              <FilePlusIcon className="size-7" />
+            <Button variant="default">
+              <FilePlusIcon className="size-7 text-primary-foreground" />
             </Button>
           </Link>
         </div>
@@ -62,8 +65,15 @@ export default async function SalesListPage({
             Showing sales from the last 30 days (default view)
           </p>
         </div>
+
+        <SalesFilter viewMode={viewMode} />
       </Card>
-      <SalesCardList data={data} />
+
+      {viewMode === "table" ? (
+        <SalesTable sales={data.sales} />
+      ) : (
+        <SalesCardList data={data} />
+      )}
 
       <ItemsListPagination
         page={page}

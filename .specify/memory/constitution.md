@@ -38,6 +38,7 @@ Rationale for v1.1.0 (MINOR):
 ### I. Code Quality Standards
 
 **Requirements**:
+
 - All code MUST follow established language-specific style guides and linting rules
 - Code MUST be self-documenting with clear naming conventions
 - Complex logic MUST include explanatory comments
@@ -47,13 +48,14 @@ Rationale for v1.1.0 (MINOR):
 - MUST NOT introduce compiler/linter errors without immediate resolution
 
 **Dependency Minimization** (NEW):
+
 - Dependencies MUST be evaluated for necessity before adoption
 - Prefer native/standard library solutions over external dependencies
 - Each dependency MUST be justified by:
-  * Solving a complex problem that native solutions cannot reasonably address
-  * Active maintenance with security updates
-  * Acceptable license compatibility
-  * Small bundle size impact for client-side code
+  - Solving a complex problem that native solutions cannot reasonably address
+  - Active maintenance with security updates
+  - Acceptable license compatibility
+  - Small bundle size impact for client-side code
 - Dependencies MUST NOT duplicate functionality already provided by other dependencies
 - Regular dependency audits MUST identify and remove unused or replaceable dependencies
 
@@ -62,11 +64,13 @@ Rationale for v1.1.0 (MINOR):
 ### II. Testing Standards (NON-NEGOTIABLE)
 
 **Test-Driven Development (TDD)**:
+
 - Tests MUST be written before implementation (Red-Green-Refactor cycle)
 - Implementation MAY NOT proceed until tests are written and failing
 - All tests MUST pass before code is considered complete
 
 **Coverage Requirements**:
+
 - Contract tests MUST be written for all API endpoints before implementation
 - Integration tests MUST cover all user-facing workflows
 - Unit tests MUST cover business logic, validation, and edge cases
@@ -74,6 +78,7 @@ Rationale for v1.1.0 (MINOR):
 - Tests MUST be independent, repeatable, and fast (<5s per test)
 
 **Test Organization**:
+
 - `tests/contract/` - API contract tests validating request/response schemas
 - `tests/integration/` - End-to-end workflow tests
 - `tests/unit/` - Isolated component tests
@@ -83,6 +88,7 @@ Rationale for v1.1.0 (MINOR):
 ### III. User Experience Consistency
 
 **Responsive Design** (NEW):
+
 - User interfaces MUST be fully responsive across mobile and desktop devices
 - Mobile breakpoints MUST be tested at minimum: 320px, 375px, 768px
 - Desktop breakpoints MUST be tested at minimum: 1024px, 1440px, 1920px
@@ -93,6 +99,7 @@ Rationale for v1.1.0 (MINOR):
 - Performance MUST NOT degrade on mobile devices (see Performance Requirements)
 
 **Design Principles**:
+
 - User interfaces MUST follow a consistent design system
 - User interactions MUST provide immediate feedback (<100ms perceived response)
 - Error messages MUST be user-friendly, actionable, and never expose technical details
@@ -103,6 +110,7 @@ Rationale for v1.1.0 (MINOR):
 - Color contrast MUST meet accessibility standards (4.5:1 for normal text, 3:1 for large text)
 
 **Interaction Patterns**:
+
 - Forms MUST validate inline with clear error indicators
 - Confirmation MUST be required for destructive actions
 - Success/error states MUST use consistent visual patterns
@@ -111,6 +119,7 @@ Rationale for v1.1.0 (MINOR):
 - Touch gestures MUST follow platform conventions on mobile devices
 
 **Documentation**:
+
 - User-facing features MUST include usage documentation
 - API documentation MUST be automatically generated and kept in sync
 - Breaking changes MUST be documented with migration guides
@@ -120,6 +129,7 @@ Rationale for v1.1.0 (MINOR):
 ### IV. Performance Requirements
 
 **Response Time Targets**:
+
 - API endpoints MUST respond within 200ms at p95 under normal load
 - UI interactions MUST render within 100ms for perceived instant response
 - Page loads MUST complete within 2 seconds on standard connections
@@ -127,6 +137,7 @@ Rationale for v1.1.0 (MINOR):
 - Mobile page loads MUST complete within 3 seconds on 3G connections
 
 **Resource Constraints**:
+
 - Memory usage MUST stay below 500MB per service instance
 - Database connections MUST be pooled and reused
 - Large file operations MUST stream data rather than loading into memory
@@ -135,12 +146,14 @@ Rationale for v1.1.0 (MINOR):
 - Initial JavaScript bundle MUST be under 200KB (gzipped) for web applications
 
 **Scalability**:
+
 - Services MUST be designed for horizontal scaling
 - State MUST NOT be stored in application memory
 - Caching MUST be implemented for expensive operations
 - Rate limiting MUST protect against abuse
 
 **Monitoring**:
+
 - All services MUST expose health check endpoints
 - Performance metrics MUST be collected and monitored
 - Slow queries MUST trigger alerts
@@ -151,12 +164,14 @@ Rationale for v1.1.0 (MINOR):
 ## Development Workflow
 
 ### Planning Phase
+
 1. Feature specifications MUST be documented in `spec.md` before technical planning
 2. Implementation plans MUST be reviewed in `plan.md` with constitution compliance check
 3. Research MUST resolve all ambiguities before design begins
 4. Design artifacts (data-model, contracts, quickstart) MUST be created before implementation
 
 ### Implementation Phase
+
 1. Tests MUST be written first (contract → integration → unit)
 2. Tests MUST fail initially to verify they test the right behavior
 3. Implementation MUST make tests pass without compromising quality
@@ -164,6 +179,7 @@ Rationale for v1.1.0 (MINOR):
 5. Each task MUST be committed atomically with descriptive messages
 
 ### Review Phase
+
 1. All code MUST pass automated tests in CI pipeline
 2. Code reviews MUST verify constitutional compliance
 3. Performance benchmarks MUST meet targets
@@ -172,11 +188,13 @@ Rationale for v1.1.0 (MINOR):
 ## Quality Gates
 
 **Phase 0 - Research**:
+
 - [ ] All technical unknowns resolved
 - [ ] Technology choices justified with alternatives considered
 - [ ] Dependencies evaluated for security, maintenance, license, and necessity
 
 **Phase 1 - Design**:
+
 - [ ] Data model covers all entities and relationships
 - [ ] API contracts defined for all endpoints
 - [ ] Test scenarios written for all user stories
@@ -184,19 +202,22 @@ Rationale for v1.1.0 (MINOR):
 - [ ] Constitution compliance verified
 
 **Phase 2 - Testing**:
+
 - [ ] Contract tests written and failing
-- [ ] Integration tests written and failing  
+- [ ] Integration tests written and failing
 - [ ] Unit tests planned for business logic
 - [ ] Performance test scenarios defined
 - [ ] Responsive design tests written for key breakpoints
 
 **Phase 3 - Implementation**:
+
 - [ ] All tests passing
 - [ ] No linter errors or warnings
 - [ ] Code review approved
 - [ ] Documentation updated
 
 **Phase 4 - Validation**:
+
 - [ ] Performance benchmarks meet targets
 - [ ] Accessibility standards verified
 - [ ] Responsive design validated across all breakpoints
@@ -206,12 +227,14 @@ Rationale for v1.1.0 (MINOR):
 ## Governance
 
 ### Constitution Authority
+
 - This constitution supersedes all other development practices and guidelines
 - All pull requests MUST demonstrate constitutional compliance
 - Deviations MUST be explicitly justified in the Complexity Tracking section of the implementation plan
 - Unjustified deviations MUST be rejected
 
 ### Amendment Process
+
 1. Proposed amendments MUST be documented with rationale
 2. Impact analysis MUST identify affected templates and workflows
 3. Migration plan MUST be provided for existing code
@@ -222,6 +245,7 @@ Rationale for v1.1.0 (MINOR):
    - PATCH: Clarifications, corrections, or non-semantic improvements
 
 ### Compliance Review
+
 - Constitution compliance MUST be verified at design phase (before implementation)
 - Constitution compliance MUST be re-verified after design phase (before task generation)
 - CI/CD pipelines MUST enforce automated quality gates
@@ -229,11 +253,13 @@ Rationale for v1.1.0 (MINOR):
 - Team retrospectives SHOULD evaluate constitutional effectiveness
 
 ### Runtime Guidance
+
 - Agent-specific guidance files MAY supplement this constitution
 - Supplemental guidance MUST NOT contradict constitutional principles
 - For Cursor-specific development guidance, see repository root agent files (e.g., `CLAUDE.md`, `AGENTS.md`)
 
 ### Continuous Improvement
+
 - Constitution reviews SHOULD occur quarterly
 - Team feedback MUST inform amendments
 - Metrics SHOULD validate principle effectiveness

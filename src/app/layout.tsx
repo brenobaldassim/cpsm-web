@@ -5,41 +5,41 @@
  * Wraps all pages with tRPC and React Query providers.
  */
 
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import '@/app/globals.css'
-import { TRPCProvider } from '@/app/_trpc/Provider'
-import { SessionProvider } from 'next-auth/react'
+import type { Metadata } from "next"
+import { Inter } from "next/font/google"
+import "@/app/globals.css"
+import { TRPCProvider } from "@/app/_trpc/Provider"
+import { SessionProvider } from "next-auth/react"
 import {
   SidebarProvider,
   SidebarInset,
   SidebarTrigger,
-} from '@/components/ui/sidebar'
-import { AppSidebar } from '@/components/layouts/navigation'
-import { cn } from '@/lib/utils'
+} from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/layouts/navigation"
+import { cn } from "@/lib/utils"
 
 // Font optimization
 const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-inter',
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
 })
 
 export const metadata: Metadata = {
   title: {
-    default: 'Client & Product Manager',
-    template: '%s | Client & Product Manager',
+    default: "Client & Product Manager",
+    template: "%s | Client & Product Manager",
   },
   description:
-    'Sales and client management system with real-time inventory tracking',
-  keywords: ['sales', 'client management', 'inventory', 'products', 'CRM'],
-  authors: [{ name: 'Your Company' }],
+    "Sales and client management system with real-time inventory tracking",
+  keywords: ["sales", "client management", "inventory", "products", "CRM"],
+  authors: [{ name: "Your Company" }],
   openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    title: 'Client & Product Manager',
+    type: "website",
+    locale: "en_US",
+    title: "Client & Product Manager",
     description:
-      'Sales and client management system with real-time inventory tracking',
+      "Sales and client management system with real-time inventory tracking",
   },
 }
 
@@ -51,7 +51,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn(inter.variable, 'dark')}
+      className={cn(inter.variable, "dark")}
       suppressHydrationWarning
     >
       <body className="min-h-screen bg-background font-sans antialiased">

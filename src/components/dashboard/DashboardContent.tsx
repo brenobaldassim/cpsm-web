@@ -4,7 +4,7 @@
  * Server component for dashboard - receives data as props for SSR.
  */
 
-import { DashBoardCard } from './DashBoardCard'
+import { DashBoardCard } from "./DashBoardCard"
 
 type DashboardContentProps = {
   clientsData: {
@@ -118,7 +118,7 @@ export function DashboardContent({
         <DashBoardCard
           title="Revenue (30 days)"
           value={`R$ ${(salesSummary.totalRevenueInCents / 100).toLocaleString(
-            'pt-BR',
+            "pt-BR",
             {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,

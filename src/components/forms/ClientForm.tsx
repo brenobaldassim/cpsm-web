@@ -5,51 +5,51 @@
  * Supports up to 2 addresses (HOME and WORK).
  */
 
-'use client'
+"use client"
 
-import * as React from 'react'
-import { useForm, Controller } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import { FormField, FormError, FormItem } from '@/components/forms'
-import { cpfSchema, cepSchema, brazilianStates } from '@/lib/validations'
+import * as React from "react"
+import { useForm, Controller } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
+import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
+import { FormField, FormError, FormItem } from "@/components/forms"
+import { cpfSchema, cepSchema, brazilianStates } from "@/lib/validations"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
+} from "@/components/ui/select"
 
 const addressSchema = z.object({
-  type: z.enum(['HOME', 'WORK']),
-  street: z.string().min(1, 'Street is required').max(255),
-  number: z.string().min(1, 'Number is required').max(20),
-  city: z.string().min(1, 'City is required').max(100),
+  type: z.enum(["HOME", "WORK"]),
+  street: z.string().min(1, "Street is required").max(255),
+  number: z.string().min(1, "Number is required").max(20),
+  city: z.string().min(1, "City is required").max(100),
   state: z.enum(brazilianStates, {
-    errorMap: () => ({ message: 'Invalid Brazilian state' }),
+    errorMap: () => ({ message: "Invalid Brazilian state" }),
   }),
   cep: cepSchema,
 })
 
 const clientFormSchema = z.object({
-  firstName: z.string().min(1, 'First name is required').max(100),
-  lastName: z.string().min(1, 'Last name is required').max(100),
-  email: z.string().email('Invalid email address'),
+  firstName: z.string().min(1, "First name is required").max(100),
+  lastName: z.string().min(1, "Last name is required").max(100),
+  email: z.string().email("Invalid email address"),
   cpf: cpfSchema,
   socialMedia: z.string().max(100).optional(),
   addresses: z
     .array(addressSchema)
-    .min(1, 'At least one address is required')
-    .max(2, 'Maximum 2 addresses allowed')
+    .min(1, "At least one address is required")
+    .max(2, "Maximum 2 addresses allowed")
     .refine(
       (addresses) => {
         const types = addresses.map((a) => a.type)
         return types.length === new Set(types).size
       },
-      { message: 'Cannot have duplicate address types' }
+      { message: "Cannot have duplicate address types" }
     ),
 })
 
@@ -78,38 +78,38 @@ export function ClientForm({
   } = useForm<ClientFormData>({
     resolver: zodResolver(clientFormSchema),
     defaultValues: defaultValues || {
-      firstName: '',
-      lastName: '',
-      email: '',
-      cpf: '',
-      socialMedia: '',
+      firstName: "",
+      lastName: "",
+      email: "",
+      cpf: "",
+      socialMedia: "",
       addresses: [
         {
-          type: 'HOME',
-          street: '',
-          number: '',
-          city: '',
-          state: 'SP',
-          cep: '',
+          type: "HOME",
+          street: "",
+          number: "",
+          city: "",
+          state: "SP",
+          cep: "",
         },
       ],
     },
   })
 
-  const addresses = watch('addresses')
+  const addresses = watch("addresses")
 
   const addAddress = () => {
     if (addresses.length < 2) {
-      const newType = addresses[0]?.type === 'HOME' ? 'WORK' : 'HOME'
-      setValue('addresses', [
+      const newType = addresses[0]?.type === "HOME" ? "WORK" : "HOME"
+      setValue("addresses", [
         ...addresses,
         {
-          type: newType as 'HOME' | 'WORK',
-          street: '',
-          number: '',
-          city: '',
-          state: 'SP',
-          cep: '',
+          type: newType as "HOME" | "WORK",
+          street: "",
+          number: "",
+          city: "",
+          state: "SP",
+          cep: "",
         },
       ])
     }
@@ -118,7 +118,7 @@ export function ClientForm({
   const removeAddress = (index: number) => {
     if (addresses.length > 1) {
       setValue(
-        'addresses',
+        "addresses",
         addresses.filter((_, i) => i !== index)
       )
     }
@@ -137,7 +137,7 @@ export function ClientForm({
           <FormItem>
             <FormField
               label="First Name"
-              registration={register('firstName')}
+              registration={register("firstName")}
               error={errors.firstName}
               required
             />
@@ -146,7 +146,7 @@ export function ClientForm({
           <FormItem>
             <FormField
               label="Last Name"
-              registration={register('lastName')}
+              registration={register("lastName")}
               error={errors.lastName}
               required
             />
@@ -156,7 +156,7 @@ export function ClientForm({
             <FormField
               label="Email"
               type="email"
-              registration={register('email')}
+              registration={register("email")}
               error={errors.email}
               required
             />
@@ -165,7 +165,7 @@ export function ClientForm({
           <FormItem>
             <FormField
               label="CPF"
-              registration={register('cpf')}
+              registration={register("cpf")}
               error={errors.cpf}
               placeholder="000.000.000-00"
               helperText="Brazilian tax ID"
@@ -176,7 +176,7 @@ export function ClientForm({
           <FormItem className="sm:col-span-2">
             <FormField
               label="Social Media"
-              registration={register('socialMedia')}
+              registration={register("socialMedia")}
               error={errors.socialMedia}
               placeholder="@username"
             />
@@ -195,7 +195,7 @@ export function ClientForm({
           )}
         </div>
 
-        {errors.addresses && typeof errors.addresses.message === 'string' && (
+        {errors.addresses && typeof errors.addresses.message === "string" && (
           <FormError message={errors.addresses.message} />
         )}
 
@@ -304,10 +304,10 @@ export function ClientForm({
       <div className="flex gap-4">
         <Button type="submit" disabled={isLoading}>
           {isLoading
-            ? 'Saving...'
+            ? "Saving..."
             : defaultValues?.id
-              ? 'Update Client'
-              : 'Create Client'}
+              ? "Update Client"
+              : "Create Client"}
         </Button>
         <Button
           type="button"

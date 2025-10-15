@@ -1,10 +1,11 @@
-import { CardItem } from '../card-item/CardItem'
-import { formatPrice } from '@/app/utils/formatPrice'
-import { cn } from '@/lib/utils'
-import { type listProductsOutput } from '@/server/api/routers/products'
-import { CardButtons } from '../card-item/CardButtons'
+import { CardItem } from "../card-item/CardItem"
+import { formatPrice } from "@/app/utils/formatPrice"
+import { cn } from "@/lib/utils"
+import { type TListProductsOutput } from "@/server/api/routers/products/schemas/validation"
+import { CardButtons } from "../card-item/CardButtons"
+import { DeleteProductButton } from "../delete-buttons/DeleteProductButton"
 interface ProductsCardListProps {
-  data: listProductsOutput
+  data: TListProductsOutput
 }
 
 export function ProductsCardList({ data }: ProductsCardListProps) {
@@ -15,14 +16,22 @@ export function ProductsCardList({ data }: ProductsCardListProps) {
           key={product.id}
           item={product}
           className={cn({
-            'bg-destructive/10 border-foreground/5': product.stockQty === 0,
+            "bg-destructive/10 border-foreground/5": product.stockQty === 0,
           })}
-          ButtonSection={<CardButtons row={product} href="/products" />}
+          ButtonSection={
+            <CardButtons
+              id={product.id}
+              href="/products"
+              DeleteButton={
+                <DeleteProductButton id={product.id} name={product.name} />
+              }
+            />
+          }
         >
           <p>{formatPrice(product.priceInCents)}</p>
           <p
-            className={cn('text-sm text-muted-foreground', {
-              'text-destructive font-medium': product.stockQty === 0,
+            className={cn("text-sm text-muted-foreground", {
+              "text-destructive font-medium": product.stockQty === 0,
             })}
           >
             {product.stockQty} in stock

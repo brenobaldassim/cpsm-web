@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from "zod"
 
 /**
  * Validation Utilities
@@ -22,7 +22,7 @@ import { z } from 'zod'
  */
 export function validateCPF(cpf: string): boolean {
   // Remove formatting
-  const cleanCPF = cpf.replace(/[^\d]/g, '')
+  const cleanCPF = cpf.replace(/[^\d]/g, "")
 
   // Check length
   if (cleanCPF.length !== 11) return false
@@ -55,8 +55,8 @@ const cpfRegex = /^\d{3}\.?\d{3}\.?\d{3}-?\d{2}$/
 
 export const cpfSchema = z
   .string()
-  .regex(cpfRegex, 'Invalid CPF format (expected: XXX.XXX.XXX-XX)')
-  .refine(validateCPF, { message: 'Invalid CPF check digits' })
+  .regex(cpfRegex, "Invalid CPF format (expected: XXX.XXX.XXX-XX)")
+  .refine(validateCPF, { message: "Invalid CPF check digits" })
 
 // ============================================================================
 // CEP Validation
@@ -67,7 +67,7 @@ export const cpfSchema = z
  * Format: #####-### or ########
  */
 export function validateCEP(cep: string): boolean {
-  const cleanCEP = cep.replace(/[^\d]/g, '')
+  const cleanCEP = cep.replace(/[^\d]/g, "")
   return cleanCEP.length === 8
 }
 
@@ -75,44 +75,44 @@ const cepRegex = /^\d{5}-?\d{3}$/
 
 export const cepSchema = z
   .string()
-  .regex(cepRegex, 'Invalid CEP format (expected: #####-###)')
+  .regex(cepRegex, "Invalid CEP format (expected: #####-###)")
 
 // ============================================================================
 // Address Schemas
 // ============================================================================
 
 export const brazilianStates = [
-  'AC',
-  'AL',
-  'AP',
-  'AM',
-  'BA',
-  'CE',
-  'DF',
-  'ES',
-  'GO',
-  'MA',
-  'MT',
-  'MS',
-  'MG',
-  'PA',
-  'PB',
-  'PR',
-  'PE',
-  'PI',
-  'RJ',
-  'RN',
-  'RS',
-  'RO',
-  'RR',
-  'SC',
-  'SP',
-  'SE',
-  'TO',
+  "AC",
+  "AL",
+  "AP",
+  "AM",
+  "BA",
+  "CE",
+  "DF",
+  "ES",
+  "GO",
+  "MA",
+  "MT",
+  "MS",
+  "MG",
+  "PA",
+  "PB",
+  "PR",
+  "PE",
+  "PI",
+  "RJ",
+  "RN",
+  "RS",
+  "RO",
+  "RR",
+  "SC",
+  "SP",
+  "SE",
+  "TO",
 ] as const
 
 export const addressSchema = z.object({
-  type: z.enum(['HOME', 'WORK']),
+  type: z.enum(["HOME", "WORK"]),
   street: z.string().min(1).max(255),
   number: z.string().min(1).max(20),
   city: z.string().min(1).max(100),
@@ -124,19 +124,19 @@ export const addressSchema = z.object({
 // Common Schemas
 // ============================================================================
 
-export const emailSchema = z.string().email('Invalid email address')
+export const emailSchema = z.string().email("Invalid email address")
 
 export const passwordSchema = z
   .string()
-  .min(8, 'Password must be at least 8 characters')
-  .max(100, 'Password must not exceed 100 characters')
+  .min(8, "Password must be at least 8 characters")
+  .max(100, "Password must not exceed 100 characters")
 
 export const priceSchema = z
   .number()
-  .int('Price must be an integer (in cents)')
-  .positive('Price must be positive')
+  .int("Price must be an integer (in cents)")
+  .positive("Price must be positive")
 
 export const stockSchema = z
   .number()
-  .int('Stock must be an integer')
-  .nonnegative('Stock cannot be negative')
+  .int("Stock must be an integer")
+  .nonnegative("Stock cannot be negative")

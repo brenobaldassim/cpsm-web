@@ -1,7 +1,7 @@
-'use client'
+"use client"
 
-import { Switch } from '@/components/ui/switch'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { Switch } from "@/components/ui/switch"
+import { useRouter, useSearchParams } from "next/navigation"
 
 interface ProductsFilterProps {
   inStockOnly: boolean
@@ -14,12 +14,12 @@ export function ProductsFilter({ inStockOnly }: ProductsFilterProps) {
   const handleInStockChange = (checked: boolean) => {
     const params = new URLSearchParams(searchParams.toString())
     if (checked) {
-      params.set('inStockOnly', 'true')
+      params.set("inStockOnly", "true")
     } else {
-      params.delete('inStockOnly')
+      params.delete("inStockOnly")
     }
     // Reset to page 1 when filter changes
-    params.delete('page')
+    params.delete("page")
     router.push(`/products?${params.toString()}`)
   }
 

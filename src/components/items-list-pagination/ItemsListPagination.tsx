@@ -5,14 +5,14 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from '../ui/pagination'
-import { ProductsListPageParams } from '@/app/products/types'
-import { updatePageInParams } from '@/app/utils/updatePageInParams'
+} from "../ui/pagination"
+
+import { updatePageInParams } from "@/app/utils/updatePageInParams"
 
 interface ItemsListPaginationProps {
   page: number
   totalPages: number
-  params?: ProductsListPageParams
+  params?: Record<string, string>
   href: string
 }
 

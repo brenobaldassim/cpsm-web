@@ -4,20 +4,20 @@
  * Form for creating and editing products.
  */
 
-'use client'
+"use client"
 
-import * as React from 'react'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import { FormField, FormError, FormItem } from '@/components/forms'
+import * as React from "react"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
+import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
+import { FormField, FormError, FormItem } from "@/components/forms"
 
 const productFormSchema = z.object({
-  name: z.string().min(1, 'Name is required').max(255),
-  priceInCents: z.number().int().positive('Price must be positive'),
-  stockQty: z.number().int().nonnegative('Stock cannot be negative'),
+  name: z.string().min(1, "Name is required").max(255),
+  priceInCents: z.number().int().positive("Price must be positive"),
+  stockQty: z.number().int().nonnegative("Stock cannot be negative"),
 })
 
 type ProductFormData = z.infer<typeof productFormSchema>
@@ -42,7 +42,7 @@ export function ProductForm({
   } = useForm<ProductFormData>({
     resolver: zodResolver(productFormSchema),
     defaultValues: defaultValues || {
-      name: '',
+      name: "",
       priceInCents: 0,
       stockQty: 0,
     },
@@ -68,7 +68,7 @@ export function ProductForm({
           <FormItem>
             <FormField
               label="Product Name"
-              registration={register('name')}
+              registration={register("name")}
               error={errors.name}
               placeholder="Enter product name"
               required
@@ -80,7 +80,7 @@ export function ProductForm({
               label="Price (R$)"
               type="number"
               step="0.01"
-              registration={register('priceInCents', {
+              registration={register("priceInCents", {
                 valueAsNumber: true,
               })}
               error={errors.priceInCents}
@@ -94,7 +94,7 @@ export function ProductForm({
             <FormField
               label="Stock Quantity"
               type="number"
-              registration={register('stockQty', {
+              registration={register("stockQty", {
                 valueAsNumber: true,
               })}
               error={errors.stockQty}
@@ -107,10 +107,10 @@ export function ProductForm({
         <div className="flex gap-4 mt-10">
           <Button type="submit" disabled={isLoading}>
             {isLoading
-              ? 'Saving...'
+              ? "Saving..."
               : defaultValues?.id
-                ? 'Update Product'
-                : 'Create Product'}
+                ? "Update Product"
+                : "Create Product"}
           </Button>
           <Button
             type="button"

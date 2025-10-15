@@ -38,6 +38,8 @@ pnpm install
 cp .env.example .env
 ```
 
+Edit `.env`
+
 ### 3. Start Database
 
 ```bash

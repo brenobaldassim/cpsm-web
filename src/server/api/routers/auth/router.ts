@@ -4,22 +4,11 @@
  * Handles user authentication: login, signup, logout, getSession
  */
 
-import { TRPCError } from '@trpc/server'
-import * as bcrypt from 'bcryptjs'
-import { z } from 'zod'
-import { createTRPCRouter, publicProcedure } from '../trpc'
-import { emailSchema, passwordSchema } from '@/lib/validations'
+import { TRPCError } from "@trpc/server"
+import * as bcrypt from "bcryptjs"
 
-const signupInput = z.object({
-  email: emailSchema,
-  password: passwordSchema,
-})
-
-const userOutput = z.object({
-  id: z.string(),
-  email: z.string(),
-  createdAt: z.date(),
-})
+import { createTRPCRouter, publicProcedure } from "../../trpc"
+import { signupInput, userOutput } from "./schemas/validation"
 
 export const authRouter = createTRPCRouter({
   /**
@@ -39,8 +28,8 @@ export const authRouter = createTRPCRouter({
 
       if (existingUser) {
         throw new TRPCError({
-          code: 'CONFLICT',
-          message: 'Email already registered',
+          code: "CONFLICT",
+          message: "Email already registered",
         })
       }
 

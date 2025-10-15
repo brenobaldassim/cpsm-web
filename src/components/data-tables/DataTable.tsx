@@ -5,10 +5,10 @@
  * Responsive design with mobile-friendly card layout.
  */
 
-'use client'
+"use client"
 
-import * as React from 'react'
-import { Input } from '@/components/ui/input'
+import * as React from "react"
+import { Input } from "@/components/ui/input"
 import {
   Table,
   TableBody,
@@ -16,15 +16,15 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
+} from "@/components/ui/table"
 import {
   Pagination,
   PaginationContent,
   PaginationItem,
   PaginationPrevious,
   PaginationNext,
-} from '@/components/ui/pagination'
-import { cn } from '@/lib/utils'
+} from "@/components/ui/pagination"
+import { cn } from "@/lib/utils"
 
 export interface Column<T> {
   /** Unique key for the column */
@@ -59,9 +59,9 @@ export interface DataTableProps<T> {
   /** Sort field */
   sortBy?: string
   /** Sort order */
-  sortOrder?: 'asc' | 'desc'
+  sortOrder?: "asc" | "desc"
   /** Sort change handler */
-  onSortChange?: (field: string, order: 'asc' | 'desc') => void
+  onSortChange?: (field: string, order: "asc" | "desc") => void
   /** Loading state */
   isLoading?: boolean
   /** Empty state message */
@@ -91,17 +91,17 @@ export interface DataTableProps<T> {
 export function DataTable<T>({
   data,
   columns,
-  searchPlaceholder = 'Search...',
+  searchPlaceholder = "Search...",
   searchValue,
   onSearchChange,
   currentPage = 1,
   totalPages = 1,
   onPageChange,
   sortBy,
-  sortOrder = 'asc',
+  sortOrder = "asc",
   onSortChange,
   isLoading = false,
-  emptyMessage = 'No data found',
+  emptyMessage = "No data found",
   className,
   keyExtractor,
 }: DataTableProps<T>) {
@@ -109,18 +109,18 @@ export function DataTable<T>({
     if (!onSortChange) return
 
     const newOrder =
-      sortBy === columnKey && sortOrder === 'asc' ? 'desc' : 'asc'
+      sortBy === columnKey && sortOrder === "asc" ? "desc" : "asc"
     onSortChange(columnKey, newOrder)
   }
 
   return (
-    <div className={cn('space-y-4  border-muted', className)}>
+    <div className={cn("space-y-4  border-muted", className)}>
       {/* Search bar */}
       {onSearchChange && (
         <div className="flex items-center gap-4">
           <Input
             placeholder={searchPlaceholder}
-            value={searchValue || ''}
+            value={searchValue || ""}
             onChange={(e) => onSearchChange(e.target.value)}
             className="max-w-sm"
           />
@@ -128,7 +128,7 @@ export function DataTable<T>({
       )}
 
       {/* Table */}
-      <div className={cn('rounded-md border border-muted')}>
+      <div className={cn("rounded-md border border-muted")}>
         <Table>
           <TableHeader>
             <TableRow>
@@ -136,7 +136,7 @@ export function DataTable<T>({
                 <TableHead
                   key={column.key}
                   className={cn(
-                    column.sortable && 'cursor-pointer select-none',
+                    column.sortable && "cursor-pointer select-none",
                     column.className
                   )}
                   onClick={() =>
@@ -146,7 +146,7 @@ export function DataTable<T>({
                   <div className="flex items-center gap-2 text-card-foreground">
                     {column.label}
                     {column.sortable && sortBy === column.key && (
-                      <span>{sortOrder === 'asc' ? '↑' : '↓'}</span>
+                      <span>{sortOrder === "asc" ? "↑" : "↓"}</span>
                     )}
                   </div>
                 </TableHead>
@@ -178,7 +178,7 @@ export function DataTable<T>({
                   {columns.map((column) => (
                     <TableCell
                       key={column.key}
-                      className={cn(column.className, 'text-card-foreground')}
+                      className={cn(column.className, "text-card-foreground")}
                     >
                       {column.render(row)}
                     </TableCell>
@@ -203,7 +203,7 @@ export function DataTable<T>({
                   onClick={() => onPageChange(currentPage - 1)}
                   className={cn(
                     currentPage === 1 &&
-                      'pointer-events-none opacity-50 cursor-not-allowed'
+                      "pointer-events-none opacity-50 cursor-not-allowed"
                   )}
                 />
               </PaginationItem>
@@ -212,7 +212,7 @@ export function DataTable<T>({
                   onClick={() => onPageChange(currentPage + 1)}
                   className={cn(
                     currentPage === totalPages &&
-                      'pointer-events-none opacity-50 cursor-not-allowed'
+                      "pointer-events-none opacity-50 cursor-not-allowed"
                   )}
                 />
               </PaginationItem>
@@ -224,4 +224,4 @@ export function DataTable<T>({
   )
 }
 
-DataTable.displayName = 'DataTable'
+DataTable.displayName = "DataTable"

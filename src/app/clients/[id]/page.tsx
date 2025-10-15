@@ -4,14 +4,14 @@
  * Form to edit an existing client.
  */
 
-'use client'
+"use client"
 
-import * as React from 'react'
-import { useRouter } from 'next/navigation'
-import { ClientForm } from '@/components/forms'
-import { trpc } from '@/lib/trpc'
-import { brazilianStates } from '@/lib/validations'
-import { Address } from '@prisma/client'
+import * as React from "react"
+import { useRouter } from "next/navigation"
+import { ClientForm } from "@/components/forms"
+import { trpc } from "@/lib/trpc"
+import { brazilianStates } from "@/lib/validations"
+import { Address } from "@prisma/client"
 
 export default function EditClientPage({
   params,
@@ -28,7 +28,7 @@ export default function EditClientPage({
 
   const updateMutation = trpc.clients.update.useMutation({
     onSuccess: () => {
-      router.push('/clients')
+      router.push("/clients")
     },
   })
 
@@ -70,7 +70,7 @@ export default function EditClientPage({
             cpf: client.cpf,
             socialMedia: client.socialMedia || undefined,
             addresses: client.addresses.map((addr: Address) => ({
-              type: addr.type as 'HOME' | 'WORK',
+              type: addr.type as "HOME" | "WORK",
               street: addr.street,
               number: addr.number,
               city: addr.city,

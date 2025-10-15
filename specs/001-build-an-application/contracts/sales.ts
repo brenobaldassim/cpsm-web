@@ -5,7 +5,7 @@
  * Procedures for sales management with price preservation and stock tracking.
  */
 
-import { z } from "zod";
+import { z } from "zod"
 
 // ============================================================================
 // Input Schemas
@@ -14,17 +14,17 @@ import { z } from "zod";
 export const saleItemInput = z.object({
   productId: z.string(),
   quantity: z.number().int().positive(),
-});
+})
 
 export const createSaleInput = z.object({
   clientId: z.string(),
   saleDate: z.date().default(() => new Date()),
   items: z.array(saleItemInput).min(1), // At least one product
-});
+})
 
 export const getSaleInput = z.object({
   id: z.string(),
-});
+})
 
 export const listSalesInput = z.object({
   page: z.number().int().positive().default(1),
@@ -34,7 +34,7 @@ export const listSalesInput = z.object({
   dateTo: z.date().optional(),
   sortBy: z.enum(["saleDate", "totalAmount", "createdAt"]).default("saleDate"),
   sortOrder: z.enum(["asc", "desc"]).default("desc"),
-});
+})
 
 export const filterSalesInput = z.object({
   startDate: z.date(),
@@ -42,7 +42,7 @@ export const filterSalesInput = z.object({
   clientId: z.string().optional(),
   minAmount: z.number().int().nonnegative().optional(), // In cents
   maxAmount: z.number().int().positive().optional(), // In cents
-});
+})
 
 // ============================================================================
 // Output Schemas
@@ -55,7 +55,7 @@ export const saleItemOutput = z.object({
   quantity: z.number(),
   priceInCents: z.number(), // Price at time of sale
   lineTotal: z.number(), // quantity × priceInCents
-});
+})
 
 export const saleOutput = z.object({
   id: z.string(),
@@ -66,7 +66,7 @@ export const saleOutput = z.object({
   items: z.array(saleItemOutput),
   createdAt: z.date(),
   updatedAt: z.date(),
-});
+})
 
 export const saleListOutput = z.object({
   sales: z.array(saleOutput),
@@ -74,7 +74,7 @@ export const saleListOutput = z.object({
   page: z.number(),
   limit: z.number(),
   totalPages: z.number(),
-});
+})
 
 export const saleSummaryOutput = z.object({
   totalSales: z.number(),
@@ -82,7 +82,7 @@ export const saleSummaryOutput = z.object({
   averageSaleAmount: z.number(), // In cents
   periodStart: z.date(),
   periodEnd: z.date(),
-});
+})
 
 // ============================================================================
 // Procedure Definitions
@@ -131,7 +131,7 @@ export const saleSummaryOutput = z.object({
 export const createSaleProcedure = {
   input: createSaleInput,
   output: saleOutput,
-};
+}
 
 /**
  * sales.getById
@@ -156,7 +156,7 @@ export const createSaleProcedure = {
 export const getSaleProcedure = {
   input: getSaleInput,
   output: saleOutput,
-};
+}
 
 /**
  * sales.list
@@ -191,7 +191,7 @@ export const getSaleProcedure = {
 export const listSalesProcedure = {
   input: listSalesInput,
   output: saleListOutput,
-};
+}
 
 /**
  * sales.filter
@@ -218,7 +218,7 @@ export const listSalesProcedure = {
 export const filterSalesProcedure = {
   input: filterSalesInput,
   output: z.array(saleOutput),
-};
+}
 
 /**
  * sales.getSummary
@@ -250,7 +250,7 @@ export const getSummaryProcedure = {
     clientId: z.string().optional(),
   }),
   output: saleSummaryOutput,
-};
+}
 
 // ============================================================================
 // Contract Summary
@@ -262,4 +262,4 @@ export const salesContract = {
   list: listSalesProcedure,
   filter: filterSalesProcedure,
   getSummary: getSummaryProcedure,
-};
+}

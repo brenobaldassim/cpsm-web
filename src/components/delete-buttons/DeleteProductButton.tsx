@@ -1,7 +1,7 @@
-'use client'
+"use client"
 
-import { trpc } from '@/lib/trpc'
-import { BaseDelete } from './BaseDelete'
+import { trpc } from "@/lib/trpc"
+import { BaseDelete } from "./BaseDelete"
 
 interface DeleteProductButtonProps {
   id: string

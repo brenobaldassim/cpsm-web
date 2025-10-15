@@ -4,19 +4,19 @@
  * Form to create a new product.
  */
 
-'use client'
+"use client"
 
-import * as React from 'react'
-import { useRouter } from 'next/navigation'
-import { ProductForm } from '@/components/forms'
-import { trpc } from '@/lib/trpc'
+import * as React from "react"
+import { useRouter } from "next/navigation"
+import { ProductForm } from "@/components/forms"
+import { trpc } from "@/lib/trpc"
 
 export default function CreateProductPage() {
   const router = useRouter()
 
   const createMutation = trpc.products.create.useMutation({
     onSuccess: () => {
-      router.push('/products')
+      router.push("/products")
     },
   })
 

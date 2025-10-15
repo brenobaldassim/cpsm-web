@@ -5,59 +5,16 @@
  * create, update, delete, list, getById, checkStock
  */
 
-import { TRPCError } from '@trpc/server'
-import { z } from 'zod'
-import { createTRPCRouter, protectedProcedure } from '../trpc'
-import { priceSchema, stockSchema } from '@/lib/validations'
-
-// Input schemas
-const createProductInput = z.object({
-  name: z.string().min(1).max(255),
-  priceInCents: priceSchema,
-  stockQty: stockSchema.default(0),
-})
-
-const productSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  priceInCents: z.number(),
-  stockQty: z.number(),
-  createdAt: z.date(),
-})
-
-const updateProductInput = z.object({
-  id: z.string(),
-  name: z.string().min(1).max(255).optional(),
-  priceInCents: priceSchema.optional(),
-  stockQty: stockSchema.optional(),
-})
-
-const listProductsInput = z.object({
-  page: z.number().int().positive().default(1),
-  limit: z.number().int().positive().max(100).default(20),
-  search: z.string().optional(),
-  inStockOnly: z.boolean().default(false),
-  sortBy: z
-    .enum(['name', 'priceInCents', 'stockQty', 'createdAt'])
-    .default('name'),
-  sortOrder: z.enum(['asc', 'desc']).default('asc'),
-})
-
-const checkStockInput = z.object({
-  productId: z.string(),
-  requestedQty: z.number().int().positive(),
-})
-
-const listProductsOutput = z.object({
-  products: z.array(productSchema),
-  total: z.number(),
-  page: z.number(),
-  limit: z.number(),
-  totalPages: z.number(),
-})
-
-export type productSchema = z.infer<typeof productSchema>
-export type listProductsOutput = z.infer<typeof listProductsOutput>
+import { TRPCError } from "@trpc/server"
+import { z } from "zod"
+import { createTRPCRouter, protectedProcedure } from "../../trpc"
+import {
+  createProductInput,
+  updateProductInput,
+  listProductsInput,
+  listProductsOutput,
+  checkStockInput,
+} from "./schemas/validation"
 
 export const productsRouter = createTRPCRouter({
   /**
@@ -71,8 +28,8 @@ export const productsRouter = createTRPCRouter({
       const user = await ctx.prisma.user.findFirst()
       if (!user) {
         throw new TRPCError({
-          code: 'INTERNAL_SERVER_ERROR',
-          message: 'No user found',
+          code: "INTERNAL_SERVER_ERROR",
+          message: "No user found",
         })
       }
 
@@ -102,8 +59,8 @@ export const productsRouter = createTRPCRouter({
 
       if (!existingProduct) {
         throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'Product not found',
+          code: "NOT_FOUND",
+          message: "Product not found",
         })
       }
 
@@ -130,16 +87,16 @@ export const productsRouter = createTRPCRouter({
 
       if (!product) {
         throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'Product not found',
+          code: "NOT_FOUND",
+          message: "Product not found",
         })
       }
 
       // Check if product has sales
       if (product.saleItems.length > 0) {
         throw new TRPCError({
-          code: 'CONFLICT',
-          message: 'Cannot delete product with sales history',
+          code: "CONFLICT",
+          message: "Cannot delete product with sales history",
         })
       }
 
@@ -163,8 +120,8 @@ export const productsRouter = createTRPCRouter({
 
       if (!product) {
         throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'Product not found',
+          code: "NOT_FOUND",
+          message: "Product not found",
         })
       }
 
@@ -184,12 +141,12 @@ export const productsRouter = createTRPCRouter({
 
       // Build where clause
       const where: {
-        name?: { contains: string; mode: 'insensitive' }
+        name?: { contains: string; mode: "insensitive" }
         stockQty?: { gt: number }
       } = {}
 
       if (search) {
-        where.name = { contains: search, mode: 'insensitive' as const }
+        where.name = { contains: search, mode: "insensitive" as const }
       }
 
       if (inStockOnly) {
@@ -231,8 +188,8 @@ export const productsRouter = createTRPCRouter({
 
       if (!product) {
         throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'Product not found',
+          code: "NOT_FOUND",
+          message: "Product not found",
         })
       }
 

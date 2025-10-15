@@ -5,8 +5,8 @@
  * Designed for React Hook Form integration.
  */
 
-import * as React from 'react'
-import { cn } from '@/lib/utils'
+import * as React from "react"
+import { cn } from "@/lib/utils"
 
 export interface FormErrorProps {
   /** Error message to display */
@@ -35,7 +35,7 @@ export const FormError: React.FC<FormErrorProps> = ({
   return (
     <div
       className={cn(
-        'rounded-md border border-red-200 bg-red-50 p-4',
+        "rounded-md border border-red-200 bg-red-50 p-4",
         className
       )}
       role="alert"
@@ -67,4 +67,4 @@ export const FormError: React.FC<FormErrorProps> = ({
   )
 }
 
-FormError.displayName = 'FormError'
+FormError.displayName = "FormError"

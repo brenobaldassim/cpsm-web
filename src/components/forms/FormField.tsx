@@ -5,11 +5,11 @@
  * Includes label, input, and error message display.
  */
 
-import * as React from 'react'
-import { type FieldError, type UseFormRegisterReturn } from 'react-hook-form'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { cn } from '@/lib/utils'
+import * as React from "react"
+import { type FieldError, type UseFormRegisterReturn } from "react-hook-form"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { cn } from "@/lib/utils"
 
 export interface FormFieldProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -51,8 +51,8 @@ export const FormField: React.FC<FormFieldProps> = ({
   const id = registration.name
 
   return (
-    <div className={cn('space-y-2', fullWidth && 'w-full')}>
-      <Label htmlFor={id} className={error && 'text-red-600'}>
+    <div className={cn("space-y-2", fullWidth && "w-full")}>
+      <Label htmlFor={id} className={error && "text-red-600"}>
         {label}
         {props.required && <span className="ml-1 text-red-500">*</span>}
       </Label>
@@ -62,10 +62,10 @@ export const FormField: React.FC<FormFieldProps> = ({
         {...registration}
         {...props}
         className={cn(
-          error && 'border-red-500 focus-visible:ring-red-500',
+          error && "border-red-500 focus-visible:ring-red-500",
           className
         )}
-        aria-invalid={error ? 'true' : 'false'}
+        aria-invalid={error ? "true" : "false"}
         aria-describedby={
           error ? `${id}-error` : helperText ? `${id}-helper` : undefined
         }

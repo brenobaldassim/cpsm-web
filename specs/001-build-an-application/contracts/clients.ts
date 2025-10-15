@@ -5,7 +5,7 @@
  * Procedures for client management (CRUD operations).
  */
 
-import { z } from "zod";
+import { z } from "zod"
 
 // ============================================================================
 // Validation Helpers
@@ -15,7 +15,7 @@ import { z } from "zod";
  * CPF validation regex and refinement
  * Format: XXX.XXX.XXX-XX or XXXXXXXXXXX
  */
-const cpfRegex = /^\d{3}\.?\d{3}\.?\d{3}-?\d{2}$/;
+const cpfRegex = /^\d{3}\.?\d{3}\.?\d{3}-?\d{2}$/
 
 const cpfSchema = z
   .string()
@@ -23,36 +23,36 @@ const cpfSchema = z
   .refine(
     (val) => {
       // Remove formatting
-      const clean = val.replace(/[^\d]/g, "");
-      if (clean.length !== 11) return false;
-      if (/^(\d)\1+$/.test(clean)) return false; // All same digit
+      const clean = val.replace(/[^\d]/g, "")
+      if (clean.length !== 11) return false
+      if (/^(\d)\1+$/.test(clean)) return false // All same digit
 
       // Validate check digits
-      let sum = 0;
+      let sum = 0
       for (let i = 0; i < 9; i++) {
-        sum += parseInt(clean.charAt(i)) * (10 - i);
+        sum += parseInt(clean.charAt(i)) * (10 - i)
       }
-      let checkDigit1 = 11 - (sum % 11);
-      if (checkDigit1 >= 10) checkDigit1 = 0;
-      if (parseInt(clean.charAt(9)) !== checkDigit1) return false;
+      let checkDigit1 = 11 - (sum % 11)
+      if (checkDigit1 >= 10) checkDigit1 = 0
+      if (parseInt(clean.charAt(9)) !== checkDigit1) return false
 
-      sum = 0;
+      sum = 0
       for (let i = 0; i < 10; i++) {
-        sum += parseInt(clean.charAt(i)) * (11 - i);
+        sum += parseInt(clean.charAt(i)) * (11 - i)
       }
-      let checkDigit2 = 11 - (sum % 11);
-      if (checkDigit2 >= 10) checkDigit2 = 0;
+      let checkDigit2 = 11 - (sum % 11)
+      if (checkDigit2 >= 10) checkDigit2 = 0
 
-      return parseInt(clean.charAt(10)) === checkDigit2;
+      return parseInt(clean.charAt(10)) === checkDigit2
     },
     { message: "Invalid CPF check digits" }
-  );
+  )
 
 /**
  * CEP validation
  * Format: #####-### or ########
  */
-const cepSchema = z.string().regex(/^\d{5}-?\d{3}$/, "Invalid CEP format");
+const cepSchema = z.string().regex(/^\d{5}-?\d{3}$/, "Invalid CEP format")
 
 /**
  * Brazilian state codes (27 states)
@@ -85,7 +85,7 @@ const brazilianStates = [
   "SP",
   "SE",
   "TO",
-] as const;
+] as const
 
 // ============================================================================
 // Input Schemas
@@ -98,7 +98,7 @@ export const addressInput = z.object({
   city: z.string().min(1).max(100),
   state: z.enum(brazilianStates),
   cep: cepSchema,
-});
+})
 
 export const createClientInput = z.object({
   firstName: z.string().min(1).max(100),
@@ -112,12 +112,12 @@ export const createClientInput = z.object({
     .max(2)
     .refine(
       (addresses) => {
-        const types = addresses.map((a) => a.type);
-        return types.length === new Set(types).size; // Ensure unique types
+        const types = addresses.map((a) => a.type)
+        return types.length === new Set(types).size // Ensure unique types
       },
       { message: "Cannot have duplicate address types" }
     ),
-});
+})
 
 export const updateClientInput = z.object({
   id: z.string(),
@@ -132,21 +132,21 @@ export const updateClientInput = z.object({
     .optional()
     .refine(
       (addresses) => {
-        if (!addresses) return true;
-        const types = addresses.map((a) => a.type);
-        return types.length === new Set(types).size;
+        if (!addresses) return true
+        const types = addresses.map((a) => a.type)
+        return types.length === new Set(types).size
       },
       { message: "Cannot have duplicate address types" }
     ),
-});
+})
 
 export const deleteClientInput = z.object({
   id: z.string(),
-});
+})
 
 export const getClientInput = z.object({
   id: z.string(),
-});
+})
 
 export const listClientsInput = z.object({
   page: z.number().int().positive().default(1),
@@ -156,7 +156,7 @@ export const listClientsInput = z.object({
     .enum(["firstName", "lastName", "email", "createdAt"])
     .default("lastName"),
   sortOrder: z.enum(["asc", "desc"]).default("asc"),
-});
+})
 
 // ============================================================================
 // Output Schemas
@@ -170,7 +170,7 @@ export const addressOutput = z.object({
   city: z.string(),
   state: z.string(),
   cep: z.string(),
-});
+})
 
 export const clientOutput = z.object({
   id: z.string(),
@@ -182,7 +182,7 @@ export const clientOutput = z.object({
   addresses: z.array(addressOutput),
   createdAt: z.date(),
   updatedAt: z.date(),
-});
+})
 
 export const clientListOutput = z.object({
   clients: z.array(clientOutput),
@@ -190,7 +190,7 @@ export const clientListOutput = z.object({
   page: z.number(),
   limit: z.number(),
   totalPages: z.number(),
-});
+})
 
 // ============================================================================
 // Procedure Definitions
@@ -226,7 +226,7 @@ export const clientListOutput = z.object({
 export const createClientProcedure = {
   input: createClientInput,
   output: clientOutput,
-};
+}
 
 /**
  * clients.update
@@ -254,7 +254,7 @@ export const createClientProcedure = {
 export const updateClientProcedure = {
   input: updateClientInput,
   output: clientOutput,
-};
+}
 
 /**
  * clients.delete
@@ -280,7 +280,7 @@ export const updateClientProcedure = {
 export const deleteClientProcedure = {
   input: deleteClientInput,
   output: z.object({ success: z.boolean() }),
-};
+}
 
 /**
  * clients.getById
@@ -304,7 +304,7 @@ export const deleteClientProcedure = {
 export const getClientProcedure = {
   input: getClientInput,
   output: clientOutput,
-};
+}
 
 /**
  * clients.list
@@ -334,7 +334,7 @@ export const getClientProcedure = {
 export const listClientsProcedure = {
   input: listClientsInput,
   output: clientListOutput,
-};
+}
 
 // ============================================================================
 // Contract Summary
@@ -346,4 +346,4 @@ export const clientsContract = {
   delete: deleteClientProcedure,
   getById: getClientProcedure,
   list: listClientsProcedure,
-};
+}

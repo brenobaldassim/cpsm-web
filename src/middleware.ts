@@ -6,8 +6,8 @@
  * Implements rate limiting per IP address.
  */
 
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import { NextResponse } from "next/server"
+import type { NextRequest } from "next/server"
 
 /**
  * Rate limiting configuration
@@ -45,12 +45,12 @@ setInterval(cleanupAccessLog, TIME_IN_MS.TWO_MINUTES)
 /**
  * Public routes that don't require authentication
  */
-const PUBLIC_ROUTES = ['/login', '/signup', '/api/auth']
+const PUBLIC_ROUTES = ["/login", "/signup", "/api/auth"]
 
 /**
  * Routes that should redirect to dashboard if already authenticated
  */
-const AUTH_ROUTES = ['/login', '/signup']
+const AUTH_ROUTES = ["/login", "/signup"]
 
 /**
  * Middleware function
@@ -61,39 +61,39 @@ export default async function middleware(request: NextRequest) {
 
   // Rate limiting check
   const ip =
-    request.headers.get('x-forwarded-for') ??
-    request.headers.get('x-real-ip') ??
-    'unknown'
+    request.headers.get("x-forwarded-for") ??
+    request.headers.get("x-real-ip") ??
+    "unknown"
   const now = Date.now()
 
   const log = accessLog.get(ip) || []
   const recent = log.filter((t) => now - t < TIME_IN_MS.ONE_MINUTE)
 
   if (recent.length >= RATE_LIMIT) {
-    return new NextResponse('Too Many Requests', { status: 429 })
+    return new NextResponse("Too Many Requests", { status: 429 })
   }
 
   recent.push(now)
   accessLog.set(ip, recent)
 
   // Allow all API routes (handled by their own middleware)
-  if (pathname.startsWith('/api/')) {
+  if (pathname.startsWith("/api/")) {
     return NextResponse.next()
   }
 
   // Allow public assets and Next.js internals
   if (
-    pathname.startsWith('/_next') ||
-    pathname.startsWith('/static') ||
-    pathname === '/favicon.ico'
+    pathname.startsWith("/_next") ||
+    pathname.startsWith("/static") ||
+    pathname === "/favicon.ico"
   ) {
     return NextResponse.next()
   }
 
   // Check for NextAuth session token in cookies
   const sessionToken =
-    request.cookies.get('authjs.session-token')?.value ||
-    request.cookies.get('__Secure-authjs.session-token')?.value
+    request.cookies.get("authjs.session-token")?.value ||
+    request.cookies.get("__Secure-authjs.session-token")?.value
 
   const isAuthenticated = !!sessionToken
 
@@ -108,15 +108,15 @@ export default async function middleware(request: NextRequest) {
   // If user is authenticated and trying to access auth routes (login/signup)
   // redirect them to the dashboard
   if (isAuthenticated && isAuthRoute) {
-    return NextResponse.redirect(new URL('/', request.url))
+    return NextResponse.redirect(new URL("/", request.url))
   }
 
   // If user is not authenticated and trying to access a protected route
   // redirect them to login
   if (!isAuthenticated && !isPublicRoute) {
-    const loginUrl = new URL('/login', request.url)
+    const loginUrl = new URL("/login", request.url)
     // Add callback URL to redirect back after login
-    loginUrl.searchParams.set('callbackUrl', pathname)
+    loginUrl.searchParams.set("callbackUrl", pathname)
     return NextResponse.redirect(loginUrl)
   }
 
@@ -137,6 +137,6 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+    "/((?!api|_next/static|_next/image|favicon.ico).*)",
   ],
 }

@@ -6,6 +6,7 @@
 **Input**: User description: "Build an application that will help the user to control its sales and clients by registering each product, client and sales that will contain which product and how many of each one was bought, and which client bought it. The application should look like a standard dashboard, for form completion on registering items. The user should be able to see the sales for the last month but have filtering options to check for different timelines as well. We should have different screens for displaying or adding clients, products or sales. Client should have name, last name, email, cps, social media and address, the address must contain: street, city, state, cep, number, and client could have two type of addresses home and work. Products must have name, price in cents and quantity on stock. Sales should have client, products, sale date, amount of sale (could have different products by sale)."
 
 ## Execution Flow (main)
+
 ```
 1. Parse user description from Input
    → If empty: ERROR "No feature description provided"
@@ -28,23 +29,27 @@
 ---
 
 ## ⚡ Quick Guidelines
+
 - ✅ Focus on WHAT users need and WHY
 - ❌ Avoid HOW to implement (no tech stack, APIs, code structure)
 - 👥 Written for business stakeholders, not developers
 
 ### Section Requirements
+
 - **Mandatory sections**: Must be completed for every feature
 - **Optional sections**: Include only when relevant to the feature
 - When a section doesn't apply, remove it entirely (don't leave as "N/A")
 
 ### For AI Generation
+
 When creating this spec from a user prompt:
+
 1. **Mark all ambiguities**: Use [NEEDS CLARIFICATION: specific question] for any assumption you'd need to make
 2. **Don't guess**: If the prompt doesn't specify something (e.g., "login system" without auth method), mark it
 3. **Think like a tester**: Every vague requirement should fail the "testable and unambiguous" checklist item
 4. **Common underspecified areas**:
    - User types and permissions
-   - Data retention/deletion policies  
+   - Data retention/deletion policies
    - Performance targets and scale
    - Error handling behaviors
    - Integration requirements
@@ -57,6 +62,7 @@ When creating this spec from a user prompt:
 ## Clarifications
 
 ### Session 2025-10-05
+
 - Q: When a sale is completed, how should the system handle product stock quantities? → A: Automatically decrement stock quantity by the amount sold (real-time inventory tracking)
 - Q: When a client or product is deleted, how should the system handle their historical sales records? → A: Prevent deletion if any sales exist (preserve data integrity; soft delete only)
 - Q: Should the application require user authentication, or is it a single-user system with open access? → A: Multi-user with login required (email/password authentication)
@@ -65,40 +71,30 @@ When creating this spec from a user prompt:
 
 ---
 
-## User Scenarios & Testing *(mandatory)*
+## User Scenarios & Testing _(mandatory)_
 
 ### Primary User Story
+
 As a business owner, I need to manage my clients, products, and sales in one place so that I can track who is buying what, maintain accurate inventory levels, and analyze sales performance over time. The system should provide an intuitive dashboard where I can quickly register new information and view recent sales activity.
 
 ### Acceptance Scenarios
 
 **Authentication & Access**
+
 1. **Given** I am not logged in, **When** I attempt to access the application, **Then** I am presented with a login screen requiring email and password
 2. **Given** I am on the login screen, **When** I enter valid credentials, **Then** I am authenticated and directed to the dashboard
 3. **Given** I am on the login screen, **When** I enter invalid credentials, **Then** I receive an error message and remain on the login screen
 
-**Client Management**
-4. **Given** I am on the clients screen, **When** I click "Add Client" and fill in all required client information including name, last name, email, CPF, social media, and at least one address (home or work with street, city, state, CEP, and number), **Then** the client is successfully saved and appears in the client list
-5. **Given** I have existing clients, **When** I navigate to the clients screen, **Then** I can view a list of all registered clients with their basic information
-6. **Given** I am adding a client, **When** I want to register both home and work addresses, **Then** I can add both address types with complete address information for each
-7. **Given** I have an existing client, **When** I edit any of their information fields, **Then** the changes are saved and reflected in the client list
+**Client Management** 4. **Given** I am on the clients screen, **When** I click "Add Client" and fill in all required client information including name, last name, email, CPF, social media, and at least one address (home or work with street, city, state, CEP, and number), **Then** the client is successfully saved and appears in the client list 5. **Given** I have existing clients, **When** I navigate to the clients screen, **Then** I can view a list of all registered clients with their basic information 6. **Given** I am adding a client, **When** I want to register both home and work addresses, **Then** I can add both address types with complete address information for each 7. **Given** I have an existing client, **When** I edit any of their information fields, **Then** the changes are saved and reflected in the client list
 
-**Product Management**
-8. **Given** I am on the products screen, **When** I click "Add Product" and enter the product name, price in cents, and quantity in stock, **Then** the product is saved and available for sale registration
-9. **Given** I have existing products, **When** I navigate to the products screen, **Then** I can view all products with their current stock quantities and prices
-10. **Given** I have an existing product, **When** I edit its information (name, price, or quantity), **Then** the changes are saved, and the new price only applies to future sales (not historical sales)
-11. **Given** I have a product with existing sales records, **When** I attempt to delete it, **Then** the system prevents deletion and displays an error message to preserve data integrity
+**Product Management** 8. **Given** I am on the products screen, **When** I click "Add Product" and enter the product name, price in cents, and quantity in stock, **Then** the product is saved and available for sale registration 9. **Given** I have existing products, **When** I navigate to the products screen, **Then** I can view all products with their current stock quantities and prices 10. **Given** I have an existing product, **When** I edit its information (name, price, or quantity), **Then** the changes are saved, and the new price only applies to future sales (not historical sales) 11. **Given** I have a product with existing sales records, **When** I attempt to delete it, **Then** the system prevents deletion and displays an error message to preserve data integrity
 
-**Sales Management**
-12. **Given** I have at least one client and one product in the system, **When** I create a new sale by selecting a client, adding one or more products with quantities, and setting the sale date, **Then** the sale is recorded with the calculated total amount using current product prices
-13. **Given** I am on the sales screen, **When** I view the default display, **Then** I see all sales from the last month (30 days)
-14. **Given** I am viewing sales, **When** I apply date filters, **Then** I can see sales for custom date ranges
-15. **Given** I create a sale, **When** the sale includes multiple products, **Then** the system calculates the total sale amount based on product prices and quantities at the time of sale
+**Sales Management** 12. **Given** I have at least one client and one product in the system, **When** I create a new sale by selecting a client, adding one or more products with quantities, and setting the sale date, **Then** the sale is recorded with the calculated total amount using current product prices 13. **Given** I am on the sales screen, **When** I view the default display, **Then** I see all sales from the last month (30 days) 14. **Given** I am viewing sales, **When** I apply date filters, **Then** I can see sales for custom date ranges 15. **Given** I create a sale, **When** the sale includes multiple products, **Then** the system calculates the total sale amount based on product prices and quantities at the time of sale
 
-**Dashboard Overview**
-16. **Given** I access the application, **When** I land on the dashboard, **Then** [NEEDS CLARIFICATION: What information should be displayed on the main dashboard? Summary statistics, recent activity, quick actions?]
+**Dashboard Overview** 16. **Given** I access the application, **When** I land on the dashboard, **Then** [NEEDS CLARIFICATION: What information should be displayed on the main dashboard? Summary statistics, recent activity, quick actions?]
 
 ### Edge Cases
+
 - System must block sales when product quantity exceeds available stock and show an error message
 - How does the system handle invalid or duplicate email addresses for clients?
 - System must prevent deletion of clients or products that have associated sales records and display an appropriate error message
@@ -109,11 +105,12 @@ As a business owner, I need to manage my clients, products, and sales in one pla
 - How are sales amounts calculated when multiple products with different prices are included?
 - What happens when filtering sales by a date range that has no sales?
 
-## Requirements *(mandatory)*
+## Requirements _(mandatory)_
 
 ### Functional Requirements
 
 **Client Management**
+
 - **FR-001**: System MUST allow users to register new clients with the following required fields: first name, last name, email, CPF, and social media handle
 - **FR-002**: System MUST support adding up to two addresses per client: one home address and one work address
 - **FR-003**: System MUST require complete address information for each address added: street, city, state, CEP, and number
@@ -125,6 +122,7 @@ As a business owner, I need to manage my clients, products, and sales in one pla
 - **FR-009**: System MUST allow users to delete clients only if they have no associated sales records (prevent deletion to preserve data integrity)
 
 **Product Management**
+
 - **FR-010**: System MUST allow users to register new products with name, price (in cents), and quantity in stock
 - **FR-011**: System MUST store product prices in cents as integer values
 - **FR-012**: System MUST track current stock quantity for each product
@@ -135,6 +133,7 @@ As a business owner, I need to manage my clients, products, and sales in one pla
 - **FR-017**: System MUST allow users to delete products only if they have no associated sales records (prevent deletion to preserve data integrity)
 
 **Sales Management**
+
 - **FR-018**: System MUST allow users to create new sales by selecting an existing client
 - **FR-019**: System MUST allow users to add multiple products to a single sale, each with its own quantity
 - **FR-020**: System MUST record the date of each sale
@@ -147,6 +146,7 @@ As a business owner, I need to manage my clients, products, and sales in one pla
 - **FR-027**: System MUST [NEEDS CLARIFICATION: Should the system support partial payments or payment status tracking?]
 
 **User Interface & Navigation**
+
 - **FR-028**: System MUST provide a dashboard interface as the main entry point
 - **FR-029**: System MUST provide separate screens/views for managing clients, products, and sales
 - **FR-030**: System MUST provide forms for adding new clients, products, and sales
@@ -154,6 +154,7 @@ As a business owner, I need to manage my clients, products, and sales in one pla
 - **FR-032**: System MUST provide a responsive interface that adapts to mobile, tablet, and desktop screen sizes
 
 **Data Validation & Business Rules**
+
 - **FR-033**: System MUST prevent saving incomplete client records (missing required fields)
 - **FR-034**: System MUST prevent saving products with negative or zero prices
 - **FR-035**: System MUST prevent saving products with negative stock quantities
@@ -164,16 +165,18 @@ As a business owner, I need to manage my clients, products, and sales in one pla
 - **FR-040**: System MUST [NEEDS CLARIFICATION: Are there any business rules for minimum or maximum sale amounts?]
 
 **Reporting & Analytics**
+
 - **FR-041**: System MUST [NEEDS CLARIFICATION: Should the system provide sales summaries or analytics (e.g., total revenue, top products, top clients)?]
 - **FR-042**: System MUST [NEEDS CLARIFICATION: Should users be able to export sales data for external analysis?]
 
 **Data Persistence & Security**
+
 - **FR-043**: System MUST persist all client, product, and sales data
 - **FR-044**: System MUST [NEEDS CLARIFICATION: Are there data retention policies - how long should historical data be kept?]
 - **FR-045**: System MUST [NEEDS CLARIFICATION: What level of data security is required? Should sensitive client information be encrypted?]
 - **FR-046**: System MUST require user authentication (email and password) before granting access to any functionality
 
-### Key Entities *(include if feature involves data)*
+### Key Entities _(include if feature involves data)_
 
 - **User**: Represents an authenticated user of the system. Contains email and password credentials for authentication. Multiple users can access the system independently.
 
@@ -190,17 +193,20 @@ As a business owner, I need to manage my clients, products, and sales in one pla
 ---
 
 ## Review & Acceptance Checklist
-*GATE: Automated checks run during main() execution*
+
+_GATE: Automated checks run during main() execution_
 
 ### Content Quality
+
 - [x] No implementation details (languages, frameworks, APIs)
 - [x] Focused on user value and business needs
 - [x] Written for non-technical stakeholders
 - [x] All mandatory sections completed
 
 ### Requirement Completeness
+
 - [ ] No [NEEDS CLARIFICATION] markers remain
-- [ ] Requirements are testable and unambiguous  
+- [ ] Requirements are testable and unambiguous
 - [x] Success criteria are measurable
 - [x] Scope is clearly bounded
 - [ ] Dependencies and assumptions identified
@@ -210,7 +216,8 @@ As a business owner, I need to manage my clients, products, and sales in one pla
 ---
 
 ## Execution Status
-*Updated by main() during processing*
+
+_Updated by main() during processing_
 
 - [x] User description parsed
 - [x] Key concepts extracted

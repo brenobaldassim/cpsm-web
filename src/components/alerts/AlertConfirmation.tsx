@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import {
   AlertDialog,
@@ -10,7 +10,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from '@/components/ui/alert-dialog'
+} from "@/components/ui/alert-dialog"
 
 interface AlertConfirmationProps {
   trigger: React.ReactNode
@@ -19,17 +19,17 @@ interface AlertConfirmationProps {
   cancelText?: string
   confirmText?: string
   onConfirm: () => void
-  variant?: 'default' | 'destructive'
+  variant?: "default" | "destructive"
 }
 
 export function AlertConfirmation({
   trigger,
   title,
   description,
-  cancelText = 'Cancel',
-  confirmText = 'Confirm',
+  cancelText = "Cancel",
+  confirmText = "Confirm",
   onConfirm,
-  variant = 'default',
+  variant = "default",
 }: AlertConfirmationProps) {
   return (
     <AlertDialog>
@@ -44,9 +44,9 @@ export function AlertConfirmation({
           <AlertDialogAction
             onClick={onConfirm}
             className={
-              variant === 'destructive'
-                ? 'bg-destructive text-destructive-foreground hover:bg-destructive/90'
-                : ''
+              variant === "destructive"
+                ? "bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                : ""
             }
           >
             {confirmText}

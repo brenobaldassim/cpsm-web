@@ -5,61 +5,15 @@
  * Includes Brazilian-specific validations (CPF, CEP)
  */
 
-import { TRPCError } from '@trpc/server'
-import { z } from 'zod'
-import { createTRPCRouter, protectedProcedure } from '../trpc'
-import { cpfSchema, addressSchema, emailSchema } from '@/lib/validations'
-
-// Input schemas
-export const createClientInput = z.object({
-  firstName: z.string().min(1).max(100),
-  lastName: z.string().min(1).max(100),
-  email: emailSchema,
-  cpf: cpfSchema,
-  socialMedia: z.string().max(100).optional(),
-  addresses: z
-    .array(addressSchema)
-    .min(1)
-    .max(2)
-    .refine(
-      (addresses) => {
-        const types = addresses.map((a) => a.type)
-        return types.length === new Set(types).size
-      },
-      { message: 'Cannot have duplicate address types' }
-    ),
-})
-
-const updateClientInput = z.object({
-  id: z.string(),
-  firstName: z.string().min(1).max(100).optional(),
-  lastName: z.string().min(1).max(100).optional(),
-  email: emailSchema.optional(),
-  socialMedia: z.string().max(100).optional(),
-  addresses: z
-    .array(addressSchema)
-    .min(1)
-    .max(2)
-    .optional()
-    .refine(
-      (addresses) => {
-        if (!addresses) return true
-        const types = addresses.map((a) => a.type)
-        return types.length === new Set(types).size
-      },
-      { message: 'Cannot have duplicate address types' }
-    ),
-})
-
-const listClientsInput = z.object({
-  page: z.number().int().positive().default(1),
-  limit: z.number().int().positive().max(100).default(20),
-  search: z.string().optional(),
-  sortBy: z
-    .enum(['firstName', 'lastName', 'email', 'createdAt'])
-    .default('lastName'),
-  sortOrder: z.enum(['asc', 'desc']).default('asc'),
-})
+import { TRPCError } from "@trpc/server"
+import { z } from "zod"
+import { createTRPCRouter, protectedProcedure } from "../../trpc"
+import {
+  createClientInput,
+  updateClientInput,
+  listClientsInput,
+  listClientsOutput,
+} from "./schemas/validation"
 
 export const clientsRouter = createTRPCRouter({
   /**
@@ -78,8 +32,8 @@ export const clientsRouter = createTRPCRouter({
 
       if (existingClient) {
         throw new TRPCError({
-          code: 'CONFLICT',
-          message: 'CPF already registered',
+          code: "CONFLICT",
+          message: "CPF already registered",
         })
       }
 
@@ -87,8 +41,8 @@ export const clientsRouter = createTRPCRouter({
       const user = await ctx.prisma.user.findFirst()
       if (!user) {
         throw new TRPCError({
-          code: 'INTERNAL_SERVER_ERROR',
-          message: 'No user found',
+          code: "INTERNAL_SERVER_ERROR",
+          message: "No user found",
         })
       }
 
@@ -125,8 +79,8 @@ export const clientsRouter = createTRPCRouter({
 
       if (!existingClient) {
         throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'Client not found',
+          code: "NOT_FOUND",
+          message: "Client not found",
         })
       }
 
@@ -171,16 +125,16 @@ export const clientsRouter = createTRPCRouter({
 
       if (!client) {
         throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'Client not found',
+          code: "NOT_FOUND",
+          message: "Client not found",
         })
       }
 
       // Check if client has sales
       if (client.sales.length > 0) {
         throw new TRPCError({
-          code: 'CONFLICT',
-          message: 'Cannot delete client with sales history',
+          code: "CONFLICT",
+          message: "Cannot delete client with sales history",
         })
       }
 
@@ -208,8 +162,8 @@ export const clientsRouter = createTRPCRouter({
 
       if (!client) {
         throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'Client not found',
+          code: "NOT_FOUND",
+          message: "Client not found",
         })
       }
 
@@ -222,6 +176,7 @@ export const clientsRouter = createTRPCRouter({
    */
   list: protectedProcedure
     .input(listClientsInput)
+    .output(listClientsOutput)
     .query(async ({ input, ctx }) => {
       const { page, limit, search, sortBy, sortOrder } = input
       const skip = (page - 1) * limit
@@ -230,9 +185,9 @@ export const clientsRouter = createTRPCRouter({
       const where = search
         ? {
             OR: [
-              { firstName: { contains: search, mode: 'insensitive' as const } },
-              { lastName: { contains: search, mode: 'insensitive' as const } },
-              { email: { contains: search, mode: 'insensitive' as const } },
+              { firstName: { contains: search, mode: "insensitive" as const } },
+              { lastName: { contains: search, mode: "insensitive" as const } },
+              { email: { contains: search, mode: "insensitive" as const } },
             ],
           }
         : {}

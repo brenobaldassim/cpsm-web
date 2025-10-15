@@ -1,7 +1,9 @@
-import { Trash2 } from 'lucide-react'
-import { Button } from '../ui/button'
-import { type UseMutationResult } from '@tanstack/react-query'
-import { AlertConfirmation } from '../alerts/AlertConfirmation'
+"use client"
+
+import { Trash2 } from "lucide-react"
+import { Button } from "../ui/button"
+import { type UseMutationResult } from "@tanstack/react-query"
+import { AlertConfirmation } from "../alerts/AlertConfirmation"
 
 interface BaseDeleteProps<TError = Error> {
   id: string
@@ -23,8 +25,8 @@ export const BaseDelete = <TError = Error,>({
   deleteMutation,
   title,
   description,
-  confirmText = 'Delete',
-  cancelText = 'Cancel',
+  confirmText = "Delete",
+  cancelText = "Cancel",
 }: BaseDeleteProps<TError>) => {
   const handleDelete = () => {
     deleteMutation.mutate({ id })
@@ -34,11 +36,12 @@ export const BaseDelete = <TError = Error,>({
     <AlertConfirmation
       trigger={
         <Button
+          className="group bg-destructive/20 text-destructive hover:text-destructive-foreground"
           variant="destructive"
-          size="sm"
+          size="icon"
           disabled={deleteMutation.isPending}
         >
-          <Trash2 />
+          <Trash2 className="group-hover:animate-warning" />
         </Button>
       }
       title={title || `Delete ${name}?`}

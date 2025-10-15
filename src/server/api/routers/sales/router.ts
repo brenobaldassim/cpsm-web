@@ -7,41 +7,16 @@
  * - Date-based filtering
  */
 
-import { TRPCError } from '@trpc/server'
-import { z } from 'zod'
-import { createTRPCRouter, protectedProcedure } from '../trpc'
-
-// Input schemas
-const saleItemInput = z.object({
-  productId: z.string(),
-  quantity: z.number().int().positive(),
-})
-
-const createSaleInput = z.object({
-  clientId: z.string(),
-  items: z.array(saleItemInput).min(1),
-  saleDate: z.coerce.date().optional(),
-})
-
-const listSalesInput = z.object({
-  page: z.number().int().positive().default(1),
-  limit: z.number().int().positive().max(100).default(20),
-  sortBy: z.enum(['saleDate', 'totalAmount', 'createdAt']).default('saleDate'),
-  sortOrder: z.enum(['asc', 'desc']).default('desc'),
-})
-
-const filterSalesInput = z.object({
-  startDate: z.coerce.date().optional(),
-  endDate: z.coerce.date().optional(),
-  clientId: z.string().optional(),
-  page: z.number().int().positive().default(1),
-  limit: z.number().int().positive().max(100).default(20),
-})
-
-const getSummaryInput = z.object({
-  startDate: z.coerce.date(),
-  endDate: z.coerce.date(),
-})
+import { TRPCError } from "@trpc/server"
+import { z } from "zod"
+import { createTRPCRouter, protectedProcedure } from "../../trpc"
+import {
+  createSaleInput,
+  listSalesInput,
+  filterSalesInput,
+  getSummaryInput,
+  listSalesOutput,
+} from "./schemas/validation"
 
 export const salesRouter = createTRPCRouter({
   /**
@@ -57,8 +32,8 @@ export const salesRouter = createTRPCRouter({
       const user = await ctx.prisma.user.findFirst()
       if (!user) {
         throw new TRPCError({
-          code: 'INTERNAL_SERVER_ERROR',
-          message: 'No user found',
+          code: "INTERNAL_SERVER_ERROR",
+          message: "No user found",
         })
       }
 
@@ -69,8 +44,8 @@ export const salesRouter = createTRPCRouter({
 
       if (!client) {
         throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'Client not found',
+          code: "NOT_FOUND",
+          message: "Client not found",
         })
       }
 
@@ -82,8 +57,8 @@ export const salesRouter = createTRPCRouter({
 
       if (products.length !== items.length) {
         throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'One or more products not found',
+          code: "NOT_FOUND",
+          message: "One or more products not found",
         })
       }
 
@@ -108,9 +83,9 @@ export const salesRouter = createTRPCRouter({
             (s) =>
               `${s.productName}: ${s.requested} requested, ${s.available} available`
           )
-          .join('; ')
+          .join("; ")
         throw new TRPCError({
-          code: 'BAD_REQUEST',
+          code: "BAD_REQUEST",
           message: `Insufficient stock: ${message}`,
         })
       }
@@ -200,8 +175,8 @@ export const salesRouter = createTRPCRouter({
 
       if (!sale) {
         throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'Sale not found',
+          code: "NOT_FOUND",
+          message: "Sale not found",
         })
       }
 
@@ -214,6 +189,7 @@ export const salesRouter = createTRPCRouter({
    */
   list: protectedProcedure
     .input(listSalesInput)
+    .output(listSalesOutput)
     .query(async ({ input, ctx }) => {
       const { page, limit, sortBy, sortOrder } = input
       const skip = (page - 1) * limit
@@ -284,7 +260,7 @@ export const salesRouter = createTRPCRouter({
           client: true,
         },
         orderBy: {
-          saleDate: 'desc',
+          saleDate: "desc",
         },
         skip,
         take: limit,

@@ -1,147 +1,147 @@
-import { PrismaClient } from '@prisma/client'
-import * as bcrypt from 'bcryptjs'
+import { PrismaClient } from "@prisma/client"
+import * as bcrypt from "bcryptjs"
 
 const prisma = new PrismaClient()
 
 async function main() {
-  console.log('🌱 Starting database seed...')
+  console.log("🌱 Starting database seed...")
 
   // Create admin user
-  const hashedPassword = await bcrypt.hash('password123', 12)
+  const hashedPassword = await bcrypt.hash("password123", 12)
 
   const admin = await prisma.user.upsert({
-    where: { email: 'admin@example.com' },
+    where: { email: "admin@example.com" },
     update: {},
     create: {
-      email: 'admin@example.com',
+      email: "admin@example.com",
       password: hashedPassword,
     },
   })
-  console.log('✅ Created admin user:', admin.email)
+  console.log("✅ Created admin user:", admin.email)
 
   // Create 5 sample clients
   const clients = await Promise.all([
     prisma.client.upsert({
-      where: { cpf: '123.456.789-09' },
+      where: { cpf: "123.456.789-09" },
       update: {},
       create: {
-        firstName: 'João',
-        lastName: 'Silva',
-        email: 'joao.silva@example.com',
-        cpf: '123.456.789-09',
-        socialMedia: '@joaosilva',
+        firstName: "João",
+        lastName: "Silva",
+        email: "joao.silva@example.com",
+        cpf: "123.456.789-09",
+        socialMedia: "@joaosilva",
         createdBy: admin.id,
         addresses: {
           create: [
             {
-              type: 'HOME',
-              street: 'Rua das Flores',
-              number: '123',
-              city: 'São Paulo',
-              state: 'SP',
-              cep: '01234-567',
+              type: "HOME",
+              street: "Rua das Flores",
+              number: "123",
+              city: "São Paulo",
+              state: "SP",
+              cep: "01234-567",
             },
           ],
         },
       },
     }),
     prisma.client.upsert({
-      where: { cpf: '987.654.321-00' },
+      where: { cpf: "987.654.321-00" },
       update: {},
       create: {
-        firstName: 'Maria',
-        lastName: 'Santos',
-        email: 'maria.santos@example.com',
-        cpf: '987.654.321-00',
-        socialMedia: '@mariasantos',
+        firstName: "Maria",
+        lastName: "Santos",
+        email: "maria.santos@example.com",
+        cpf: "987.654.321-00",
+        socialMedia: "@mariasantos",
         createdBy: admin.id,
         addresses: {
           create: [
             {
-              type: 'HOME',
-              street: 'Av. Paulista',
-              number: '1000',
-              city: 'São Paulo',
-              state: 'SP',
-              cep: '01310-100',
+              type: "HOME",
+              street: "Av. Paulista",
+              number: "1000",
+              city: "São Paulo",
+              state: "SP",
+              cep: "01310-100",
             },
             {
-              type: 'WORK',
-              street: 'Rua Augusta',
-              number: '500',
-              city: 'São Paulo',
-              state: 'SP',
-              cep: '01305-000',
-            },
-          ],
-        },
-      },
-    }),
-    prisma.client.upsert({
-      where: { cpf: '111.222.333-44' },
-      update: {},
-      create: {
-        firstName: 'Pedro',
-        lastName: 'Oliveira',
-        email: 'pedro.oliveira@example.com',
-        cpf: '111.222.333-44',
-        createdBy: admin.id,
-        addresses: {
-          create: [
-            {
-              type: 'HOME',
-              street: 'Rua do Comércio',
-              number: '789',
-              city: 'Rio de Janeiro',
-              state: 'RJ',
-              cep: '20000-000',
+              type: "WORK",
+              street: "Rua Augusta",
+              number: "500",
+              city: "São Paulo",
+              state: "SP",
+              cep: "01305-000",
             },
           ],
         },
       },
     }),
     prisma.client.upsert({
-      where: { cpf: '555.666.777-88' },
+      where: { cpf: "111.222.333-44" },
       update: {},
       create: {
-        firstName: 'Ana',
-        lastName: 'Costa',
-        email: 'ana.costa@example.com',
-        cpf: '555.666.777-88',
-        socialMedia: '@anacosta',
+        firstName: "Pedro",
+        lastName: "Oliveira",
+        email: "pedro.oliveira@example.com",
+        cpf: "111.222.333-44",
         createdBy: admin.id,
         addresses: {
           create: [
             {
-              type: 'WORK',
-              street: 'Av. Atlântica',
-              number: '2000',
-              city: 'Rio de Janeiro',
-              state: 'RJ',
-              cep: '22021-001',
+              type: "HOME",
+              street: "Rua do Comércio",
+              number: "789",
+              city: "Rio de Janeiro",
+              state: "RJ",
+              cep: "20000-000",
             },
           ],
         },
       },
     }),
     prisma.client.upsert({
-      where: { cpf: '999.888.777-66' },
+      where: { cpf: "555.666.777-88" },
       update: {},
       create: {
-        firstName: 'Carlos',
-        lastName: 'Ferreira',
-        email: 'carlos.ferreira@example.com',
-        cpf: '999.888.777-66',
+        firstName: "Ana",
+        lastName: "Costa",
+        email: "ana.costa@example.com",
+        cpf: "555.666.777-88",
+        socialMedia: "@anacosta",
         createdBy: admin.id,
         addresses: {
           create: [
             {
-              type: 'HOME',
-              street: 'Rua das Palmeiras',
-              number: '456',
-              city: 'Belo Horizonte',
-              state: 'MG',
-              cep: '30130-000',
+              type: "WORK",
+              street: "Av. Atlântica",
+              number: "2000",
+              city: "Rio de Janeiro",
+              state: "RJ",
+              cep: "22021-001",
+            },
+          ],
+        },
+      },
+    }),
+    prisma.client.upsert({
+      where: { cpf: "999.888.777-66" },
+      update: {},
+      create: {
+        firstName: "Carlos",
+        lastName: "Ferreira",
+        email: "carlos.ferreira@example.com",
+        cpf: "999.888.777-66",
+        createdBy: admin.id,
+        addresses: {
+          create: [
+            {
+              type: "HOME",
+              street: "Rua das Palmeiras",
+              number: "456",
+              city: "Belo Horizonte",
+              state: "MG",
+              cep: "30130-000",
             },
           ],
         },
@@ -153,43 +153,43 @@ async function main() {
   // Create 10 sample products
   const products = await Promise.all([
     prisma.product.upsert({
-      where: { id: 'seed-prod-1' },
+      where: { id: "seed-prod-1" },
       update: {},
       create: {
-        id: 'seed-prod-1',
-        name: 'Laptop Dell Inspiron',
+        id: "seed-prod-1",
+        name: "Laptop Dell Inspiron",
         priceInCents: 250000, // R$ 2,500.00
         stockQty: 20,
         createdBy: admin.id,
       },
     }),
     prisma.product.upsert({
-      where: { id: 'seed-prod-2' },
+      where: { id: "seed-prod-2" },
       update: {},
       create: {
-        id: 'seed-prod-2',
-        name: 'Mouse Logitech MX Master',
+        id: "seed-prod-2",
+        name: "Mouse Logitech MX Master",
         priceInCents: 35000, // R$ 350.00
         stockQty: 50,
         createdBy: admin.id,
       },
     }),
     prisma.product.upsert({
-      where: { id: 'seed-prod-3' },
+      where: { id: "seed-prod-3" },
       update: {},
       create: {
-        id: 'seed-prod-3',
-        name: 'Teclado Mecânico Keychron',
+        id: "seed-prod-3",
+        name: "Teclado Mecânico Keychron",
         priceInCents: 45000, // R$ 450.00
         stockQty: 30,
         createdBy: admin.id,
       },
     }),
     prisma.product.upsert({
-      where: { id: 'seed-prod-4' },
+      where: { id: "seed-prod-4" },
       update: {},
       create: {
-        id: 'seed-prod-4',
+        id: "seed-prod-4",
         name: 'Monitor LG 27"',
         priceInCents: 120000, // R$ 1,200.00
         stockQty: 15,
@@ -197,66 +197,66 @@ async function main() {
       },
     }),
     prisma.product.upsert({
-      where: { id: 'seed-prod-5' },
+      where: { id: "seed-prod-5" },
       update: {},
       create: {
-        id: 'seed-prod-5',
-        name: 'Webcam Logitech C920',
+        id: "seed-prod-5",
+        name: "Webcam Logitech C920",
         priceInCents: 55000, // R$ 550.00
         stockQty: 25,
         createdBy: admin.id,
       },
     }),
     prisma.product.upsert({
-      where: { id: 'seed-prod-6' },
+      where: { id: "seed-prod-6" },
       update: {},
       create: {
-        id: 'seed-prod-6',
-        name: 'Headset HyperX Cloud',
+        id: "seed-prod-6",
+        name: "Headset HyperX Cloud",
         priceInCents: 40000, // R$ 400.00
         stockQty: 40,
         createdBy: admin.id,
       },
     }),
     prisma.product.upsert({
-      where: { id: 'seed-prod-7' },
+      where: { id: "seed-prod-7" },
       update: {},
       create: {
-        id: 'seed-prod-7',
-        name: 'SSD Samsung 1TB',
+        id: "seed-prod-7",
+        name: "SSD Samsung 1TB",
         priceInCents: 65000, // R$ 650.00
         stockQty: 35,
         createdBy: admin.id,
       },
     }),
     prisma.product.upsert({
-      where: { id: 'seed-prod-8' },
+      where: { id: "seed-prod-8" },
       update: {},
       create: {
-        id: 'seed-prod-8',
-        name: 'Memória RAM 16GB',
+        id: "seed-prod-8",
+        name: "Memória RAM 16GB",
         priceInCents: 38000, // R$ 380.00
         stockQty: 45,
         createdBy: admin.id,
       },
     }),
     prisma.product.upsert({
-      where: { id: 'seed-prod-9' },
+      where: { id: "seed-prod-9" },
       update: {},
       create: {
-        id: 'seed-prod-9',
-        name: 'Placa de Vídeo GTX 1660',
+        id: "seed-prod-9",
+        name: "Placa de Vídeo GTX 1660",
         priceInCents: 180000, // R$ 1,800.00
         stockQty: 10,
         createdBy: admin.id,
       },
     }),
     prisma.product.upsert({
-      where: { id: 'seed-prod-10' },
+      where: { id: "seed-prod-10" },
       update: {},
       create: {
-        id: 'seed-prod-10',
-        name: 'Gabinete Gamer RGB',
+        id: "seed-prod-10",
+        name: "Gabinete Gamer RGB",
         priceInCents: 28000, // R$ 280.00
         stockQty: 20,
         createdBy: admin.id,
@@ -305,14 +305,14 @@ async function main() {
       },
     })
   }
-  console.log('✅ Created 20 sample sales')
+  console.log("✅ Created 20 sample sales")
 
-  console.log('🎉 Database seed completed successfully!')
+  console.log("🎉 Database seed completed successfully!")
 }
 
 main()
   .catch((e) => {
-    console.error('❌ Seed error:', e)
+    console.error("❌ Seed error:", e)
     process.exit(1)
   })
   .finally(async () => {

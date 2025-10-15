@@ -234,9 +234,11 @@ model SaleItem {
 ## Entity Descriptions
 
 ### User
+
 Represents an authenticated user of the system who can perform CRUD operations on clients, products, and sales.
 
 **Fields**:
+
 - `id`: Unique identifier (CUID for URL safety)
 - `email`: Unique email address for login
 - `password`: Hashed password (bcrypt with cost factor 12)
@@ -244,11 +246,13 @@ Represents an authenticated user of the system who can perform CRUD operations o
 - `updatedAt`: Timestamp of last update
 
 **Relations**:
+
 - One-to-many with Client (tracks who created each client)
 - One-to-many with Product (tracks who created each product)
 - One-to-many with Sale (tracks who created each sale)
 
 **Business Rules**:
+
 - Username must be unique
 - Password must be hashed before storage
 - Users cannot be deleted if they have associated data
@@ -256,9 +260,11 @@ Represents an authenticated user of the system who can perform CRUD operations o
 ---
 
 ### Client
+
 Represents a customer or buyer who purchases products through sales transactions.
 
 **Fields**:
+
 - `id`: Unique identifier
 - `firstName`: Client's first name (required)
 - `lastName`: Client's last name (required)
@@ -270,11 +276,13 @@ Represents a customer or buyer who purchases products through sales transactions
 - `updatedAt`: Timestamp of last update
 
 **Relations**:
+
 - One-to-many with Address (can have up to 2 addresses: HOME and WORK)
 - One-to-many with Sale (purchase history)
 - Many-to-one with User (creator)
 
 **Business Rules**:
+
 - CPF must be unique across all clients
 - CPF must pass validation algorithm
 - Email must be valid format
@@ -283,6 +291,7 @@ Represents a customer or buyer who purchases products through sales transactions
 - All fields except socialMedia are required
 
 **Indexes**:
+
 - email (for quick lookups)
 - cpf (for unique constraint and lookups)
 - lastName (for alphabetical sorting)
@@ -290,9 +299,11 @@ Represents a customer or buyer who purchases products through sales transactions
 ---
 
 ### Address
+
 Represents a physical location (home or work) associated with a client. Brazilian address format.
 
 **Fields**:
+
 - `id`: Unique identifier
 - `type`: Enum (HOME | WORK) - address type
 - `street`: Street name and details
@@ -303,24 +314,29 @@ Represents a physical location (home or work) associated with a client. Brazilia
 - `clientId`: Reference to parent client
 
 **Relations**:
+
 - Many-to-one with Client (belongs to one client)
 
 **Business Rules**:
+
 - CEP must match format: #####-###
 - All fields are required
 - A client can have at most one HOME and one WORK address
 - Cascade delete when client is deleted
 
 **Indexes**:
+
 - clientId (for efficient joins)
 - cep (for postal code lookups)
 
 ---
 
 ### Product
+
 Represents an item available for sale with current pricing and stock information.
 
 **Fields**:
+
 - `id`: Unique identifier
 - `name`: Product name (required)
 - `priceInCents`: Current price in cents (integer to avoid floating point issues)
@@ -330,10 +346,12 @@ Represents an item available for sale with current pricing and stock information
 - `updatedAt`: Timestamp of last update
 
 **Relations**:
+
 - One-to-many with SaleItem (sale history)
 - Many-to-one with User (creator)
 
 **Business Rules**:
+
 - Price must be positive (> 0)
 - Stock quantity must be non-negative (>= 0)
 - Stock automatically decrements when sales are created
@@ -342,14 +360,17 @@ Represents an item available for sale with current pricing and stock information
 - All fields are required
 
 **Indexes**:
+
 - name (for search and sorting)
 
 ---
 
 ### Sale
+
 Represents a transaction where a client purchases one or more products. Contains sale date and calculated total amount.
 
 **Fields**:
+
 - `id`: Unique identifier
 - `saleDate`: Date/time of the sale transaction
 - `totalAmount`: Total sale amount in cents (sum of all SaleItems)
@@ -359,11 +380,13 @@ Represents a transaction where a client purchases one or more products. Contains
 - `updatedAt`: Timestamp of last update
 
 **Relations**:
+
 - Many-to-one with Client (buyer)
 - One-to-many with SaleItem (products in this sale)
 - Many-to-one with User (creator)
 
 **Business Rules**:
+
 - Must have at least one SaleItem
 - Total amount is automatically calculated from SaleItems
 - Sale date defaults to creation time but can be set manually
@@ -372,6 +395,7 @@ Represents a transaction where a client purchases one or more products. Contains
 - Stock quantities must be validated before sale creation
 
 **Indexes**:
+
 - clientId (for customer purchase history)
 - saleDate (for date range filtering)
 - createdAt (for recent sales queries)
@@ -379,9 +403,11 @@ Represents a transaction where a client purchases one or more products. Contains
 ---
 
 ### SaleItem
+
 Represents a line item in a sale, linking a specific product with quantity and price snapshot.
 
 **Fields**:
+
 - `id`: Unique identifier
 - `quantity`: Number of units sold
 - `priceInCents`: Price per unit at time of sale (snapshot)
@@ -389,10 +415,12 @@ Represents a line item in a sale, linking a specific product with quantity and p
 - `productId`: Reference to the product sold
 
 **Relations**:
+
 - Many-to-one with Sale (belongs to one sale)
 - Many-to-one with Product (references one product)
 
 **Business Rules**:
+
 - Quantity must be positive (> 0)
 - Price is captured from Product at time of sale
 - Price snapshot ensures historical accuracy even if product price changes
@@ -401,6 +429,7 @@ Represents a line item in a sale, linking a specific product with quantity and p
 - Line total = quantity × priceInCents
 
 **Indexes**:
+
 - saleId (for efficient joins)
 - productId (for product sales history)
 
@@ -409,67 +438,71 @@ Represents a line item in a sale, linking a specific product with quantity and p
 ## Validation Rules
 
 ### CPF Validation
+
 ```typescript
 // Format: XXX.XXX.XXX-XX (11 digits)
 function validateCPF(cpf: string): boolean {
   // Remove formatting
-  const cleanCPF = cpf.replace(/[^\d]/g, '');
-  
-  if (cleanCPF.length !== 11) return false;
-  if (/^(\d)\1+$/.test(cleanCPF)) return false; // All same digit
-  
+  const cleanCPF = cpf.replace(/[^\d]/g, "")
+
+  if (cleanCPF.length !== 11) return false
+  if (/^(\d)\1+$/.test(cleanCPF)) return false // All same digit
+
   // Validate check digits
-  let sum = 0;
+  let sum = 0
   for (let i = 0; i < 9; i++) {
-    sum += parseInt(cleanCPF.charAt(i)) * (10 - i);
+    sum += parseInt(cleanCPF.charAt(i)) * (10 - i)
   }
-  let checkDigit1 = 11 - (sum % 11);
-  if (checkDigit1 >= 10) checkDigit1 = 0;
-  
-  if (parseInt(cleanCPF.charAt(9)) !== checkDigit1) return false;
-  
-  sum = 0;
+  let checkDigit1 = 11 - (sum % 11)
+  if (checkDigit1 >= 10) checkDigit1 = 0
+
+  if (parseInt(cleanCPF.charAt(9)) !== checkDigit1) return false
+
+  sum = 0
   for (let i = 0; i < 10; i++) {
-    sum += parseInt(cleanCPF.charAt(i)) * (11 - i);
+    sum += parseInt(cleanCPF.charAt(i)) * (11 - i)
   }
-  let checkDigit2 = 11 - (sum % 11);
-  if (checkDigit2 >= 10) checkDigit2 = 0;
-  
-  return parseInt(cleanCPF.charAt(10)) === checkDigit2;
+  let checkDigit2 = 11 - (sum % 11)
+  if (checkDigit2 >= 10) checkDigit2 = 0
+
+  return parseInt(cleanCPF.charAt(10)) === checkDigit2
 }
 ```
 
 ### CEP Validation
+
 ```typescript
 // Format: #####-### (8 digits)
-const cepRegex = /^\d{5}-?\d{3}$/;
+const cepRegex = /^\d{5}-?\d{3}$/
 
 function validateCEP(cep: string): boolean {
-  return cepRegex.test(cep);
+  return cepRegex.test(cep)
 }
 ```
 
 ### Email Validation
+
 ```typescript
 // Standard email format
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 ```
 
 ### Price and Quantity Validation
+
 ```typescript
 // Prices must be positive integers (cents)
 function validatePrice(priceInCents: number): boolean {
-  return Number.isInteger(priceInCents) && priceInCents > 0;
+  return Number.isInteger(priceInCents) && priceInCents > 0
 }
 
 // Stock quantity must be non-negative integer
 function validateStockQty(qty: number): boolean {
-  return Number.isInteger(qty) && qty >= 0;
+  return Number.isInteger(qty) && qty >= 0
 }
 
 // Sale quantity must be positive integer
 function validateSaleQty(qty: number): boolean {
-  return Number.isInteger(qty) && qty > 0;
+  return Number.isInteger(qty) && qty > 0
 }
 ```
 
@@ -477,15 +510,15 @@ function validateSaleQty(qty: number): boolean {
 
 ## Cascading Rules
 
-| Parent | Child | On Delete | Rationale |
-|--------|-------|-----------|-----------|
-| User | Client | RESTRICT | Preserve creator information |
-| User | Product | RESTRICT | Preserve creator information |
-| User | Sale | RESTRICT | Preserve creator information |
-| Client | Address | CASCADE | Addresses have no meaning without client |
-| Client | Sale | RESTRICT | Prevent data loss, preserve sales history |
-| Product | SaleItem | RESTRICT | Prevent data loss, preserve sales history |
-| Sale | SaleItem | CASCADE | Sale items have no meaning without sale |
+| Parent  | Child    | On Delete | Rationale                                 |
+| ------- | -------- | --------- | ----------------------------------------- |
+| User    | Client   | RESTRICT  | Preserve creator information              |
+| User    | Product  | RESTRICT  | Preserve creator information              |
+| User    | Sale     | RESTRICT  | Preserve creator information              |
+| Client  | Address  | CASCADE   | Addresses have no meaning without client  |
+| Client  | Sale     | RESTRICT  | Prevent data loss, preserve sales history |
+| Product | SaleItem | RESTRICT  | Prevent data loss, preserve sales history |
+| Sale    | SaleItem | CASCADE   | Sale items have no meaning without sale   |
 
 ---
 
@@ -517,7 +550,7 @@ function validateSaleQty(qty: number): boolean {
 
 1. **Initial Migration**: Create all tables and relationships
 2. **Seed Data**: Create default admin user, sample clients/products (for development)
-3. **Production Setup**: 
+3. **Production Setup**:
    - Enable connection pooling
    - Configure backup schedule
    - Set up monitoring for slow queries
@@ -531,23 +564,23 @@ function validateSaleQty(qty: number): boolean {
 // Get client with addresses
 const client = await prisma.client.findUnique({
   where: { id: clientId },
-  include: { addresses: true }
-});
+  include: { addresses: true },
+})
 
 // Get sales for last 30 days
-const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
 const recentSales = await prisma.sale.findMany({
   where: {
-    saleDate: { gte: thirtyDaysAgo }
+    saleDate: { gte: thirtyDaysAgo },
   },
   include: {
     client: true,
     saleItems: {
-      include: { product: true }
-    }
+      include: { product: true },
+    },
   },
-  orderBy: { saleDate: 'desc' }
-});
+  orderBy: { saleDate: "desc" },
+})
 
 // Create sale with multiple products
 const sale = await prisma.sale.create({
@@ -559,20 +592,19 @@ const sale = await prisma.sale.create({
     saleItems: {
       create: [
         { productId: prod1, quantity: 2, priceInCents: prod1Price },
-        { productId: prod2, quantity: 1, priceInCents: prod2Price }
-      ]
-    }
-  }
-});
+        { productId: prod2, quantity: 1, priceInCents: prod2Price },
+      ],
+    },
+  },
+})
 
 // Check if client can be deleted
 const salesCount = await prisma.sale.count({
-  where: { clientId }
-});
-const canDelete = salesCount === 0;
+  where: { clientId },
+})
+const canDelete = salesCount === 0
 ```
 
 ---
 
-*Data model complete and ready for implementation*
-
+_Data model complete and ready for implementation_

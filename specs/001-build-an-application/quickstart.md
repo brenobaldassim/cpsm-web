@@ -7,40 +7,43 @@
 ## Prerequisites
 
 1. **Docker Setup**:
+
    ```bash
    # Start PostgreSQL database with Docker Compose
    docker-compose up -d
-   
+
    # Verify database is running
    docker-compose ps
-   
+
    # View database logs (optional)
    docker-compose logs postgres
    ```
 
 2. **Environment Setup**:
+
    ```bash
    # Copy environment variables template
    cp .env.example .env.local
-   
+
    # Install dependencies (using pnpm)
    pnpm install
-   
+
    # Setup database (migrations)
    pnpm exec prisma migrate dev
-   
+
    # Seed database with test data
    pnpm exec prisma db seed
-   
+
    # Start development server
    pnpm dev
    ```
 
 3. **Package Manager**: This project uses **pnpm**. Install it globally:
+
    ```bash
    # Install pnpm globally
    npm install -g pnpm
-   
+
    # Or via Corepack (Node.js 16.13+)
    corepack enable
    ```
@@ -54,15 +57,16 @@
 5. **Access Application**: http://localhost:3000
 
 6. **Stopping Services**:
+
    ```bash
    # Stop development server: Ctrl+C
-   
+
    # Stop database (keeps data)
    docker-compose stop
-   
+
    # Stop and remove database (removes data)
    docker-compose down
-   
+
    # Stop and remove database with volumes (full cleanup)
    docker-compose down -v
    ```
@@ -108,6 +112,7 @@
    - Expected: Redirected to login page
 
 **Acceptance Criteria**:
+
 - ✅ Unauthenticated users cannot access protected pages
 - ✅ Login works with valid credentials
 - ✅ Login fails with invalid credentials
@@ -198,6 +203,7 @@
    - Expected: Client NOT deleted
 
 **Acceptance Criteria**:
+
 - ✅ Can create clients with 1 or 2 addresses
 - ✅ CPF validation enforced (format + check digits)
 - ✅ CEP validation enforced
@@ -276,6 +282,7 @@
     - Expected: Product NOT deleted
 
 **Acceptance Criteria**:
+
 - ✅ Can create products with valid price and stock
 - ✅ Price and stock validation enforced
 - ✅ Can edit product information
@@ -353,6 +360,7 @@
    - Expected: Validation error "At least one product required"
 
 **Acceptance Criteria**:
+
 - ✅ Can create sales with one or multiple products
 - ✅ Stock automatically decremented on sale creation
 - ✅ Cannot sell more than available stock
@@ -416,6 +424,7 @@
    - Expected: No errors
 
 **Acceptance Criteria**:
+
 - ✅ Default view shows last 30 days
 - ✅ Can filter by date range
 - ✅ Can filter by client
@@ -431,6 +440,7 @@
 **Objective**: Verify responsive design across device sizes.
 
 ### Device Breakpoints to Test:
+
 - Mobile Small: 320px
 - Mobile: 375px
 - Tablet: 768px
@@ -476,6 +486,7 @@
    - Contrast meets accessibility standards
 
 **Acceptance Criteria**:
+
 - ✅ Navigation adapts to screen size
 - ✅ Tables responsive on small screens
 - ✅ Forms usable on mobile
@@ -523,6 +534,7 @@
    - Expected: API responses < 200ms (p95)
 
 **Acceptance Criteria**:
+
 - ✅ Pages render on server (SSR)
 - ✅ Core Web Vitals in "Good" range
 - ✅ Initial bundle < 200KB gzipped
@@ -566,6 +578,7 @@
    - Expected: No errors
 
 **Acceptance Criteria**:
+
 - ✅ Network errors handled gracefully
 - ✅ Validation errors clear and helpful
 - ✅ Loading states shown for async operations
@@ -577,6 +590,7 @@
 ## Validation Checklist
 
 ### Functional Requirements
+
 - [ ] Multi-user authentication works
 - [ ] Client CRUD with CPF and address validation
 - [ ] Product CRUD with price and stock management
@@ -588,6 +602,7 @@
 - [ ] Client filtering
 
 ### Non-Functional Requirements
+
 - [ ] Responsive design (mobile, tablet, desktop)
 - [ ] Touch targets ≥ 44×44px
 - [ ] Page load < 2s desktop, < 3s mobile
@@ -598,6 +613,7 @@
 - [ ] Accessibility standards met
 
 ### User Experience
+
 - [ ] Loading states for async operations
 - [ ] Error messages user-friendly
 - [ ] Form validation inline
@@ -673,4 +689,3 @@ All 8 scenarios must pass for feature acceptance:
 8. ✅ Error Handling
 
 **Feature Complete**: All acceptance criteria met ✅
-

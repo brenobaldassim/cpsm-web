@@ -5,21 +5,21 @@
  * Integrates with Prisma for user management.
  */
 
-import { PrismaAdapter } from '@auth/prisma-adapter'
-import * as bcrypt from 'bcryptjs'
-import NextAuth, { type DefaultSession } from 'next-auth'
-import Credentials from 'next-auth/providers/credentials'
-import { prisma } from './db'
+import { PrismaAdapter } from "@auth/prisma-adapter"
+import * as bcrypt from "bcryptjs"
+import NextAuth, { type DefaultSession } from "next-auth"
+import Credentials from "next-auth/providers/credentials"
+import { prisma } from "./db"
 
 /**
  * Module augmentation for NextAuth types
  * Adds our custom properties to the session
  */
-declare module 'next-auth' {
+declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string
-    } & DefaultSession['user']
+    } & DefaultSession["user"]
   }
 }
 
@@ -35,10 +35,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
    */
   providers: [
     Credentials({
-      name: 'credentials',
+      name: "credentials",
       credentials: {
-        email: { label: 'Email', type: 'email' },
-        password: { label: 'Password', type: 'password' },
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" },
       },
 
       async authorize(credentials) {
@@ -79,7 +79,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
    * Use JWT for stateless sessions (faster, no database lookups on every request)
    */
   session: {
-    strategy: 'jwt',
+    strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
 
@@ -88,7 +88,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
    * Redirect to our custom login page
    */
   pages: {
-    signIn: '/login',
+    signIn: "/login",
   },
 
   /**
@@ -123,5 +123,5 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   /**
    * Enable debug mode in development
    */
-  debug: process.env.NODE_ENV === 'development',
+  debug: process.env.NODE_ENV === "development",
 })

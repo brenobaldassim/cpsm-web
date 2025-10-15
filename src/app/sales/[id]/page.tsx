@@ -4,10 +4,10 @@
  * View complete sale information with items.
  */
 
-'use client'
+"use client"
 
-import * as React from 'react'
-import { Card } from '@/components/ui/card'
+import * as React from "react"
+import { Card } from "@/components/ui/card"
 import {
   Table,
   TableBody,
@@ -16,8 +16,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
-import { trpc } from '@/lib/trpc'
+} from "@/components/ui/table"
+import { trpc } from "@/lib/trpc"
 
 export default function SaleDetailPage({
   params,
@@ -31,7 +31,7 @@ export default function SaleDetailPage({
   })
 
   const formatPrice = (priceInCents: number) => {
-    return `R$ ${(priceInCents / 100).toLocaleString('pt-BR', {
+    return `R$ ${(priceInCents / 100).toLocaleString("pt-BR", {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     })}`
@@ -77,12 +77,12 @@ export default function SaleDetailPage({
               Sale Date
             </dt>
             <dd className="mt-1 text-sm text-card-foreground">
-              {new Date(sale.saleDate).toLocaleDateString('pt-BR', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
+              {new Date(sale.saleDate).toLocaleDateString("pt-BR", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
               })}
             </dd>
           </div>
@@ -107,7 +107,7 @@ export default function SaleDetailPage({
               Created
             </dt>
             <dd className="mt-1 text-sm text-card-foreground">
-              {new Date(sale.createdAt).toLocaleDateString('pt-BR')}
+              {new Date(sale.createdAt).toLocaleDateString("pt-BR")}
             </dd>
           </div>
         </dl>

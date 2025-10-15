@@ -5,30 +5,25 @@
  * Protected route - requires authentication.
  */
 
-'use client'
+import * as React from "react"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
+import { FilePlusIcon } from "lucide-react"
+import { SalesCardList } from "@/components/card-lists/salesCardList"
+import { createCaller } from "@/server/api/server-caller"
+import { SalesListPageParams } from "./types"
+import { ItemsListPagination } from "@/components/items-list-pagination"
 
-import * as React from 'react'
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { DataTable, type Column } from '@/components/data-tables'
-import { trpc } from '@/lib/trpc'
-import { formatPrice } from '../utils/formatPrice'
-import { Card } from '@/components/ui/card'
-import { FilePlusIcon } from 'lucide-react'
-
-type Sale = {
-  id: string
-  client: {
-    firstName: string
-    lastName: string
-  }
-  saleDate: Date
-  totalAmount: number
-  createdAt: Date
+interface SalesListPageProps {
+  searchParams: Promise<SalesListPageParams>
 }
 
-export default function SalesListPage() {
-  const [page, setPage] = React.useState(1)
+export default async function SalesListPage({
+  searchParams,
+}: SalesListPageProps) {
+  const params = await searchParams
+  const page = Number(params.page) || 1
   // TODO: Add date filtering UI
   // const [dateFrom, setDateFrom] = React.useState<Date>(() => {
   //   const date = new Date()
@@ -37,44 +32,15 @@ export default function SalesListPage() {
   // })
   // const [dateTo, setDateTo] = React.useState<Date>(new Date())
 
-  const { data, isLoading } = trpc.sales.list.useQuery({
+  const caller = await createCaller()
+  const data = await caller.sales.list({
     page,
     limit: 20,
-    sortBy: 'saleDate',
-    sortOrder: 'desc',
+    sortBy: "saleDate",
+    sortOrder: "desc",
   })
-
-  const columns: Column<Sale>[] = [
-    {
-      key: 'saleDate',
-      label: 'Date',
-      render: (row) => new Date(row.saleDate).toLocaleDateString('pt-BR'),
-    },
-    {
-      key: 'clientName',
-      label: 'Client',
-      render: (row) => `${row.client.firstName} ${row.client.lastName}`,
-    },
-    {
-      key: 'totalAmount',
-      label: 'Total',
-      render: (row) => formatPrice(row.totalAmount),
-    },
-    {
-      key: 'actions',
-      label: 'Actions',
-      render: (row) => (
-        <Link href={`/sales/${row.id}`}>
-          <Button variant="outline" size="sm">
-            View Details
-          </Button>
-        </Link>
-      ),
-    },
-  ]
-
   return (
-    <div className="w-full max-w-5xl px-4 py-8 sm:px-6 lg:px-8 ">
+    <div className="w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-4">
       <Card className="p-6">
         <div className="mb-8 flex items-center justify-between">
           <div>
@@ -84,8 +50,8 @@ export default function SalesListPage() {
             </p>
           </div>
           <Link href="/sales/new">
-            <Button className="[&_svg]:!size-7">
-              <FilePlusIcon />
+            <Button>
+              <FilePlusIcon className="size-7" />
             </Button>
           </Link>
         </div>
@@ -96,18 +62,15 @@ export default function SalesListPage() {
             Showing sales from the last 30 days (default view)
           </p>
         </div>
-
-        <DataTable
-          data={data?.sales || []}
-          columns={columns}
-          currentPage={page}
-          totalPages={data?.totalPages || 1}
-          onPageChange={setPage}
-          isLoading={isLoading}
-          emptyMessage="No sales found for the selected period"
-          keyExtractor={(row) => row.id}
-        />
       </Card>
+      <SalesCardList data={data} />
+
+      <ItemsListPagination
+        page={page}
+        totalPages={data.totalPages}
+        params={params as Record<string, string>}
+        href="/sales"
+      />
     </div>
   )
 }

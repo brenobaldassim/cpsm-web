@@ -3,7 +3,7 @@ import { Prisma } from "@prisma/client"
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const saleWithItemsAndClient = Prisma.validator<Prisma.SaleDefaultArgs>()({
-  include: { saleItems: true, client: true },
+  include: { saleItems: { include: { product: true } }, client: true },
 })
 
 export type SaleWithItemsAndClient = Prisma.SaleGetPayload<

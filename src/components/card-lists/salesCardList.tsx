@@ -36,9 +36,16 @@ export function SalesCardList({ data }: SalesCardListProps) {
               </div>
             }
           >
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted-foreground">Total</p>
+            <p className="text-2xl  text-primary font-bold">
               {formatPrice(sale.totalAmount)}
             </p>
+            <div className="flex flex-col justify-center items-end">
+              <p className="text-sm text-muted-foreground">Total items</p>
+              <p className="text-xl  text-primary font-bold">
+                {sale.saleItems.length}
+              </p>
+            </div>
           </CardItem>
         )
       })}

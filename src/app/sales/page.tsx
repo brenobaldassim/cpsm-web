@@ -57,8 +57,8 @@ export default async function SalesListPage({
         </div>
 
         {/* Info about date filtering */}
-        <div className="mb-6 p-4 bg-primary border border-muted rounded-md">
-          <p className="text-sm text-primary-foreground">
+        <div className="mb-6 p-4 bg-primary-foreground border border-primary/20 rounded-md">
+          <p className="text-base text-primary ">
             Showing sales from the last 30 days (default view)
           </p>
         </div>

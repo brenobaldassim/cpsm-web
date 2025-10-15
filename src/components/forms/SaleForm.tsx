@@ -265,10 +265,10 @@ export function SaleForm({
             {/* Show line total */}
             {watchedItems[index]?.productId &&
               watchedItems[index]?.quantity && (
-                <div className="mt-4 pt-4 border-t border-neutral-200">
+                <div className="mt-4 pt-4 border-t border-muted-foreground/20">
                   <div className="flex justify-between text-sm">
-                    <span className="text-neutral-600">Line Total:</span>
-                    <span className="font-medium text-neutral-900">
+                    <span className="text-muted-foreground">Line Total:</span>
+                    <span className="font-medium text-primary">
                       {(() => {
                         const product = products.find(
                           (p) => p.id === watchedItems[index].productId
@@ -289,18 +289,20 @@ export function SaleForm({
       </div>
 
       {/* Total */}
-      <Card className="p-6 bg-neutral-50">
+
+      <Card className="p-6 bg-primary-foreground w-full">
         <div className="flex justify-between items-center">
-          <span className="text-lg font-semibold text-neutral-900">
+          <span className="text-lg font-semibold text-primary">
             Total Amount:
           </span>
-          <span className="text-2xl font-bold text-neutral-900">
+          <span className="text-2xl font-bold text-primary">
             {formatPrice(calculateTotal())}
           </span>
         </div>
       </Card>
 
       {/* Submit Button */}
+
       <div className="flex gap-4">
         <Button type="submit" disabled={isLoading}>
           {isLoading ? "Creating Sale..." : "Create Sale"}

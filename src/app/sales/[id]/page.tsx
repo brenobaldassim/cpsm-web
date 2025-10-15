@@ -18,6 +18,9 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { trpc } from "@/lib/trpc"
+import { notFound } from "next/navigation"
+import { Loading } from "@/components/loading/Loading"
+import { formatPrice } from "@/app/utils/formatPrice"
 
 export default function SaleDetailPage({
   params,
@@ -26,39 +29,20 @@ export default function SaleDetailPage({
 }) {
   const { id: saleId } = React.use(params)
 
-  const { data: sale, isLoading } = trpc.sales.getById.useQuery({
+  const { data: sale, isLoading: isLoadingSale } = trpc.sales.getById.useQuery({
     id: saleId,
   })
 
-  const formatPrice = (priceInCents: number) => {
-    return `R$ ${(priceInCents / 100).toLocaleString("pt-BR", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    })}`
-  }
-
-  if (isLoading) {
-    return (
-      <>
-        <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
-          <div className="text-center">Loading...</div>
-        </div>
-      </>
-    )
+  if (isLoadingSale) {
+    return <Loading />
   }
 
   if (!sale) {
-    return (
-      <>
-        <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
-          <div className="text-center">Sale not found</div>
-        </div>
-      </>
-    )
+    return notFound()
   }
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-2xl w-full px-4 py-8 sm:px-6 lg:px-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-foreground">Sale Details</h1>
         <p className="mt-2 text-muted-foreground">

@@ -12,6 +12,8 @@ import { ClientForm } from "@/components/forms"
 import { trpc } from "@/lib/trpc"
 import { brazilianStates } from "@/lib/validations"
 import { Address } from "@prisma/client"
+import { notFound } from "next/navigation"
+import { Loading } from "@/components/loading/Loading"
 
 export default function EditClientPage({
   params,
@@ -33,28 +35,16 @@ export default function EditClientPage({
   })
 
   if (isLoadingClient) {
-    return (
-      <>
-        <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
-          <div className="text-center">Loading...</div>
-        </div>
-      </>
-    )
+    return <Loading />
   }
 
   if (!client) {
-    return (
-      <>
-        <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
-          <div className="text-center">Client not found</div>
-        </div>
-      </>
-    )
+    return notFound()
   }
 
   return (
     <>
-      <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-2xl w-full px-4 py-8 sm:px-6 lg:px-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-foreground">Edit Client</h1>
           <p className="mt-2 text-secondary-foreground">

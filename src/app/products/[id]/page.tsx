@@ -7,9 +7,10 @@
 "use client"
 
 import * as React from "react"
-import { useRouter } from "next/navigation"
+import { notFound, useRouter } from "next/navigation"
 import { ProductForm } from "@/components/forms"
 import { trpc } from "@/lib/trpc"
+import { Loading } from "@/components/loading/Loading"
 
 export default function EditProductPage({
   params,
@@ -31,28 +32,16 @@ export default function EditProductPage({
   })
 
   if (isLoadingProduct) {
-    return (
-      <>
-        <div className="mx-auto max-w-2xl px-4 py-8 sm:px-6 lg:px-8">
-          <div className="text-center">Loading...</div>
-        </div>
-      </>
-    )
+    return <Loading />
   }
 
   if (!product) {
-    return (
-      <>
-        <div className="mx-auto max-w-2xl px-4 py-8 sm:px-6 lg:px-8">
-          <div className="text-center">Product not found</div>
-        </div>
-      </>
-    )
+    return notFound()
   }
 
   return (
     <>
-      <div className="mx-auto max-w-2xl px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-2xl w-full px-4 py-8 sm:px-6 lg:px-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-foreground">Edit Product</h1>
           <p className="mt-2 text-secondary-foreground">

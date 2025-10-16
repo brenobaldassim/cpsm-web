@@ -25,20 +25,6 @@ export interface FormFieldProps
   fullWidth?: boolean
 }
 
-/**
- * FormField Component
- *
- * @example
- * ```tsx
- * <FormField
- *   label="Email"
- *   registration={register('email')}
- *   error={errors.email}
- *   type="email"
- *   placeholder="Enter your email"
- * />
- * ```
- */
 export const FormField: React.FC<FormFieldProps> = ({
   label,
   registration,

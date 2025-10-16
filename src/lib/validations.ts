@@ -128,8 +128,8 @@ export const emailSchema = z.string().email("Invalid email address")
 
 export const passwordSchema = z
   .string()
-  .min(8, "Password must be at least 8 characters")
-  .max(100, "Password must not exceed 100 characters")
+  .min(6, "Password must be at least 8 characters")
+  .max(11, "Password must not exceed 11 characters long")
 
 export const priceSchema = z
   .number()

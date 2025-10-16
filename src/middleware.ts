@@ -45,12 +45,12 @@ setInterval(cleanupAccessLog, TIME_IN_MS.TWO_MINUTES)
 /**
  * Public routes that don't require authentication
  */
-const PUBLIC_ROUTES = ["/login", "/signup", "/api/auth"]
+const PUBLIC_ROUTES = ["/login", "/sign-up", "/api/auth"]
 
 /**
  * Routes that should redirect to dashboard if already authenticated
  */
-const AUTH_ROUTES = ["/login", "/signup"]
+const AUTH_ROUTES = ["/login", "/sign-up"]
 
 /**
  * Middleware function

@@ -53,7 +53,7 @@ export function AppSidebar() {
     await signOut({ callbackUrl: "/login" })
   }
 
-  if (status === "unauthenticated") {
+  if (status === "unauthenticated" || status === "loading") {
     return null
   }
 

@@ -1,4 +1,4 @@
-import { ProductsListPageParams } from "../products/types"
+import { ProductsListPageParams } from "../(navigation)/products/types"
 
 export const updatePageInParams = (
   page: number,

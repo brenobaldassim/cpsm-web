@@ -9,19 +9,15 @@ import * as bcrypt from "bcryptjs"
 
 import { createTRPCRouter, publicProcedure } from "../../trpc"
 import { signupInput, userOutput } from "./schemas/validation"
+import { excludePassword } from "./utils"
 
 export const authRouter = createTRPCRouter({
-  /**
-   * auth.signup
-   * Create new user account
-   */
   signup: publicProcedure
     .input(signupInput)
     .output(userOutput)
     .mutation(async ({ input, ctx }) => {
       const { email, password } = input
 
-      // Check if user already exists
       const existingUser = await ctx.prisma.user.findUnique({
         where: { email },
       })
@@ -33,10 +29,8 @@ export const authRouter = createTRPCRouter({
         })
       }
 
-      // Hash password
       const hashedPassword = await bcrypt.hash(password, 12)
 
-      // Create user
       const user = await ctx.prisma.user.create({
         data: {
           email,
@@ -44,10 +38,6 @@ export const authRouter = createTRPCRouter({
         },
       })
 
-      return {
-        id: user.id,
-        email: user.email,
-        createdAt: user.createdAt,
-      }
+      return excludePassword(user)
     }),
 })

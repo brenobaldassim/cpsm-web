@@ -17,6 +17,8 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { FormField, FormError } from "@/components/forms"
 import { emailSchema, passwordSchema } from "@/lib/validations"
+import { Loading } from "@/components/loading/Loading"
+import Link from "next/link"
 
 const loginSchema = z.object({
   email: emailSchema,
@@ -111,6 +113,13 @@ function LoginForm() {
               {isLoading ? "Signing in..." : "Sign in"}
             </Button>
           </form>
+          <div className="text-sm text-center mt-8 w-full flex justify-end gap-2">
+            {" "}
+            <p>Don&apos;t have an account? </p>
+            <Link href="/signup" className="text-blue-500 underline italic">
+              Sign up
+            </Link>
+          </div>
         </Card>
       </div>
     </div>
@@ -119,15 +128,7 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <React.Suspense
-      fallback={
-        <div className="flex min-h-screen items-center justify-center">
-          <div className="text-center">
-            <p className="text-muted-foreground">Loading...</p>
-          </div>
-        </div>
-      }
-    >
+    <React.Suspense fallback={<Loading />}>
       <LoginForm />
     </React.Suspense>
   )

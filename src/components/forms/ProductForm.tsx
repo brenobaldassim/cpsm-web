@@ -6,7 +6,7 @@
 
 "use client"
 
-import * as React from "react"
+import { useMemo } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
@@ -35,17 +35,30 @@ export function ProductForm({
   isLoading = false,
   error,
 }: ProductFormProps) {
+  const formDefaultValues = useMemo(() => {
+    if (!defaultValues) {
+      return {
+        name: "",
+        priceInCents: 0,
+        stockQty: 0,
+      }
+    }
+
+    return {
+      ...defaultValues,
+      priceInCents: defaultValues.priceInCents
+        ? defaultValues.priceInCents / 100
+        : 0,
+    }
+  }, [defaultValues])
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<ProductFormData>({
     resolver: zodResolver(productFormSchema),
-    defaultValues: defaultValues || {
-      name: "",
-      priceInCents: 0,
-      stockQty: 0,
-    },
+    defaultValues: formDefaultValues,
   })
 
   // Convert price input (BRL) to cents for submission

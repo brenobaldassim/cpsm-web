@@ -19,6 +19,7 @@ export default function EditProductPage({
 }) {
   const router = useRouter()
   const { id: productId } = React.use(params)
+  const utils = trpc.useUtils()
 
   const { data: product, isLoading: isLoadingProduct } =
     trpc.products.getById.useQuery({
@@ -27,6 +28,8 @@ export default function EditProductPage({
 
   const updateMutation = trpc.products.update.useMutation({
     onSuccess: () => {
+      utils.products.list.invalidate()
+      utils.products.getById.invalidate({ id: productId })
       router.push("/products")
     },
   })

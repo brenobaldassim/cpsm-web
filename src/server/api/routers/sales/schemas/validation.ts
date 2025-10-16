@@ -54,5 +54,6 @@ export const listSalesOutput = z.object({
   totalPages: z.number(),
 })
 
+export type TCreateSaleInput = z.infer<typeof createSaleInput>
 export type TSaleSchema = z.infer<typeof saleSchema>
 export type TListSalesOutput = z.infer<typeof listSalesOutput>

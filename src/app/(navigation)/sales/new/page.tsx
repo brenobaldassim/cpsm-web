@@ -13,9 +13,11 @@ import { trpc } from "@/lib/trpc"
 
 export default function CreateSalePage() {
   const router = useRouter()
+  const utils = trpc.useUtils()
 
   const createMutation = trpc.sales.create.useMutation({
     onSuccess: () => {
+      utils.sales.list.invalidate()
       router.push("/sales")
     },
   })

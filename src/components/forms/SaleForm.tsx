@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/select"
 import { DateInput } from "@/components/ui/dateInput"
 import { Input } from "../ui/input"
+import { TCreateSaleInput } from "@/server/api/routers/sales/schemas/validation"
 
 const saleItemSchema = z.object({
   productId: z.string().min(1, "Product is required"),
@@ -36,14 +37,8 @@ const saleFormSchema = z.object({
   items: z.array(saleItemSchema).min(1, "At least one product is required"),
 })
 
-type SaleFormData = z.infer<typeof saleFormSchema>
-
 export interface SaleFormProps {
-  onSubmit: (data: {
-    clientId: string
-    saleDate: Date
-    items: { productId: string; quantity: number }[]
-  }) => void
+  onSubmit: (data: TCreateSaleInput) => void
   isLoading?: boolean
   error?: string
 }
@@ -59,11 +54,11 @@ export function SaleForm({
     watch,
     control,
     formState: { errors },
-  } = useForm<SaleFormData>({
+  } = useForm<TCreateSaleInput>({
     resolver: zodResolver(saleFormSchema),
     defaultValues: {
       clientId: "",
-      saleDate: new Date().toISOString().split("T")[0],
+      saleDate: new Date(),
       items: [{ productId: "", quantity: 1 }],
     },
   })
@@ -107,12 +102,14 @@ export function SaleForm({
     })}`
   }
 
-  const handleFormSubmit = (data: SaleFormData) => {
-    onSubmit({
-      clientId: data.clientId,
-      saleDate: new Date(data.saleDate),
-      items: data.items,
-    })
+  const handleFormSubmit = (data: TCreateSaleInput) => {
+    {
+      onSubmit({
+        clientId: data.clientId,
+        saleDate: data.saleDate,
+        items: data.items,
+      })
+    }
   }
 
   return (
@@ -162,7 +159,10 @@ export function SaleForm({
               name="saleDate"
               control={control}
               render={({ field }) => (
-                <DateInput value={field.value} onChange={field.onChange} />
+                <DateInput
+                  value={field.value?.toISOString()}
+                  onChange={field.onChange}
+                />
               )}
             />
             {errors.saleDate && (

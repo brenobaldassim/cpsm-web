@@ -73,5 +73,6 @@ export const listClientsOutput = z.object({
   totalPages: z.number(),
 })
 
+export type TCreateClientInput = z.infer<typeof createClientInput>
 export type TListClientsOutput = z.infer<typeof listClientsOutput>
 export type TClientSchema = z.infer<typeof clientSchema>

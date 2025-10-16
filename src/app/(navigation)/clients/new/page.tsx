@@ -4,20 +4,23 @@
  * Form to create a new client with addresses.
  */
 
-import * as React from "react"
-import { redirect } from "next/navigation"
-import { createCaller } from "@/server/api/server-caller"
-import { ClientFormWrapper } from "./ClientFormWrapper"
-import { z } from "zod"
-import { createClientInput } from "@/server/api/routers/clients/schemas/validation"
+"use client"
 
-export default async function CreateClientPage() {
-  async function createClient(data: z.infer<typeof createClientInput>) {
-    "use server"
-    const api = await createCaller()
-    await api.clients.create(data)
-    redirect("/clients")
-  }
+import * as React from "react"
+import { useRouter } from "next/navigation"
+import { ClientFormWrapper } from "./ClientFormWrapper"
+import { trpc } from "@/lib/trpc"
+
+const CreateClientPage = () => {
+  const router = useRouter()
+  const utils = trpc.useUtils()
+
+  const createMutation = trpc.clients.create.useMutation({
+    onSuccess: () => {
+      utils.clients.list.invalidate()
+      router.push("/clients")
+    },
+  })
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-8 sm:px-6 lg:px-8 w-full">
@@ -28,7 +31,9 @@ export default async function CreateClientPage() {
         </p>
       </div>
 
-      <ClientFormWrapper createClient={createClient} />
+      <ClientFormWrapper onSubmit={(data) => createMutation.mutate(data)} />
     </div>
   )
 }
+
+export default CreateClientPage

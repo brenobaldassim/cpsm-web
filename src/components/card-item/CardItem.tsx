@@ -50,7 +50,7 @@ export const CardItem: React.FC<CardItemProps> = ({
       </CardHeader>
       <CardContent>{children}</CardContent>
       {ButtonSection && ButtonSection}
-      <CardFooter className="text-sm">
+      <CardFooter className="text-sm text-muted-foreground font-semibold">
         <p>{item.createdAt.toLocaleDateString("pt-BR")}</p>
       </CardFooter>
     </Card>

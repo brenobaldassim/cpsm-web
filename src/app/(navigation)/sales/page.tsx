@@ -9,7 +9,7 @@ import * as React from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { FilePlusIcon } from "lucide-react"
+import { PlusIcon } from "lucide-react"
 import { SalesCardList } from "@/components/card-lists/salesCardList"
 import { SalesTable } from "@/components/data-tables/SalesTable"
 import { SalesFilter } from "@/components/filters/SalesFilter"
@@ -53,8 +53,8 @@ export default async function SalesListPage({
             </p>
           </div>
           <Link href="/sales/new">
-            <Button variant="default">
-              <FilePlusIcon className="size-7 text-primary-foreground" />
+            <Button size="icon" variant="default">
+              <PlusIcon className="size-7 text-primary-foreground" />
             </Button>
           </Link>
         </div>

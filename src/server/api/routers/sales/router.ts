@@ -28,18 +28,11 @@ export const salesRouter = createTRPCRouter({
     .mutation(async ({ input, ctx }) => {
       const { clientId, items, saleDate } = input
 
-      // Get user ID
-      const user = await ctx.prisma.user.findFirst()
-      if (!user) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "No user found",
-        })
-      }
-
-      // Verify client exists
-      const client = await ctx.prisma.client.findUnique({
-        where: { id: clientId },
+      const client = await ctx.prisma.client.findFirst({
+        where: {
+          id: clientId,
+          createdBy: ctx.session.user.id,
+        },
       })
 
       if (!client) {
@@ -49,10 +42,12 @@ export const salesRouter = createTRPCRouter({
         })
       }
 
-      // Validate products and stock availability
       const productIds = items.map((item) => item.productId)
       const products = await ctx.prisma.product.findMany({
-        where: { id: { in: productIds } },
+        where: {
+          id: { in: productIds },
+          createdBy: ctx.session.user.id,
+        },
       })
 
       if (products.length !== items.length) {
@@ -119,11 +114,10 @@ export const salesRouter = createTRPCRouter({
           })
         }
 
-        // Create sale
         const newSale = await tx.sale.create({
           data: {
             clientId,
-            createdBy: user.id,
+            createdBy: ctx.session.user.id,
             saleDate: saleDate || new Date(),
             totalAmount,
             saleItems: {
@@ -157,8 +151,11 @@ export const salesRouter = createTRPCRouter({
   getById: protectedProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ input, ctx }) => {
-      const sale = await ctx.prisma.sale.findUnique({
-        where: { id: input.id },
+      const sale = await ctx.prisma.sale.findFirst({
+        where: {
+          id: input.id,
+          createdBy: ctx.session.user.id,
+        },
         include: {
           saleItems: {
             include: {
@@ -194,9 +191,14 @@ export const salesRouter = createTRPCRouter({
       const { page, limit, sortBy, sortOrder } = input
       const skip = (page - 1) * limit
 
-      const total = await ctx.prisma.sale.count()
+      const where = {
+        createdBy: ctx.session.user.id,
+      }
+
+      const total = await ctx.prisma.sale.count({ where })
 
       const sales = await ctx.prisma.sale.findMany({
+        where,
         include: {
           saleItems: {
             include: {
@@ -231,11 +233,13 @@ export const salesRouter = createTRPCRouter({
       const { startDate, endDate, clientId, page, limit } = input
       const skip = (page - 1) * limit
 
-      // Build where clause
       const where: {
+        createdBy: string
         saleDate?: { gte?: Date; lte?: Date }
         clientId?: string
-      } = {}
+      } = {
+        createdBy: ctx.session.user.id,
+      }
 
       if (startDate || endDate) {
         where.saleDate = {}
@@ -286,6 +290,7 @@ export const salesRouter = createTRPCRouter({
 
       const sales = await ctx.prisma.sale.findMany({
         where: {
+          createdBy: ctx.session.user.id,
           saleDate: {
             gte: startDate,
             lte: endDate,

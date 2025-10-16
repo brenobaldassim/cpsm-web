@@ -9,8 +9,8 @@ import * as React from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { UserRoundPlus } from "lucide-react"
-import { ClientsCardList } from "@/components/card-lists/clientsCardList"
+import { PlusIcon } from "lucide-react"
+import { ClientsCardList } from "@/components/card-lists/ClientsCardList"
 import { ClientsTable } from "@/components/data-tables/ClientsTable"
 import { ClientsFilter } from "@/components/filters/ClientsFilter"
 import { createCaller } from "@/server/api/server-caller"
@@ -51,8 +51,8 @@ export default async function ClientsListPage({
             </p>
           </div>
           <Link href="/clients/new">
-            <Button variant="default">
-              <UserRoundPlus className="size-7 text-primary-foreground" />
+            <Button size="icon" variant="default">
+              <PlusIcon className="size-7 text-primary-foreground" />
             </Button>
           </Link>
         </div>

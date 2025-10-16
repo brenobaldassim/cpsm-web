@@ -25,9 +25,11 @@ export const clientsRouter = createTRPCRouter({
     .mutation(async ({ input, ctx }) => {
       const { addresses, ...clientData } = input
 
-      // Check for duplicate CPF
-      const existingClient = await ctx.prisma.client.findUnique({
-        where: { cpf: input.cpf },
+      const existingClient = await ctx.prisma.client.findFirst({
+        where: {
+          cpf: input.cpf,
+          createdBy: ctx.session.user.id,
+        },
       })
 
       if (existingClient) {
@@ -37,20 +39,10 @@ export const clientsRouter = createTRPCRouter({
         })
       }
 
-      // Get user ID from context (using seed admin for now)
-      const user = await ctx.prisma.user.findFirst()
-      if (!user) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "No user found",
-        })
-      }
-
-      // Create client with addresses
       const client = await ctx.prisma.client.create({
         data: {
           ...clientData,
-          createdBy: user.id,
+          createdBy: ctx.session.user.id,
           addresses: {
             create: addresses,
           },
@@ -72,9 +64,11 @@ export const clientsRouter = createTRPCRouter({
     .mutation(async ({ input, ctx }) => {
       const { id, addresses, ...updateData } = input
 
-      // Check if client exists
-      const existingClient = await ctx.prisma.client.findUnique({
-        where: { id },
+      const existingClient = await ctx.prisma.client.findFirst({
+        where: {
+          id,
+          createdBy: ctx.session.user.id,
+        },
       })
 
       if (!existingClient) {
@@ -83,8 +77,6 @@ export const clientsRouter = createTRPCRouter({
           message: "Client not found",
         })
       }
-
-      // Update client and addresses
       if (addresses) {
         // Delete existing addresses and create new ones
         await ctx.prisma.address.deleteMany({
@@ -117,9 +109,11 @@ export const clientsRouter = createTRPCRouter({
   delete: protectedProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ input, ctx }) => {
-      // Check if client exists
-      const client = await ctx.prisma.client.findUnique({
-        where: { id: input.id },
+      const client = await ctx.prisma.client.findFirst({
+        where: {
+          id: input.id,
+          createdBy: ctx.session.user.id,
+        },
         include: { sales: true },
       })
 
@@ -129,8 +123,6 @@ export const clientsRouter = createTRPCRouter({
           message: "Client not found",
         })
       }
-
-      // Check if client has sales
       if (client.sales.length > 0) {
         throw new TRPCError({
           code: "CONFLICT",
@@ -153,8 +145,11 @@ export const clientsRouter = createTRPCRouter({
   getById: protectedProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ input, ctx }) => {
-      const client = await ctx.prisma.client.findUnique({
-        where: { id: input.id },
+      const client = await ctx.prisma.client.findFirst({
+        where: {
+          id: input.id,
+          createdBy: ctx.session.user.id,
+        },
         include: {
           addresses: true,
         },
@@ -181,21 +176,21 @@ export const clientsRouter = createTRPCRouter({
       const { page, limit, search, sortBy, sortOrder } = input
       const skip = (page - 1) * limit
 
-      // Build where clause
       const where = search
         ? {
+            createdBy: ctx.session.user.id,
             OR: [
               { firstName: { contains: search, mode: "insensitive" as const } },
               { lastName: { contains: search, mode: "insensitive" as const } },
               { email: { contains: search, mode: "insensitive" as const } },
             ],
           }
-        : {}
+        : {
+            createdBy: ctx.session.user.id,
+          }
 
-      // Get total count
       const total = await ctx.prisma.client.count({ where })
 
-      // Get clients
       const clients = await ctx.prisma.client.findMany({
         where,
         include: {

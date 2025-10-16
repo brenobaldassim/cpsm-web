@@ -24,19 +24,10 @@ export const productsRouter = createTRPCRouter({
   create: protectedProcedure
     .input(createProductInput)
     .mutation(async ({ input, ctx }) => {
-      // Get user ID
-      const user = await ctx.prisma.user.findFirst()
-      if (!user) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "No user found",
-        })
-      }
-
       const product = await ctx.prisma.product.create({
         data: {
           ...input,
-          createdBy: user.id,
+          createdBy: ctx.session.user.id,
         },
       })
 
@@ -52,9 +43,11 @@ export const productsRouter = createTRPCRouter({
     .mutation(async ({ input, ctx }) => {
       const { id, ...updateData } = input
 
-      // Check if product exists
-      const existingProduct = await ctx.prisma.product.findUnique({
-        where: { id },
+      const existingProduct = await ctx.prisma.product.findFirst({
+        where: {
+          id,
+          createdBy: ctx.session.user.id,
+        },
       })
 
       if (!existingProduct) {
@@ -79,9 +72,11 @@ export const productsRouter = createTRPCRouter({
   delete: protectedProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ input, ctx }) => {
-      // Check if product exists
-      const product = await ctx.prisma.product.findUnique({
-        where: { id: input.id },
+      const product = await ctx.prisma.product.findFirst({
+        where: {
+          id: input.id,
+          createdBy: ctx.session.user.id,
+        },
         include: { saleItems: true },
       })
 
@@ -91,8 +86,6 @@ export const productsRouter = createTRPCRouter({
           message: "Product not found",
         })
       }
-
-      // Check if product has sales
       if (product.saleItems.length > 0) {
         throw new TRPCError({
           code: "CONFLICT",
@@ -114,8 +107,11 @@ export const productsRouter = createTRPCRouter({
   getById: protectedProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ input, ctx }) => {
-      const product = await ctx.prisma.product.findUnique({
-        where: { id: input.id },
+      const product = await ctx.prisma.product.findFirst({
+        where: {
+          id: input.id,
+          createdBy: ctx.session.user.id,
+        },
       })
 
       if (!product) {
@@ -139,11 +135,13 @@ export const productsRouter = createTRPCRouter({
       const { page, limit, search, inStockOnly, sortBy, sortOrder } = input
       const skip = (page - 1) * limit
 
-      // Build where clause
       const where: {
+        createdBy: string
         name?: { contains: string; mode: "insensitive" }
         stockQty?: { gt: number }
-      } = {}
+      } = {
+        createdBy: ctx.session.user.id,
+      }
 
       if (search) {
         where.name = { contains: search, mode: "insensitive" as const }
@@ -153,10 +151,8 @@ export const productsRouter = createTRPCRouter({
         where.stockQty = { gt: 0 }
       }
 
-      // Get total count
       const total = await ctx.prisma.product.count({ where })
 
-      // Get products
       const products = await ctx.prisma.product.findMany({
         where,
         orderBy: {
@@ -182,8 +178,11 @@ export const productsRouter = createTRPCRouter({
   checkStock: protectedProcedure
     .input(checkStockInput)
     .query(async ({ input, ctx }) => {
-      const product = await ctx.prisma.product.findUnique({
-        where: { id: input.productId },
+      const product = await ctx.prisma.product.findFirst({
+        where: {
+          id: input.productId,
+          createdBy: ctx.session.user.id,
+        },
       })
 
       if (!product) {

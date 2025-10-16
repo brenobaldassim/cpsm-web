@@ -2,6 +2,7 @@ import { TListClientsOutput } from "@/server/api/routers/clients/schemas/validat
 import { CardButtons } from "../card-item/CardButtons"
 import { CardItem } from "../card-item/CardItem"
 import { DeleteClientButton } from "../delete-buttons/DeleteClientButton"
+import { BaseCardList } from "./BaseCardList"
 
 interface ClientsCardListProps {
   data: TListClientsOutput
@@ -9,7 +10,7 @@ interface ClientsCardListProps {
 
 export const ClientsCardList: React.FC<ClientsCardListProps> = ({ data }) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
+    <BaseCardList emptyMessage="clients" isEmpty={data.clients.length === 0}>
       {data.clients.map((client) => {
         const name = `${client.firstName} ${client.lastName}`
 
@@ -38,6 +39,6 @@ export const ClientsCardList: React.FC<ClientsCardListProps> = ({ data }) => {
           </CardItem>
         )
       })}
-    </div>
+    </BaseCardList>
   )
 }

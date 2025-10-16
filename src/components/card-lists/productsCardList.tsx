@@ -4,13 +4,14 @@ import { cn } from "@/lib/utils"
 import { type TListProductsOutput } from "@/server/api/routers/products/schemas/validation"
 import { CardButtons } from "../card-item/CardButtons"
 import { DeleteProductButton } from "../delete-buttons/DeleteProductButton"
+import { BaseCardList } from "./BaseCardList"
 interface ProductsCardListProps {
   data: TListProductsOutput
 }
 
 export function ProductsCardList({ data }: ProductsCardListProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
+    <BaseCardList emptyMessage="products" isEmpty={data.products.length === 0}>
       {data.products.map((product) => (
         <CardItem
           key={product.id}
@@ -38,6 +39,6 @@ export function ProductsCardList({ data }: ProductsCardListProps) {
           </p>
         </CardItem>
       ))}
-    </div>
+    </BaseCardList>
   )
 }

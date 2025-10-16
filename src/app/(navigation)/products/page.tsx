@@ -12,7 +12,7 @@ import { createCaller } from "@/server/api/server-caller"
 import { ProductsFilter } from "@/components/filters/ProductsFilter"
 import { ItemsListPagination } from "@/components/items-list-pagination"
 import { ProductsListPageParams } from "./types"
-import { ProductsCardList } from "@/components/card-lists/productsCardList"
+import { ProductsCardList } from "@/components/card-lists/ProductsCardList"
 import { ProductsTable } from "@/components/data-tables/ProductsTable"
 import { PackagePlus } from "lucide-react"
 
@@ -52,7 +52,7 @@ export default async function ProductsListPage({
             </p>
           </div>
           <Link href="/products/new">
-            <Button variant="default">
+            <Button size="icon" variant="default">
               <PackagePlus className="size-7 text-primary-foreground" />
             </Button>
           </Link>

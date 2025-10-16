@@ -4,7 +4,14 @@ import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useSession, signOut } from "next-auth/react"
-import { Home, Users, Package, ShoppingCart, LogOut } from "lucide-react"
+import {
+  Home,
+  Users,
+  Package,
+  ShoppingCart,
+  LogOut,
+  CircleUserRound,
+} from "lucide-react"
 
 import {
   Sidebar,
@@ -45,7 +52,7 @@ const navItems = [
 
 export function AppSidebar() {
   const pathname = usePathname()
-  const { status } = useSession()
+  const { status, data: session } = useSession()
   const [isLoggingOut, setIsLoggingOut] = React.useState(false)
 
   const handleLogout = async () => {
@@ -60,13 +67,11 @@ export function AppSidebar() {
   return (
     <Sidebar>
       <SidebarHeader className="border-b border-sidebar-border">
-        <div className="flex items-center px-4 py-4">
-          <Link
-            href="/"
-            className="text-xl font-bold text-sidebar-foreground hover:text-sidebar-accent-foreground"
-          >
-            CPM
-          </Link>
+        <div className="flex flex-col items-center justify-center px-4 py-6 gap-4 bg-sidebar-accent/50 rounded-lg">
+          <CircleUserRound className="size-9" />
+          <p className="text-sm font-medium text-sidebar-foreground">
+            {session?.user?.email}
+          </p>
         </div>
       </SidebarHeader>
 

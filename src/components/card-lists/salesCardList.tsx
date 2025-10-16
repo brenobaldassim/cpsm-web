@@ -5,6 +5,7 @@ import { type TListSalesOutput } from "@/server/api/routers/sales/schemas/valida
 import { Button } from "../ui/button"
 import Link from "next/link"
 import { BookOpen } from "lucide-react"
+import { BaseCardList } from "./BaseCardList"
 
 interface SalesCardListProps {
   data: TListSalesOutput
@@ -12,7 +13,7 @@ interface SalesCardListProps {
 
 export function SalesCardList({ data }: SalesCardListProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
+    <BaseCardList emptyMessage="sales" isEmpty={data.sales.length === 0}>
       {data.sales.map((sale) => {
         const name = `${sale.client.firstName} ${sale.client.lastName}`
         return (
@@ -49,6 +50,6 @@ export function SalesCardList({ data }: SalesCardListProps) {
           </CardItem>
         )
       })}
-    </div>
+    </BaseCardList>
   )
 }

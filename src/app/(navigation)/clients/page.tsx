@@ -34,8 +34,8 @@ export default async function ClientsListPage({
   const caller = await createCaller()
   const data = await caller.clients.list({
     page,
-    limit: 20,
     search,
+    limit: 20,
     sortBy,
     sortOrder,
   })

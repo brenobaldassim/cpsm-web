@@ -11,10 +11,6 @@ import NextAuth, { type DefaultSession } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { prisma } from "./db"
 
-/**
- * Module augmentation for NextAuth types
- * Adds our custom properties to the session
- */
 declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
@@ -23,16 +19,9 @@ declare module "next-auth" {
   }
 }
 
-/**
- * NextAuth configuration options
- */
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
 
-  /**
-   * Configure providers
-   * We use credentials provider for email/password authentication
-   */
   providers: [
     Credentials({
       name: "credentials",
@@ -49,7 +38,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const email = credentials.email as string
         const password = credentials.password as string
 
-        // Find user by email
         const user = await prisma.user.findUnique({
           where: { email },
         })
@@ -58,7 +46,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           return null
         }
 
-        // Verify password with bcrypt
         const isValidPassword = await bcrypt.compare(password, user.password)
 
         if (!isValidPassword) {
@@ -74,31 +61,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
 
-  /**
-   * Configure session strategy
-   * Use JWT for stateless sessions (faster, no database lookups on every request)
-   */
   session: {
     strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
 
-  /**
-   * Configure pages
-   * Redirect to our custom login page
-   */
   pages: {
     signIn: "/login",
   },
 
-  /**
-   * Callbacks for customizing session and JWT behavior
-   */
   callbacks: {
-    /**
-     * JWT callback - called when JWT is created or updated
-     * Add user ID to the token
-     */
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id
@@ -107,10 +79,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return token
     },
 
-    /**
-     * Session callback - called when session is checked
-     * Add user ID to the session object
-     */
     async session({ session, token }) {
       if (token && session.user) {
         session.user.id = token.id as string
@@ -120,8 +88,5 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
   },
 
-  /**
-   * Enable debug mode in development
-   */
   debug: process.env.NODE_ENV === "development",
 })

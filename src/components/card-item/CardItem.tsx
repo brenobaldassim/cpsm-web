@@ -49,7 +49,7 @@ export const CardItem: React.FC<CardItemProps> = ({
         <CardTitle>{item.name}</CardTitle>
       </CardHeader>
       <CardContent>{children}</CardContent>
-      {ButtonSection && ButtonSection}
+      {ButtonSection}
       <CardFooter className="text-sm text-muted-foreground font-semibold">
         <p>{item.createdAt.toLocaleDateString("pt-BR")}</p>
       </CardFooter>

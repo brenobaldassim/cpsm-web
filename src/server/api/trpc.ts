@@ -30,9 +30,6 @@ export async function createTRPCContext(
 
 export type Context = Awaited<ReturnType<typeof createTRPCContext>>
 
-/**
- * Initialize tRPC with context and transformers
- */
 const t = initTRPC.context<Context>().create({
   transformer: superjson,
   errorFormatter({ shape, error }) {
@@ -47,25 +44,12 @@ const t = initTRPC.context<Context>().create({
   },
 })
 
-/**
- * Create router
- */
 export const createTRPCRouter = t.router
 
-/**
- * Create caller factory for server-side calls
- */
 export const createCallerFactory = t.createCallerFactory
 
-/**
- * Public procedure - no authentication required
- */
 export const publicProcedure = t.procedure
 
-/**
- * Protected procedure - requires authentication
- * Throws UNAUTHORIZED error if user is not authenticated
- */
 export const protectedProcedure = t.procedure.use(async ({ ctx, next }) => {
   if (!ctx.session?.user) {
     throw new TRPCError({

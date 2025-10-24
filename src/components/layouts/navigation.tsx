@@ -31,7 +31,7 @@ import { Routes } from "@/app/routes"
 const navItems = [
   {
     label: "Dashboard",
-    href: "/",
+    href: Routes.HOME,
     icon: Home,
   },
   {

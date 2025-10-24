@@ -254,62 +254,6 @@ export const salesRouter = createTRPCRouter({
     }),
 
   /**
-   * sales.filter
-   * Filter sales by date range and/or client
-   */
-  filter: protectedProcedure
-    .input(filterSalesInput)
-    .query(async ({ input, ctx }) => {
-      const { startDate, endDate, clientId, page, limit } = input
-      const skip = (page - 1) * limit
-
-      const where: {
-        createdBy: string
-        saleDate?: { gte?: Date; lte?: Date }
-        clientId?: string
-      } = {
-        createdBy: ctx.session.user.id,
-      }
-
-      if (startDate || endDate) {
-        where.saleDate = {}
-        if (startDate) where.saleDate.gte = startDate
-        if (endDate) where.saleDate.lte = endDate
-      }
-
-      if (clientId) {
-        where.clientId = clientId
-      }
-
-      const total = await ctx.prisma.sale.count({ where })
-
-      const sales = await ctx.prisma.sale.findMany({
-        where,
-        include: {
-          saleItems: {
-            include: {
-              product: true,
-            },
-          },
-          client: true,
-        },
-        orderBy: {
-          saleDate: "desc",
-        },
-        skip,
-        take: limit,
-      })
-
-      return {
-        sales,
-        total,
-        page,
-        limit,
-        totalPages: Math.ceil(total / limit),
-      }
-    }),
-
-  /**
    * sales.getSummary
    * Get sales summary for date range (total sales, revenue)
    */

@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation"
 import { ProductForm } from "@/components/forms"
 import { trpc } from "@/lib/trpc"
 
-export default function CreateProductPage() {
+const CreateProductPage = () => {
   const router = useRouter()
   const utils = trpc.useUtils()
 
@@ -41,3 +41,5 @@ export default function CreateProductPage() {
     </>
   )
 }
+
+export default CreateProductPage

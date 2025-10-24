@@ -1,7 +1,7 @@
 "use client"
 
 import { LayoutGrid, Table } from "lucide-react"
-import { Button } from "../ui/button"
+import { Button } from "../../ui/button"
 import { useRouter, useSearchParams } from "next/navigation"
 
 interface ListViewModeProps {
@@ -9,7 +9,7 @@ interface ListViewModeProps {
   href: string
 }
 
-export function ListViewMode({ viewMode, href }: ListViewModeProps) {
+export const ListViewMode = ({ viewMode, href }: ListViewModeProps) => {
   const router = useRouter()
   const searchParams = useSearchParams()
 

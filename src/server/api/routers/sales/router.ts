@@ -187,10 +187,21 @@ export const salesRouter = createTRPCRouter({
     .input(listSalesInput)
     .output(listSalesOutput)
     .query(async ({ input, ctx }) => {
-      const { search, page, limit, sortBy, sortOrder } = input
+      const { search, page, limit, sortBy, sortOrder, startDate, endDate } =
+        input
       const skip = (page - 1) * limit
 
-      const where = search
+      const whereDate =
+        startDate && endDate
+          ? {
+              saleDate: {
+                gte: startDate,
+                lte: endDate,
+              },
+            }
+          : {}
+
+      const whereSearch = search
         ? {
             createdBy: ctx.session.user.id,
             OR: [
@@ -223,6 +234,8 @@ export const salesRouter = createTRPCRouter({
         : {
             createdBy: ctx.session.user.id,
           }
+
+      const where = { ...whereDate, ...whereSearch }
 
       const total = await ctx.prisma.sale.count({ where })
 

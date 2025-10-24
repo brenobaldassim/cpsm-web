@@ -12,7 +12,7 @@ interface SalesCardListProps {
   data: TListSalesOutput
 }
 
-export function SalesCardList({ data }: SalesCardListProps) {
+export const SalesCardList = ({ data }: SalesCardListProps) => {
   return (
     <BaseCardList emptyMessage="sales" isEmpty={data.sales.length === 0}>
       {data.sales.map((sale) => {

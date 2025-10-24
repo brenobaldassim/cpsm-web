@@ -8,7 +8,7 @@ interface DeleteProductButtonProps {
   name: string
 }
 
-export function DeleteProductButton({ id, name }: DeleteProductButtonProps) {
+export const DeleteProductButton = ({ id, name }: DeleteProductButtonProps) => {
   const deleteMutation = trpc.products.delete.useMutation({
     onSuccess: () => {
       window.location.reload()

@@ -19,11 +19,11 @@ import { notFound } from "next/navigation"
 import { formatPrice } from "@/app/utils/formatPrice"
 import { createCaller } from "@/server/api/server-caller"
 
-export default async function SaleDetailPage({
-  params,
-}: {
+interface SaleDetailPageProps {
   params: Promise<{ id: string }>
-}) {
+}
+
+const SaleDetailPage: React.FC<SaleDetailPageProps> = async ({ params }) => {
   const { id: saleId } = await params
   const caller = await createCaller()
 
@@ -138,3 +138,5 @@ export default async function SaleDetailPage({
     </div>
   )
 }
+
+export default SaleDetailPage

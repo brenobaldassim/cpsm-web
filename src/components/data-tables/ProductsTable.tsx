@@ -20,7 +20,7 @@ interface ProductsTableProps {
   products: TProductSchema[]
 }
 
-export function ProductsTable({ products }: ProductsTableProps) {
+export const ProductsTable = ({ products }: ProductsTableProps) => {
   const Buttons = (row: TProductSchema) => (
     <div className="flex gap-2">
       <Link href={`${Routes.PRODUCTS}/${row.id}`}>

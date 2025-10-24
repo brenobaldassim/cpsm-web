@@ -19,7 +19,7 @@ interface ClientsTableProps {
   clients: TClientSchema[]
 }
 
-export function ClientsTable({ clients }: ClientsTableProps) {
+export const ClientsTable = ({ clients }: ClientsTableProps) => {
   const Buttons = (row: TClientSchema) => (
     <div className="flex gap-2">
       <Link href={`${Routes.CLIENTS}/${row.id}`}>

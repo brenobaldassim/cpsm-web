@@ -21,9 +21,9 @@ interface ProductsListPageProps {
   searchParams: Promise<ProductsListPageParams>
 }
 
-export default async function ProductsListPage({
+const ProductsListPage: React.FC<ProductsListPageProps> = async ({
   searchParams,
-}: ProductsListPageProps) {
+}) => {
   const params = await searchParams
   const page = Number(params.page) || 1
   const search = params.search || ""
@@ -77,3 +77,5 @@ export default async function ProductsListPage({
     </div>
   )
 }
+
+export default ProductsListPage

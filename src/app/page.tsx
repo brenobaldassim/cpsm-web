@@ -1,7 +1,7 @@
 import { DashboardContent } from "@/components/dashboard"
 import { createCaller } from "@/server/api/server-caller"
 
-export default async function DashboardPage() {
+const DashboardPage = async () => {
   const caller = await createCaller()
 
   const [clientsData, productsData, salesSummary] = await Promise.all([
@@ -31,3 +31,5 @@ export default async function DashboardPage() {
     </main>
   )
 }
+
+export default DashboardPage

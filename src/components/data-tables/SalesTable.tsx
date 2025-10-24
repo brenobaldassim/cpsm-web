@@ -19,7 +19,7 @@ interface SalesTableProps {
   sales: TSaleSchema[]
 }
 
-export function SalesTable({ sales }: SalesTableProps) {
+export const SalesTable = ({ sales }: SalesTableProps) => {
   const Buttons = (row: TSaleSchema) => (
     <div className="flex gap-2">
       <Link href={`${Routes.SALES}/${row.id}`}>

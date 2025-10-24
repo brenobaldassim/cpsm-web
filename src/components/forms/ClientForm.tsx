@@ -62,12 +62,12 @@ export interface ClientFormProps {
   error?: string
 }
 
-export function ClientForm({
+export const ClientForm = ({
   defaultValues,
   onSubmit,
   isLoading = false,
   error,
-}: ClientFormProps) {
+}: ClientFormProps) => {
   const {
     register,
     handleSubmit,

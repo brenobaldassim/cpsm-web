@@ -22,7 +22,7 @@ interface AlertConfirmationProps {
   variant?: "default" | "destructive"
 }
 
-export function AlertConfirmation({
+export const AlertConfirmation = ({
   trigger,
   title,
   description,
@@ -30,7 +30,7 @@ export function AlertConfirmation({
   confirmText = "Confirm",
   onConfirm,
   variant = "default",
-}: AlertConfirmationProps) {
+}: AlertConfirmationProps) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>{trigger}</AlertDialogTrigger>

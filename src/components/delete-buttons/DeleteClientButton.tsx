@@ -8,7 +8,7 @@ interface DeleteClientButtonProps {
   name: string
 }
 
-export function DeleteClientButton({ id, name }: DeleteClientButtonProps) {
+export const DeleteClientButton = ({ id, name }: DeleteClientButtonProps) => {
   const deleteMutation = trpc.clients.delete.useMutation({
     onSuccess: () => {
       window.location.reload()

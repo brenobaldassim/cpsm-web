@@ -16,12 +16,12 @@ interface ItemsListPaginationProps {
   href: string
 }
 
-export function ItemsListPagination({
+export const ItemsListPagination = ({
   page,
   totalPages,
   params,
   href,
-}: ItemsListPaginationProps) {
+}: ItemsListPaginationProps) => {
   return (
     <Pagination>
       <PaginationContent>

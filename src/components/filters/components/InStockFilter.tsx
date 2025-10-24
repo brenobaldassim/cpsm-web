@@ -8,7 +8,7 @@ interface InStockFilterProps {
   href: string
 }
 
-export function InStockFilter({ inStockOnly, href }: InStockFilterProps) {
+export const InStockFilter = ({ inStockOnly, href }: InStockFilterProps) => {
   const router = useRouter()
   const searchParams = useSearchParams()
 

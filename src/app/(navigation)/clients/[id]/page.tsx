@@ -15,11 +15,11 @@ import { Address } from "@prisma/client"
 import { notFound } from "next/navigation"
 import { Loading } from "@/components/loading/Loading"
 
-export default function EditClientPage({
-  params,
-}: {
+interface EditClientPageProps {
   params: Promise<{ id: string }>
-}) {
+}
+
+const EditClientPage: React.FC<EditClientPageProps> = async ({ params }) => {
   const router = useRouter()
   const { id: clientId } = React.use(params)
 
@@ -82,3 +82,5 @@ export default function EditClientPage({
     </>
   )
 }
+
+export default EditClientPage

@@ -88,7 +88,7 @@ export interface DataTableProps<T> {
  * />
  * ```
  */
-export function DataTable<T>({
+export const DataTable = <T,>({
   data,
   columns,
   searchPlaceholder = "Search...",
@@ -104,7 +104,7 @@ export function DataTable<T>({
   emptyMessage = "No data found",
   className,
   keyExtractor,
-}: DataTableProps<T>) {
+}: DataTableProps<T>) => {
   const handleSort = (columnKey: string) => {
     if (!onSortChange) return
 

@@ -10,7 +10,7 @@ interface ProductsCardListProps {
   data: TListProductsOutput
 }
 
-export function ProductsCardList({ data }: ProductsCardListProps) {
+export const ProductsCardList = ({ data }: ProductsCardListProps) => {
   return (
     <BaseCardList emptyMessage="products" isEmpty={data.products.length === 0}>
       {data.products.map((product) => (

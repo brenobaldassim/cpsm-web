@@ -22,9 +22,9 @@ interface ClientsListPageProps {
   searchParams: Promise<ClientsListPageParams>
 }
 
-export default async function ClientsListPage({
+const ClientsListPage: React.FC<ClientsListPageProps> = async ({
   searchParams,
-}: ClientsListPageProps) {
+}) => {
   const params = await searchParams
   const page = Number(params.page) || 1
   const search = params.search || ""
@@ -76,3 +76,5 @@ export default async function ClientsListPage({
     </div>
   )
 }
+
+export default ClientsListPage

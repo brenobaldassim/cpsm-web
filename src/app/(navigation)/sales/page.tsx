@@ -22,20 +22,15 @@ interface SalesListPageProps {
   searchParams: Promise<SalesListPageParams>
 }
 
-export default async function SalesListPage({
+const SalesListPage: React.FC<SalesListPageProps> = async ({
   searchParams,
-}: SalesListPageProps) {
+}) => {
   const params = await searchParams
   const page = Number(params.page) || 1
   const viewMode = params.viewMode || "card"
   const search = params.search || ""
-  // TODO: Add date filtering UI
-  // const [dateFrom, setDateFrom] = React.useState<Date>(() => {
-  //   const date = new Date()
-  //   date.setDate(date.getDate() - 30)
-  //   return date
-  // })
-  // const [dateTo, setDateTo] = React.useState<Date>(new Date())
+  const startDate = params.startDate ? new Date(params.startDate) : undefined
+  const endDate = params.endDate ? new Date(params.endDate) : undefined
 
   const caller = await createCaller()
   const data = await caller.sales.list({
@@ -44,6 +39,8 @@ export default async function SalesListPage({
     search,
     sortBy: "saleDate",
     sortOrder: "desc",
+    startDate,
+    endDate,
   })
   return (
     <div className="w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-4">
@@ -87,3 +84,5 @@ export default async function SalesListPage({
     </div>
   )
 }
+
+export default SalesListPage

@@ -12,11 +12,11 @@ import { ProductForm } from "@/components/forms"
 import { trpc } from "@/lib/trpc"
 import { Loading } from "@/components/loading/Loading"
 
-export default function EditProductPage({
-  params,
-}: {
+interface EditProductPageProps {
   params: Promise<{ id: string }>
-}) {
+}
+
+const EditProductPage: React.FC<EditProductPageProps> = async ({ params }) => {
   const router = useRouter()
   const { id: productId } = React.use(params)
   const utils = trpc.useUtils()
@@ -67,3 +67,5 @@ export default function EditProductPage({
     </>
   )
 }
+
+export default EditProductPage

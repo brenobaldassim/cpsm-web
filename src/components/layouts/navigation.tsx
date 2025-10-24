@@ -51,7 +51,7 @@ const navItems = [
   },
 ]
 
-export function AppSidebar() {
+export const AppSidebar = () => {
   const pathname = usePathname()
   const { status, data: session } = useSession()
   const [isLoggingOut, setIsLoggingOut] = React.useState(false)

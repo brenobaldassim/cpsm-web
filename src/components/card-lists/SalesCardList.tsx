@@ -6,6 +6,7 @@ import { Button } from "../ui/button"
 import Link from "next/link"
 import { BookOpen } from "lucide-react"
 import { BaseCardList } from "./BaseCardList"
+import { Routes } from "@/app/routes"
 
 interface SalesCardListProps {
   data: TListSalesOutput
@@ -25,7 +26,7 @@ export function SalesCardList({ data }: SalesCardListProps) {
             })}
             ButtonSection={
               <div className="absolute bottom-0 right-0 h-full flex items-end p-2">
-                <Link className="group" href={`/sales/${sale.id}`}>
+                <Link className="group" href={`${Routes.SALES}/${sale.id}`}>
                   <Button
                     variant="ghost"
                     size="icon"

@@ -16,6 +16,7 @@ import { ClientsFilter } from "@/components/filters/ClientsFilter"
 import { createCaller } from "@/server/api/server-caller"
 import { ClientsListPageParams } from "./types"
 import { ItemsListPagination } from "@/components/items-list-pagination"
+import { Routes } from "@/app/routes"
 
 interface ClientsListPageProps {
   searchParams: Promise<ClientsListPageParams>
@@ -50,7 +51,7 @@ export default async function ClientsListPage({
               Manage your client database
             </p>
           </div>
-          <Link href="/clients/new">
+          <Link href={`${Routes.CLIENTS}/new`}>
             <Button size="icon" variant="default">
               <PlusIcon className="size-7 text-primary-foreground" />
             </Button>

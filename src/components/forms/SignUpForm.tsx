@@ -13,6 +13,7 @@ import { FormField } from "./FormField"
 import { Button } from "../ui/button"
 import Link from "next/link"
 import { trpc } from "@/lib/trpc"
+import { Routes } from "@/app/routes"
 
 const signupSchema = z
   .object({
@@ -127,7 +128,10 @@ export const SignUpForm = () => {
           <div className="text-sm text-center mt-8 w-full flex justify-end gap-2">
             {" "}
             <p>Already have an account? </p>
-            <Link href="/login" className="text-blue-500 underline italic">
+            <Link
+              href={Routes.LOGIN}
+              className="text-blue-500 underline italic"
+            >
               Sign in
             </Link>
           </div>

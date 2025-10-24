@@ -14,7 +14,7 @@ import { BookOpen } from "lucide-react"
 import { formatPrice } from "@/app/utils/formatPrice"
 import { Card } from "@/components/ui/card"
 import { TSaleSchema } from "@/server/api/routers/sales/schemas/validation"
-
+import { Routes } from "@/app/routes"
 interface SalesTableProps {
   sales: TSaleSchema[]
 }
@@ -22,7 +22,7 @@ interface SalesTableProps {
 export function SalesTable({ sales }: SalesTableProps) {
   const Buttons = (row: TSaleSchema) => (
     <div className="flex gap-2">
-      <Link href={`/sales/${row.id}`}>
+      <Link href={`${Routes.SALES}/${row.id}`}>
         <Button className="hover:bg-transparent" variant="ghost" size="icon">
           <BookOpen />
         </Button>

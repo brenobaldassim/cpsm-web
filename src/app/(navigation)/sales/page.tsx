@@ -16,6 +16,7 @@ import { SalesFilter } from "@/components/filters/SalesFilter"
 import { createCaller } from "@/server/api/server-caller"
 import { SalesListPageParams } from "./types"
 import { ItemsListPagination } from "@/components/items-list-pagination"
+import { Routes } from "@/app/routes"
 
 interface SalesListPageProps {
   searchParams: Promise<SalesListPageParams>
@@ -54,7 +55,7 @@ export default async function SalesListPage({
               View and manage sales transactions
             </p>
           </div>
-          <Link href="/sales/new">
+          <Link href={`${Routes.SALES}/new`}>
             <Button size="icon" variant="default">
               <PlusIcon className="size-7 text-primary-foreground" />
             </Button>
@@ -81,7 +82,7 @@ export default async function SalesListPage({
         page={page}
         totalPages={data.totalPages}
         params={params as Record<string, string>}
-        href="/sales"
+        href={Routes.SALES}
       />
     </div>
   )

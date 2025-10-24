@@ -15,6 +15,7 @@ import { ProductsListPageParams } from "./types"
 import { ProductsCardList } from "@/components/card-lists/ProductsCardList"
 import { ProductsTable } from "@/components/data-tables/ProductsTable"
 import { PackagePlus } from "lucide-react"
+import { Routes } from "@/app/routes"
 
 interface ProductsListPageProps {
   searchParams: Promise<ProductsListPageParams>
@@ -51,7 +52,7 @@ export default async function ProductsListPage({
               Manage your product catalog and inventory
             </p>
           </div>
-          <Link href="/products/new">
+          <Link href={`${Routes.PRODUCTS}/new`}>
             <Button size="icon" variant="default">
               <PackagePlus className="size-7 text-primary-foreground" />
             </Button>

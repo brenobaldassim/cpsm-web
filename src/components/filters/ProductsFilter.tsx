@@ -1,13 +1,13 @@
 import { ListViewMode } from "./ListViewMode"
 import { InStockFilter } from "./InStockFilter"
 import { SearchInput } from "./SearchInput"
-
+import { Routes } from "@/app/routes"
 interface ProductsFilterProps {
   inStockOnly: boolean
   viewMode: "card" | "table"
 }
 
-const href = "/products"
+const href = Routes.PRODUCTS
 export function ProductsFilter({ inStockOnly, viewMode }: ProductsFilterProps) {
   return (
     <div className="mb-4 flex flex-row items-center justify-between gap-4">

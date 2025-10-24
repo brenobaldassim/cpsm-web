@@ -26,6 +26,7 @@ import {
   SidebarSeparator,
 } from "@/components/ui/sidebar"
 import { Button } from "@/components/ui/button"
+import { Routes } from "@/app/routes"
 
 const navItems = [
   {
@@ -35,17 +36,17 @@ const navItems = [
   },
   {
     label: "Clients",
-    href: "/clients",
+    href: Routes.CLIENTS,
     icon: Users,
   },
   {
     label: "Products",
-    href: "/products",
+    href: Routes.PRODUCTS,
     icon: Package,
   },
   {
     label: "Sales",
-    href: "/sales",
+    href: Routes.SALES,
     icon: ShoppingCart,
   },
 ]

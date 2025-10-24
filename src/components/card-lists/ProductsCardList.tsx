@@ -5,6 +5,7 @@ import { type TListProductsOutput } from "@/server/api/routers/products/schemas/
 import { CardButtons } from "../card-item/CardButtons"
 import { DeleteProductButton } from "../delete-buttons/DeleteProductButton"
 import { BaseCardList } from "./BaseCardList"
+import { Routes } from "@/app/routes"
 interface ProductsCardListProps {
   data: TListProductsOutput
 }
@@ -22,7 +23,7 @@ export function ProductsCardList({ data }: ProductsCardListProps) {
           ButtonSection={
             <CardButtons
               id={product.id}
-              href="/products"
+              href={Routes.PRODUCTS}
               DeleteButton={
                 <DeleteProductButton id={product.id} name={product.name} />
               }

@@ -14,7 +14,7 @@ import { SquarePen } from "lucide-react"
 import { DeleteClientButton } from "@/components/delete-buttons/DeleteClientButton"
 import { Card } from "@/components/ui/card"
 import { TClientSchema } from "@/server/api/routers/clients/schemas/validation"
-
+import { Routes } from "@/app/routes"
 interface ClientsTableProps {
   clients: TClientSchema[]
 }
@@ -22,7 +22,7 @@ interface ClientsTableProps {
 export function ClientsTable({ clients }: ClientsTableProps) {
   const Buttons = (row: TClientSchema) => (
     <div className="flex gap-2">
-      <Link href={`/clients/${row.id}`}>
+      <Link href={`${Routes.CLIENTS}/${row.id}`}>
         <Button className="hover:bg-transparent" variant="ghost" size="icon">
           <SquarePen />
         </Button>

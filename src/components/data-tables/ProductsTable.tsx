@@ -15,7 +15,7 @@ import { DeleteProductButton } from "@/components/delete-buttons/DeleteProductBu
 import { formatPrice } from "@/app/utils/formatPrice"
 import { Card } from "@/components/ui/card"
 import { TProductSchema } from "@/server/api/routers/products/schemas/validation"
-
+import { Routes } from "@/app/routes"
 interface ProductsTableProps {
   products: TProductSchema[]
 }
@@ -23,7 +23,7 @@ interface ProductsTableProps {
 export function ProductsTable({ products }: ProductsTableProps) {
   const Buttons = (row: TProductSchema) => (
     <div className="flex gap-2">
-      <Link href={`/products/${row.id}`}>
+      <Link href={`${Routes.PRODUCTS}/${row.id}`}>
         <Button className="hover:bg-transparent" variant="ghost" size="icon">
           <SquarePen />
         </Button>

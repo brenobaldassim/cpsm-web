@@ -12,6 +12,7 @@ import { FormError } from "./FormError"
 import { FormField } from "./FormField"
 import { Button } from "../ui/button"
 import Link from "next/link"
+import { Routes } from "@/app/routes"
 
 const loginSchema = z.object({
   email: emailSchema,
@@ -109,7 +110,10 @@ export const LoginForm = () => {
           <div className="text-sm text-center mt-8 w-full flex justify-end gap-2">
             {" "}
             <p>Don&apos;t have an account? </p>
-            <Link href="/sign-up" className="text-blue-500 underline italic">
+            <Link
+              href={Routes.SIGN_UP}
+              className="text-blue-500 underline italic"
+            >
               Sign up
             </Link>
           </div>

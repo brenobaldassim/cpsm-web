@@ -58,10 +58,14 @@ export function AppSidebar() {
 
   const handleLogout = async () => {
     setIsLoggingOut(true)
-    await signOut({ callbackUrl: "/login" })
+    await signOut({ callbackUrl: Routes.LOGIN })
   }
 
-  if (status === "unauthenticated" || status === "loading") {
+  if (status === "unauthenticated") {
+    return null
+  }
+
+  if (pathname === Routes.LOGIN || pathname === Routes.SIGN_UP) {
     return null
   }
 
@@ -109,13 +113,13 @@ export function AppSidebar() {
         <SidebarSeparator />
         <div className="p-2">
           <Button
-            variant="outline"
-            size="sm"
+            variant="ghost"
+            size="lg"
             onClick={handleLogout}
             disabled={isLoggingOut}
-            className="w-full justify-start"
+            className="w-full justify-center border-2 border-sidebar-border"
           >
-            <LogOut className="mr-2 h-4 w-4" />
+            <LogOut className="mr-2 size-4" />
             {isLoggingOut ? "Logging out..." : "Logout"}
           </Button>
         </div>

@@ -18,7 +18,6 @@ export const appRouter = createTRPCRouter({
   sales: salesRouter,
 })
 
-// Export type definition for client-side
 export type AppRouter = typeof appRouter
 
 export const createCaller = createCallerFactory(appRouter)

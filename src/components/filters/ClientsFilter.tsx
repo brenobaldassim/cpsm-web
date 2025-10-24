@@ -1,4 +1,5 @@
 import { ListViewMode } from "./ListViewMode"
+import { SearchInput } from "./SearchInput"
 
 interface ClientsFilterProps {
   viewMode: "card" | "table"
@@ -6,7 +7,8 @@ interface ClientsFilterProps {
 
 export function ClientsFilter({ viewMode }: ClientsFilterProps) {
   return (
-    <div className="mb-4 flex flex-row items-center justify-end gap-4">
+    <div className="mb-4 flex flex-row items-center justify-between gap-4">
+      <SearchInput placeholder="Search" href="/clients" />
       <ListViewMode viewMode={viewMode} href="/clients" />
     </div>
   )

@@ -27,6 +27,7 @@ export default async function SalesListPage({
   const params = await searchParams
   const page = Number(params.page) || 1
   const viewMode = params.viewMode || "card"
+  const search = params.search || ""
   // TODO: Add date filtering UI
   // const [dateFrom, setDateFrom] = React.useState<Date>(() => {
   //   const date = new Date()
@@ -39,6 +40,7 @@ export default async function SalesListPage({
   const data = await caller.sales.list({
     page,
     limit: 20,
+    search,
     sortBy: "saleDate",
     sortOrder: "desc",
   })

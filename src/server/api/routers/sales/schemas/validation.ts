@@ -34,14 +34,6 @@ export const listSalesInput = z.object({
   sortOrder: z.enum(["asc", "desc"]).default("desc"),
 })
 
-export const filterSalesInput = z.object({
-  startDate: z.coerce.date().optional(),
-  endDate: z.coerce.date().optional(),
-  clientId: z.string().optional(),
-  page: z.number().int().positive().default(1),
-  limit: z.number().int().positive().max(100).default(20),
-})
-
 export const getSummaryInput = z.object({
   startDate: z.coerce.date(),
   endDate: z.coerce.date(),

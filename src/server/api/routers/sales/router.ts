@@ -13,7 +13,6 @@ import { createTRPCRouter, protectedProcedure } from "../../trpc"
 import {
   createSaleInput,
   listSalesInput,
-  filterSalesInput,
   getSummaryInput,
   listSalesOutput,
 } from "./schemas/validation"

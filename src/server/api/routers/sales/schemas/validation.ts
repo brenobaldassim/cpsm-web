@@ -41,6 +41,11 @@ export const getSummaryInput = z.object({
   endDate: z.coerce.date(),
 })
 
+export const getDailySalesInput = z.object({
+  startDate: z.coerce.date(),
+  endDate: z.coerce.date(),
+})
+
 export const listSalesOutput = z.object({
   sales: z.array(saleSchema),
   total: z.number(),
@@ -49,6 +54,12 @@ export const listSalesOutput = z.object({
   totalPages: z.number(),
 })
 
+export const dailySalesOutput = z.object({
+  date: z.string(),
+  totalAmount: z.number(),
+})
+
 export type TCreateSaleInput = z.infer<typeof createSaleInput>
 export type TSaleSchema = z.infer<typeof saleSchema>
 export type TListSalesOutput = z.infer<typeof listSalesOutput>
+export type TDailySalesOutput = z.infer<typeof dailySalesOutput>

@@ -14,7 +14,9 @@ import {
   createSaleInput,
   listSalesInput,
   getSummaryInput,
+  getDailySalesInput,
   listSalesOutput,
+  dailySalesOutput,
 } from "./schemas/validation"
 
 export const salesRouter = createTRPCRouter({
@@ -307,5 +309,57 @@ export const salesRouter = createTRPCRouter({
           totalSales > 0 ? Math.round(totalRevenueInCents / totalSales) : 0,
         totalItemsSold,
       }
+    }),
+
+  /**
+   * sales.getDailySales
+   * Get daily sales amounts for a date range (for charting)
+   */
+  getDailySales: protectedProcedure
+    .input(getDailySalesInput)
+    .output(z.array(dailySalesOutput))
+    .query(async ({ input, ctx }) => {
+      const { startDate, endDate } = input
+
+      const sales = await ctx.prisma.sale.findMany({
+        where: {
+          createdBy: ctx.session.user.id,
+          saleDate: {
+            gte: startDate,
+            lte: endDate,
+          },
+        },
+        select: {
+          saleDate: true,
+          totalAmount: true,
+        },
+        orderBy: {
+          saleDate: "asc",
+        },
+      })
+
+      const dailySalesMap = new Map<string, number>()
+
+      // Initialize all dates in range with 0
+      const currentDate = new Date(startDate)
+      while (currentDate <= endDate) {
+        const dateStr = currentDate.toISOString().split("T")[0]
+        dailySalesMap.set(dateStr, 0)
+        currentDate.setDate(currentDate.getDate() + 1)
+      }
+
+      // Populate with actual sales data
+      for (const sale of sales) {
+        const dateStr = sale.saleDate.toISOString().split("T")[0]
+        const currentAmount = dailySalesMap.get(dateStr) || 0
+        dailySalesMap.set(dateStr, currentAmount + sale.totalAmount)
+      }
+
+      return Array.from(dailySalesMap.entries())
+        .map(([date, totalAmount]) => ({
+          date,
+          totalAmount: totalAmount / 100,
+        }))
+        .sort((a, b) => a.date.localeCompare(b.date))
     }),
 })

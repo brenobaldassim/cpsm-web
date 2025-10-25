@@ -6,7 +6,7 @@
  */
 
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Geist } from "next/font/google"
 import "@/app/globals.css"
 import { TRPCProvider } from "@/app/_trpc/Provider"
 import { SessionProvider } from "next-auth/react"
@@ -18,11 +18,10 @@ import {
 import { AppSidebar } from "@/components/layouts/navigation"
 import { cn } from "@/lib/utils"
 
-// Font optimization
-const inter = Inter({
+const geist = Geist({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-inter",
+  variable: "--font-geist",
 })
 
 export const metadata: Metadata = {
@@ -47,7 +46,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html
       lang="en"
-      className={cn(inter.variable, "dark")}
+      className={cn(geist.variable, "dark")}
       suppressHydrationWarning
     >
       <body className="min-h-screen bg-background font-sans antialiased">

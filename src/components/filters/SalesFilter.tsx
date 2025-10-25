@@ -12,11 +12,7 @@ export const SalesFilter = ({ viewMode }: SalesFilterProps) => {
     <div className="mb-4 flex flex-row items-center justify-between gap-4">
       <div className="flex flex-row items-center gap-4 w-full">
         <SearchInput placeholder="Search" href={href} />
-        <DateRangeFilter
-          href={href}
-          defaultStartDate={new Date(Date.now() - TimeInMs.ONE_MONTH)}
-          defaultEndDate={new Date(Date.now())}
-        />
+        <DateRangeFilter href={href} />
       </div>
       <ListViewMode viewMode={viewMode} href={href} />
     </div>

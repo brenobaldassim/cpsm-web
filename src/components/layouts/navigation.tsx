@@ -26,7 +26,7 @@ import {
   SidebarSeparator,
 } from "@/components/ui/sidebar"
 import { Button } from "@/components/ui/button"
-import { Routes } from "@/app/constants"
+import { Routes, TimeInMs } from "@/app/constants"
 
 const navItems = [
   {
@@ -46,7 +46,7 @@ const navItems = [
   },
   {
     label: "Sales",
-    href: Routes.SALES,
+    href: `${Routes.SALES}?startDate=${new Date(Date.now() - TimeInMs.ONE_MONTH).toISOString().split("T")[0]}&endDate=${new Date(Date.now()).toISOString().split("T")[0]}`,
     icon: ShoppingCart,
   },
 ]

@@ -17,6 +17,7 @@ import { createCaller } from "@/server/api/server-caller"
 import { SalesListPageParams } from "./types"
 import { ItemsListPagination } from "@/components/items-list-pagination"
 import { Routes } from "@/app/constants"
+import { Info } from "@/components/info"
 
 interface SalesListPageProps {
   searchParams: Promise<SalesListPageParams>
@@ -26,6 +27,7 @@ const SalesListPage: React.FC<SalesListPageProps> = async ({
   searchParams,
 }) => {
   const params = await searchParams
+
   const page = Number(params.page) || 1
   const viewMode = params.viewMode || "card"
   const search = params.search || ""
@@ -59,12 +61,10 @@ const SalesListPage: React.FC<SalesListPageProps> = async ({
           </Link>
         </div>
 
-        {/* Info about date filtering */}
-        <div className="mb-6 p-4 bg-primary-foreground border border-primary/20 rounded-md">
-          <p className="text-base text-primary ">
-            Showing sales from the last 30 days (default view)
-          </p>
-        </div>
+        <Info
+          text="This are the sales, you can filter by date range (30 days default) or
+        search by client or product name."
+        />
 
         <SalesFilter viewMode={viewMode} />
       </Card>

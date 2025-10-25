@@ -17,6 +17,7 @@ import { createCaller } from "@/server/api/server-caller"
 import { ClientsListPageParams } from "./types"
 import { ItemsListPagination } from "@/components/items-list-pagination"
 import { Routes } from "@/app/constants"
+import { Info } from "@/components/info"
 
 interface ClientsListPageProps {
   searchParams: Promise<ClientsListPageParams>
@@ -57,6 +58,8 @@ const ClientsListPage: React.FC<ClientsListPageProps> = async ({
             </Button>
           </Link>
         </div>
+
+        <Info text="This are the clients, you can search by first name, last name or email." />
 
         <ClientsFilter viewMode={viewMode} />
       </Card>

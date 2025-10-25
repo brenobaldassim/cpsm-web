@@ -16,6 +16,7 @@ import { ProductsCardList } from "@/components/card-lists/ProductsCardList"
 import { ProductsTable } from "@/components/data-tables/ProductsTable"
 import { PackagePlus } from "lucide-react"
 import { Routes } from "@/app/constants"
+import { Info } from "@/components/info"
 
 interface ProductsListPageProps {
   searchParams: Promise<ProductsListPageParams>
@@ -58,6 +59,8 @@ const ProductsListPage: React.FC<ProductsListPageProps> = async ({
             </Button>
           </Link>
         </div>
+
+        <Info text="This are the products, you can filter by in stock only or search by name." />
 
         <ProductsFilter inStockOnly={inStockOnly} viewMode={viewMode} />
       </Card>

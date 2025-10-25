@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter, useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import {
@@ -15,21 +15,20 @@ import { parseLocalDate } from "@/app/utils/parseLocalDate"
 
 interface DateRangeFilterProps {
   href: string
-  defaultStartDate?: Date
-  defaultEndDate?: Date
 }
 
-export function DateRangeFilter({
-  href,
-  defaultStartDate,
-  defaultEndDate,
-}: DateRangeFilterProps) {
+export function DateRangeFilter({ href }: DateRangeFilterProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
 
-  const startDateFromUrl = searchParams.get("startDate")
-  const endDateFromUrl = searchParams.get("endDate")
-  const hasAnyKindOfParams = searchParams.size > 0
+  const startDateFromUrl = useMemo(
+    () => searchParams.get("startDate"),
+    [searchParams]
+  )
+  const endDateFromUrl = useMemo(
+    () => searchParams.get("endDate"),
+    [searchParams]
+  )
 
   const [dateRange, setDateRange] = useState<DateRange | undefined>(() => {
     if (startDateFromUrl && endDateFromUrl) {
@@ -37,23 +36,9 @@ export function DateRangeFilter({
         from: parseLocalDate(startDateFromUrl),
         to: parseLocalDate(endDateFromUrl),
       }
-    } else if (!hasAnyKindOfParams && defaultStartDate && defaultEndDate) {
-      return {
-        from: parseLocalDate(defaultStartDate?.toISOString().split("T")[0]),
-        to: parseLocalDate(defaultEndDate?.toISOString().split("T")[0]),
-      }
     }
     return
   })
-
-  useEffect(() => {
-    if (startDateFromUrl && endDateFromUrl) {
-      setDateRange({
-        from: parseLocalDate(startDateFromUrl),
-        to: parseLocalDate(endDateFromUrl),
-      })
-    }
-  }, [startDateFromUrl, endDateFromUrl])
 
   useEffect(() => {
     if (!dateRange?.from && !startDateFromUrl) return

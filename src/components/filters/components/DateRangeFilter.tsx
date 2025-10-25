@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter, useSearchParams } from "next/navigation"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import {
@@ -12,7 +12,6 @@ import {
 import { CalendarIcon, X } from "lucide-react"
 import { DateRange } from "react-day-picker"
 import { parseLocalDate } from "@/app/utils/parseLocalDate"
-import { TimeInMs } from "@/app/constants"
 
 interface DateRangeFilterProps {
   href: string

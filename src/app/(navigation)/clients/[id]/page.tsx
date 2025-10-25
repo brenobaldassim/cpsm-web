@@ -19,7 +19,7 @@ interface EditClientPageProps {
   params: Promise<{ id: string }>
 }
 
-const EditClientPage: React.FC<EditClientPageProps> = async ({ params }) => {
+const EditClientPage: React.FC<EditClientPageProps> = ({ params }) => {
   const router = useRouter()
   const { id: clientId } = React.use(params)
 

@@ -12,7 +12,7 @@ import { FormError } from "./FormError"
 import { FormField } from "./FormField"
 import { Button } from "../ui/button"
 import Link from "next/link"
-import { Routes } from "@/app/routes"
+import { Routes } from "@/app/constants"
 
 const loginSchema = z.object({
   email: emailSchema,

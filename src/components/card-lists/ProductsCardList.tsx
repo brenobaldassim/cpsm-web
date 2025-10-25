@@ -5,7 +5,7 @@ import { type TListProductsOutput } from "@/server/api/routers/products/schemas/
 import { CardButtons } from "../card-item/CardButtons"
 import { DeleteProductButton } from "../delete-buttons/DeleteProductButton"
 import { BaseCardList } from "./BaseCardList"
-import { Routes } from "@/app/routes"
+import { Routes } from "@/app/constants"
 interface ProductsCardListProps {
   data: TListProductsOutput
 }
@@ -16,7 +16,7 @@ export const ProductsCardList = ({ data }: ProductsCardListProps) => {
       {data.products.map((product) => (
         <CardItem
           key={product.id}
-          item={product}
+          item={{ ...product, date: product.createdAt }}
           className={cn({
             "bg-destructive/10 border-foreground/5": product.stockQty === 0,
           })}

@@ -1,5 +1,6 @@
 import { DashboardContent } from "@/components/dashboard"
 import { createCaller } from "@/server/api/server-caller"
+import { TimeInMs } from "./constants"
 
 const DashboardPage = async () => {
   const caller = await createCaller()
@@ -8,7 +9,7 @@ const DashboardPage = async () => {
     caller.clients.list({ page: 1, limit: 1 }),
     caller.products.list({ page: 1, limit: 1 }),
     caller.sales.getSummary({
-      startDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), // 30 days ago
+      startDate: new Date(Date.now() - TimeInMs.ONE_MONTH),
       endDate: new Date(),
     }),
   ])

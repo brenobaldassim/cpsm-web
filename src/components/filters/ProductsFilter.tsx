@@ -1,7 +1,7 @@
 import { ListViewMode } from "./components/ListViewMode"
 import { InStockFilter } from "./components/InStockFilter"
 import { SearchInput } from "./components/SearchInput"
-import { Routes } from "@/app/routes"
+import { Routes } from "@/app/constants"
 interface ProductsFilterProps {
   inStockOnly: boolean
   viewMode: "card" | "table"

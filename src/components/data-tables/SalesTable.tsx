@@ -14,7 +14,7 @@ import { BookOpen } from "lucide-react"
 import { formatPrice } from "@/app/utils/formatPrice"
 import { Card } from "@/components/ui/card"
 import { TSaleSchema } from "@/server/api/routers/sales/schemas/validation"
-import { Routes } from "@/app/routes"
+import { Routes } from "@/app/constants"
 interface SalesTableProps {
   sales: TSaleSchema[]
 }

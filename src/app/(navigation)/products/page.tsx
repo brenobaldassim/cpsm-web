@@ -15,7 +15,7 @@ import { ProductsListPageParams } from "./types"
 import { ProductsCardList } from "@/components/card-lists/ProductsCardList"
 import { ProductsTable } from "@/components/data-tables/ProductsTable"
 import { PackagePlus } from "lucide-react"
-import { Routes } from "@/app/routes"
+import { Routes } from "@/app/constants"
 
 interface ProductsListPageProps {
   searchParams: Promise<ProductsListPageParams>

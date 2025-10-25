@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter, useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import {
@@ -12,23 +12,36 @@ import {
 import { CalendarIcon, X } from "lucide-react"
 import { DateRange } from "react-day-picker"
 import { parseLocalDate } from "@/app/utils/parseLocalDate"
+import { TimeInMs } from "@/app/constants"
 
 interface DateRangeFilterProps {
   href: string
+  defaultStartDate?: Date
+  defaultEndDate?: Date
 }
 
-export function DateRangeFilter({ href }: DateRangeFilterProps) {
+export function DateRangeFilter({
+  href,
+  defaultStartDate,
+  defaultEndDate,
+}: DateRangeFilterProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
 
   const startDateFromUrl = searchParams.get("startDate")
   const endDateFromUrl = searchParams.get("endDate")
+  const hasAnyKindOfParams = searchParams.size > 0
 
   const [dateRange, setDateRange] = useState<DateRange | undefined>(() => {
     if (startDateFromUrl && endDateFromUrl) {
       return {
         from: parseLocalDate(startDateFromUrl),
         to: parseLocalDate(endDateFromUrl),
+      }
+    } else if (!hasAnyKindOfParams && defaultStartDate && defaultEndDate) {
+      return {
+        from: parseLocalDate(defaultStartDate?.toISOString().split("T")[0]),
+        to: parseLocalDate(defaultEndDate?.toISOString().split("T")[0]),
       }
     }
     return
@@ -40,8 +53,6 @@ export function DateRangeFilter({ href }: DateRangeFilterProps) {
         from: parseLocalDate(startDateFromUrl),
         to: parseLocalDate(endDateFromUrl),
       })
-    } else {
-      setDateRange(undefined)
     }
   }, [startDateFromUrl, endDateFromUrl])
 

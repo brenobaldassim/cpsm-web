@@ -16,7 +16,7 @@ import { SalesFilter } from "@/components/filters/SalesFilter"
 import { createCaller } from "@/server/api/server-caller"
 import { SalesListPageParams } from "./types"
 import { ItemsListPagination } from "@/components/items-list-pagination"
-import { Routes } from "@/app/routes"
+import { Routes, TimeInMs } from "@/app/constants"
 
 interface SalesListPageProps {
   searchParams: Promise<SalesListPageParams>

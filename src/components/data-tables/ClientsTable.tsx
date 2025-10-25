@@ -14,7 +14,7 @@ import { SquarePen } from "lucide-react"
 import { DeleteClientButton } from "@/components/delete-buttons/DeleteClientButton"
 import { Card } from "@/components/ui/card"
 import { TClientSchema } from "@/server/api/routers/clients/schemas/validation"
-import { Routes } from "@/app/routes"
+import { Routes } from "@/app/constants"
 interface ClientsTableProps {
   clients: TClientSchema[]
 }

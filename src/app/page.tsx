@@ -6,8 +6,8 @@ const DashboardPage = async () => {
   const caller = await createCaller()
 
   const [clientsData, productsData, salesSummary] = await Promise.all([
-    caller.clients.list({ page: 1, limit: 1 }),
-    caller.products.list({ page: 1, limit: 1 }),
+    caller.clients.listAll(),
+    caller.products.listAll(),
     caller.sales.getSummary({
       startDate: new Date(Date.now() - TimeInMs.ONE_MONTH),
       endDate: new Date(),
@@ -25,8 +25,8 @@ const DashboardPage = async () => {
         </p>
       </div>
       <DashboardContent
-        clientsData={clientsData}
-        productsData={productsData}
+        totalClients={clientsData.length}
+        totalProducts={productsData.length}
         salesSummary={salesSummary}
       />
     </main>

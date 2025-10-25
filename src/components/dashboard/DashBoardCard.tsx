@@ -15,17 +15,17 @@ export const DashBoardCard: React.FC<DashBoardCardProps> = ({
   iconBgColor = "bg-green-100",
 }) => {
   return (
-    <Card className="border-muted">
+    <Card className="relative border-muted">
       <CardHeader className="text-sm md:text-base">{title}</CardHeader>
       <CardContent>
         <CardTitle className="mt-2 text-xl md:text-2xl font-bold text-card-foreground text-center md:text-left">
           {value ?? "-"}
         </CardTitle>
 
-        <div className="w-full flex items-end justify-end mt-2">
+        <div className="absolute top-2 right-2 ">
           <div
             className={cn(
-              `flex h-12 w-12 items-center justify-center rounded-full `,
+              `flex size-8 items-center justify-center rounded-full `,
               iconBgColor
             )}
           >

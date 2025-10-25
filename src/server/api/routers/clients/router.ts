@@ -211,4 +211,12 @@ export const clientsRouter = createTRPCRouter({
         totalPages: Math.ceil(total / limit),
       }
     }),
+
+  listAll: protectedProcedure.query(async ({ ctx }) => {
+    return await ctx.prisma.client.findMany({
+      where: {
+        createdBy: ctx.session.user.id,
+      },
+    })
+  }),
 })

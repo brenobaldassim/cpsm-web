@@ -171,6 +171,14 @@ export const productsRouter = createTRPCRouter({
       }
     }),
 
+  listAll: protectedProcedure.query(async ({ ctx }) => {
+    return await ctx.prisma.product.findMany({
+      where: {
+        createdBy: ctx.session.user.id,
+      },
+    })
+  }),
+
   /**
    * products.checkStock
    * Check if requested quantity is available

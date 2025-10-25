@@ -1,6 +1,6 @@
 import { ListViewMode } from "./components/ListViewMode"
 import { SearchInput } from "./components/SearchInput"
-import { Routes, TimeInMs } from "@/app/constants"
+import { Routes } from "@/app/constants"
 import { DateRangeFilter } from "./components/DateRangeFilter"
 interface SalesFilterProps {
   viewMode: "card" | "table"

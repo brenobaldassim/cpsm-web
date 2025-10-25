@@ -6,7 +6,7 @@ import { Button } from "../ui/button"
 import Link from "next/link"
 import { BookOpen } from "lucide-react"
 import { BaseCardList } from "./BaseCardList"
-import { Routes } from "@/app/routes"
+import { Routes } from "@/app/constants"
 
 interface SalesCardListProps {
   data: TListSalesOutput
@@ -20,7 +20,7 @@ export const SalesCardList = ({ data }: SalesCardListProps) => {
         return (
           <CardItem
             key={sale.id}
-            item={{ ...sale, name }}
+            item={{ ...sale, name, date: sale.saleDate }}
             className={cn({
               "bg-destructive/10 border-foreground/5": sale.totalAmount === 0,
             })}

@@ -1,10 +1,11 @@
 "use client"
 
 import { useRouter, useSearchParams } from "next/navigation"
-import { Input } from "../../ui/input"
+import { Input } from "@/components/ui/input"
 import { useCallback, useEffect, useState } from "react"
-import { SearchIcon } from "lucide-react"
+import { SearchIcon, X } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
 
 interface SearchInputProps {
   placeholder: string
@@ -52,6 +53,12 @@ export function SearchInput({ placeholder, href }: SearchInputProps) {
     []
   )
 
+  const handleClearSearch = useCallback(() => {
+    setSearch("")
+    setIsSearching(false)
+    handleUpdateSearchParams()
+  }, [handleUpdateSearchParams])
+
   return (
     <div className="relative w-1/3">
       <Input
@@ -61,11 +68,17 @@ export function SearchInput({ placeholder, href }: SearchInputProps) {
         onChange={handleSearchChange}
         className={cn("w-full", isSearching && "opacity-70")}
       />
-      <div className="absolute right-2 top-1/2 -translate-y-1/2">
+      <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
+        {search.length > 0 && !isSearching && (
+          <Button variant="link" size="icon" onClick={handleClearSearch}>
+            <X className="size-4 text-muted-foreground" />
+          </Button>
+        )}
         <SearchIcon
           className={cn(
             "size-4 text-muted-foreground",
-            isSearching && "opacity-70 animate-warning "
+            isSearching && "opacity-70 animate-warning ",
+            search.length > 0 && !isSearching && "hidden"
           )}
         />
       </div>

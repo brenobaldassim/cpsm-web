@@ -15,7 +15,7 @@ import { DeleteProductButton } from "@/components/delete-buttons/DeleteProductBu
 import { formatPrice } from "@/app/utils/formatPrice"
 import { Card } from "@/components/ui/card"
 import { TProductSchema } from "@/server/api/routers/products/schemas/validation"
-import { Routes } from "@/app/routes"
+import { Routes } from "@/app/constants"
 interface ProductsTableProps {
   products: TProductSchema[]
 }

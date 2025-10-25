@@ -1,4 +1,4 @@
-import { Routes } from "@/app/routes"
+import { Routes } from "@/app/constants"
 import { ListViewMode } from "./components/ListViewMode"
 import { SearchInput } from "./components/SearchInput"
 

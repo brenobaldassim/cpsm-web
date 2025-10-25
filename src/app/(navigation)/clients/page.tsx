@@ -16,7 +16,7 @@ import { ClientsFilter } from "@/components/filters/ClientsFilter"
 import { createCaller } from "@/server/api/server-caller"
 import { ClientsListPageParams } from "./types"
 import { ItemsListPagination } from "@/components/items-list-pagination"
-import { Routes } from "@/app/routes"
+import { Routes } from "@/app/constants"
 
 interface ClientsListPageProps {
   searchParams: Promise<ClientsListPageParams>

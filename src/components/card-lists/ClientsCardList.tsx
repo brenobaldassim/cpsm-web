@@ -3,7 +3,7 @@ import { CardButtons } from "../card-item/CardButtons"
 import { CardItem } from "../card-item/CardItem"
 import { DeleteClientButton } from "../delete-buttons/DeleteClientButton"
 import { BaseCardList } from "./BaseCardList"
-import { Routes } from "@/app/routes"
+import { Routes } from "@/app/constants"
 
 interface ClientsCardListProps {
   data: TListClientsOutput
@@ -18,7 +18,7 @@ export const ClientsCardList: React.FC<ClientsCardListProps> = ({ data }) => {
         return (
           <CardItem
             key={client.id}
-            item={{ ...client, name }}
+            item={{ ...client, name, date: client.createdAt }}
             ButtonSection={
               <CardButtons
                 id={client.id}

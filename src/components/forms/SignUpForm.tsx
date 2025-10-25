@@ -13,7 +13,7 @@ import { FormField } from "./FormField"
 import { Button } from "../ui/button"
 import Link from "next/link"
 import { trpc } from "@/lib/trpc"
-import { Routes } from "@/app/routes"
+import { Routes } from "@/app/constants"
 
 const signupSchema = z
   .object({

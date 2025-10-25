@@ -16,7 +16,7 @@ interface EditProductPageProps {
   params: Promise<{ id: string }>
 }
 
-const EditProductPage: React.FC<EditProductPageProps> = async ({ params }) => {
+const EditProductPage: React.FC<EditProductPageProps> = ({ params }) => {
   const router = useRouter()
   const { id: productId } = React.use(params)
   const utils = trpc.useUtils()

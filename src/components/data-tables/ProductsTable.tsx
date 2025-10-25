@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button"
 import { DataTable, Column } from "./DataTable"
 import { SquarePen } from "lucide-react"
 import { DeleteProductButton } from "@/components/delete-buttons/DeleteProductButton"
-import { formatPrice } from "@/app/utils/formatPrice"
+import { formatPriceInCents } from "@/app/utils/formatPriceInCents"
 import { Card } from "@/components/ui/card"
 import { TProductSchema } from "@/server/api/routers/products/schemas/validation"
 import { Routes } from "@/app/constants"
@@ -43,7 +43,7 @@ export const ProductsTable = ({ products }: ProductsTableProps) => {
       key: "priceInCents",
       label: "Price",
       sortable: true,
-      render: (row) => formatPrice(row.priceInCents),
+      render: (row) => formatPriceInCents(row.priceInCents),
     },
     {
       key: "stockQty",

@@ -1,5 +1,5 @@
 import { CardItem } from "../card-item/CardItem"
-import { formatPrice } from "@/app/utils/formatPrice"
+import { formatPriceInCents } from "@/app/utils/formatPriceInCents"
 import { cn } from "@/lib/utils"
 import { type TListSalesOutput } from "@/server/api/routers/sales/schemas/validation"
 import { Button } from "../ui/button"
@@ -40,7 +40,7 @@ export const SalesCardList = ({ data }: SalesCardListProps) => {
           >
             <p className="text-sm text-muted-foreground">Total</p>
             <p className="text-2xl  text-primary font-bold">
-              {formatPrice(sale.totalAmount)}
+              {formatPriceInCents(sale.totalAmount)}
             </p>
             <div className="flex flex-col justify-center items-end">
               <p className="text-sm text-muted-foreground">Total items</p>

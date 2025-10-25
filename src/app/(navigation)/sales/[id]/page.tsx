@@ -16,7 +16,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { notFound } from "next/navigation"
-import { formatPrice } from "@/app/utils/formatPrice"
+import { formatPriceInCents } from "@/app/utils/formatPriceInCents"
 import { createCaller } from "@/server/api/server-caller"
 
 interface SaleDetailPageProps {
@@ -77,7 +77,7 @@ const SaleDetailPage: React.FC<SaleDetailPageProps> = async ({ params }) => {
               Total Amount
             </dt>
             <dd className="mt-1 text-lg font-semibold text-card-foreground">
-              {formatPrice(sale.totalAmount)}
+              {formatPriceInCents(sale.totalAmount)}
             </dd>
           </div>
           <div>
@@ -115,10 +115,10 @@ const SaleDetailPage: React.FC<SaleDetailPageProps> = async ({ params }) => {
                   {item.quantity}
                 </TableCell>
                 <TableCell className="px-4 text-right">
-                  {formatPrice(item.priceInCents)}
+                  {formatPriceInCents(item.priceInCents)}
                 </TableCell>
                 <TableCell className="px-4 text-right font-medium">
-                  {formatPrice(item.priceInCents * item.quantity)}
+                  {formatPriceInCents(item.priceInCents * item.quantity)}
                 </TableCell>
               </TableRow>
             ))}
@@ -129,7 +129,7 @@ const SaleDetailPage: React.FC<SaleDetailPageProps> = async ({ params }) => {
                 Total
               </TableCell>
               <TableCell className="px-4 text-right text-lg font-bold">
-                {formatPrice(sale.totalAmount)}
+                {formatPriceInCents(sale.totalAmount)}
               </TableCell>
             </TableRow>
           </TableFooter>

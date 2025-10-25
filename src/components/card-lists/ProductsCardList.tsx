@@ -1,5 +1,5 @@
 import { CardItem } from "../card-item/CardItem"
-import { formatPrice } from "@/app/utils/formatPrice"
+import { formatPriceInCents } from "@/app/utils/formatPriceInCents"
 import { cn } from "@/lib/utils"
 import { type TListProductsOutput } from "@/server/api/routers/products/schemas/validation"
 import { CardButtons } from "../card-item/CardButtons"
@@ -30,7 +30,7 @@ export const ProductsCardList = ({ data }: ProductsCardListProps) => {
             />
           }
         >
-          <p>{formatPrice(product.priceInCents)}</p>
+          <p>{formatPriceInCents(product.priceInCents)}</p>
           <p
             className={cn("text-sm text-muted-foreground", {
               "text-destructive font-medium": product.stockQty === 0,

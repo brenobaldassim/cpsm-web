@@ -11,7 +11,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { DataTable, Column } from "./DataTable"
 import { BookOpen } from "lucide-react"
-import { formatPrice } from "@/app/utils/formatPrice"
+import { formatPriceInCents } from "@/app/utils/formatPriceInCents"
 import { Card } from "@/components/ui/card"
 import { TSaleSchema } from "@/server/api/routers/sales/schemas/validation"
 import { Routes } from "@/app/constants"
@@ -41,7 +41,7 @@ export const SalesTable = ({ sales }: SalesTableProps) => {
       key: "totalAmount",
       label: "Total Amount",
       sortable: true,
-      render: (row) => formatPrice(row.totalAmount),
+      render: (row) => formatPriceInCents(row.totalAmount),
     },
     {
       key: "saleItems",

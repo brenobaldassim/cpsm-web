@@ -25,6 +25,7 @@ import {
 import { DateInput } from "@/components/ui/dateInput"
 import { Input } from "../ui/input"
 import { TCreateSaleInput } from "@/server/api/routers/sales/schemas/validation"
+import { formatPriceInCents } from "@/app/utils/formatPriceInCents"
 
 const saleItemSchema = z.object({
   productId: z.string().min(1, "Product is required"),
@@ -93,13 +94,6 @@ export function SaleForm({
       }
     })
     return total
-  }
-
-  const formatPrice = (priceInCents: number) => {
-    return `R$ ${(priceInCents / 100).toLocaleString("pt-BR", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    })}`
   }
 
   const handleFormSubmit = (data: TCreateSaleInput) => {
@@ -215,7 +209,7 @@ export function SaleForm({
                           {products.map((product) => (
                             <SelectItem key={product.id} value={product.id}>
                               {product.name} -{" "}
-                              {formatPrice(product.priceInCents)} (Stock:{" "}
+                              {formatPriceInCents(product.priceInCents)} (Stock:{" "}
                               {product.stockQty})
                             </SelectItem>
                           ))}
@@ -274,7 +268,7 @@ export function SaleForm({
                           (p) => p.id === watchedItems[index].productId
                         )
                         if (product) {
-                          return formatPrice(
+                          return formatPriceInCents(
                             product.priceInCents * watchedItems[index].quantity
                           )
                         }
@@ -296,7 +290,7 @@ export function SaleForm({
             Total Amount:
           </span>
           <span className="text-2xl font-bold text-primary">
-            {formatPrice(calculateTotal())}
+            {formatPriceInCents(calculateTotal())}
           </span>
         </div>
       </Card>

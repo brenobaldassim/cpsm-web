@@ -15,15 +15,7 @@ const DashboardPage = async () => {
   ])
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-start">
-      <div className="md:p-16 p-6">
-        <h1 className="text-4xl font-bold text-primary">
-          Client & Product Manager
-        </h1>
-        <p className="mt-4 text-lg text-primary">
-          Sales and inventory management system
-        </p>
-      </div>
+    <main className="flex min-h-screen flex-col items-center justify-start w-full">
       <DashboardContent
         totalClients={clientsData.length}
         totalProducts={productsData.length}
